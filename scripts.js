@@ -113,16 +113,16 @@
     });
     document.documentElement.classList.add('lenis-on');
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    if (window.ScrollTrigger) {
+    if (window.ScrollTrigger && window.gsap) {
       lenis.on('scroll', ScrollTrigger.update);
       gsap.ticker.add((time) => lenis.raf(time * 1000));
       gsap.ticker.lagSmoothing(0);
+    } else {
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
     }
 
     document.addEventListener('click', (e) => {
@@ -193,18 +193,26 @@
     $$('[data-split-words]').forEach(el => {
       const words = splitIntoWords(el);
       if (!words.length) return;
-      gsap.from(words, {
-        opacity: 0,
-        y: 40,
+      gsap.set(words, { opacity: 0, y: 40 });
+      const play = () => gsap.to(words, {
+        opacity: 1,
+        y: 0,
         duration: 0.9,
         ease: 'power3.out',
         stagger: 0.08,
-        scrollTrigger: {
+        clearProps: 'opacity,transform',
+      });
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.85) {
+        play();
+      } else {
+        ScrollTrigger.create({
           trigger: el,
           start: 'top 85%',
           once: true,
-        },
-      });
+          onEnter: play,
+        });
+      }
     });
 
     // 2) Body text / eyebrows / generic fade-up — fade + y(20 → 0), delay 0.15s
@@ -280,19 +288,27 @@
     $$('.step').forEach((step, i) => {
       const body = step.querySelectorAll('.step-title, .step-desc');
       if (!body.length) return;
-      gsap.from(body, {
-        opacity: 0,
-        y: 20,
+      gsap.set(body, { opacity: 0, y: 20 });
+      const play = () => gsap.to(body, {
+        opacity: 1,
+        y: 0,
         duration: 0.8,
         ease: 'power3.out',
         delay: 0.2 + i * 0.04,
         stagger: 0.06,
-        scrollTrigger: {
+        clearProps: 'opacity,transform',
+      });
+      const rect = step.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.88) {
+        play();
+      } else {
+        ScrollTrigger.create({
           trigger: step,
           start: 'top 88%',
           once: true,
-        },
-      });
+          onEnter: play,
+        });
+      }
     });
 
     // Trasformation meta + test card + weal services — fade + y(20) as body
@@ -315,6 +331,19 @@
         },
       });
     });
+
+    ScrollTrigger.refresh();
+
+    // Safety net — if any animated element is still invisible after 3s, force visible
+    setTimeout(() => {
+      $$('[data-split-words] .word, .step-title, .step-desc').forEach(el => {
+        const op = parseFloat(getComputedStyle(el).opacity);
+        if (op < 0.9) {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        }
+      });
+    }, 3000);
   });
 
   /* ─── HERO LOAD ANIMATIONS ─── */
