@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════
-   GIORGIA PIRAS V3.1 — Interactions (simplified)
+   GIORGIA PIRAS V3.2 — Interactions
    GSAP + ScrollTrigger + Lenis via CDN
    ════════════════════════════════════════════════════════════ */
 
@@ -23,7 +23,7 @@
 
   /* ─── SPLIT TEXT HELPERS ─── */
   function splitIntoWords(el) {
-    if (!el || el.dataset.splitDone) return [];
+    if (!el || el.dataset.splitDone) return $$('.word', el);
     const text = el.textContent;
     el.textContent = '';
     const nodes = [];
@@ -41,27 +41,6 @@
     });
     el.dataset.splitDone = '1';
     return nodes;
-  }
-
-  function splitIntoLetters(el) {
-    if (!el || el.dataset.splitDone) return [];
-    const text = el.textContent;
-    el.textContent = '';
-    const chars = [];
-    [...text].forEach(ch => {
-      if (ch === ' ') {
-        el.appendChild(document.createTextNode(' '));
-        return;
-      }
-      const c = document.createElement('span');
-      c.className = 'char';
-      c.style.display = 'inline-block';
-      c.textContent = ch;
-      el.appendChild(c);
-      chars.push(c);
-    });
-    el.dataset.splitDone = '1';
-    return chars;
   }
 
   /* ─── ROMA CLOCK ─── */
@@ -199,9 +178,12 @@
   /* ─── GSAP SCROLL ANIMATIONS ─── */
   ready(() => {
     if (!window.gsap || !window.ScrollTrigger) {
-      // Graceful fallback
+      // Graceful fallback — make everything visible
       $$('[data-anim]').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
-      $$('[data-split-words]').forEach(splitIntoWords);
+      $$('[data-split-words]').forEach(el => {
+        splitIntoWords(el);
+        $$('.word', el).forEach(w => { w.style.opacity = '1'; w.style.transform = 'none'; });
+      });
       return;
     }
 
@@ -211,84 +193,105 @@
     $$('[data-split-words]').forEach(el => {
       const words = splitIntoWords(el);
       if (!words.length) return;
-      gsap.set(words, { opacity: 0, y: 40 });
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 85%',
-        once: true,
-        onEnter: () => {
-          gsap.to(words, {
-            opacity: 1,
-            y: 0,
-            duration: 0.9,
-            ease: 'power3.out',
-            stagger: 0.08,
-          });
-        }
+      gsap.from(words, {
+        opacity: 0,
+        y: 40,
+        duration: 0.9,
+        ease: 'power3.out',
+        stagger: 0.08,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          once: true,
+        },
       });
     });
 
-    // 2) Body text — fade + y(20 → 0), delay 0.15s
+    // 2) Body text / eyebrows / generic fade-up — fade + y(20 → 0), delay 0.15s
     $$('[data-anim]').forEach(el => {
       if (el.closest('.hero')) return; // hero handled at load
-      gsap.set(el, { opacity: 0, y: el.dataset.anim === 'fade-down' ? -16 : 20 });
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 90%',
-        once: true,
-        onEnter: () => {
-          gsap.to(el, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', delay: 0.15 });
-        }
+      const y = el.dataset.anim === 'fade-down' ? -16 : 20;
+      gsap.from(el, {
+        opacity: 0,
+        y,
+        duration: 0.9,
+        ease: 'power3.out',
+        delay: 0.15,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 90%',
+          once: true,
+        },
       });
     });
 
     // 3) Big numbers (01, 02, 03, 04) — fade + y(30 → 0), stagger across cards
     const serviziNums = $$('.servizio-num');
     if (serviziNums.length) {
-      gsap.set(serviziNums, { opacity: 0, y: 30 });
-      ScrollTrigger.create({
-        trigger: '.servizi-grid',
-        start: 'top 82%',
-        once: true,
-        onEnter: () => gsap.to(serviziNums, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08 }),
+      gsap.from(serviziNums, {
+        opacity: 0,
+        y: 30,
+        duration: 0.9,
+        ease: 'power3.out',
+        stagger: 0.08,
+        scrollTrigger: {
+          trigger: '.servizi-grid',
+          start: 'top 82%',
+          once: true,
+        },
       });
     }
 
     const stepNums = $$('.step-num');
     if (stepNums.length) {
-      gsap.set(stepNums, { opacity: 0, y: 30 });
-      ScrollTrigger.create({
-        trigger: '.steps',
-        start: 'top 85%',
-        once: true,
-        onEnter: () => gsap.to(stepNums, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08 }),
+      gsap.from(stepNums, {
+        opacity: 0,
+        y: 30,
+        duration: 0.9,
+        ease: 'power3.out',
+        stagger: 0.08,
+        scrollTrigger: {
+          trigger: '.steps',
+          start: 'top 85%',
+          once: true,
+        },
       });
     }
 
-    // Servizio & step body text — fade + y(20) with small delay after numbers
+    // Servizio & step body text — fade + y(20) with small delay
     $$('.servizio-card').forEach((card, i) => {
       const body = card.querySelectorAll('.servizio-title, .servizio-desc, .link-underline');
-      gsap.set(body, { opacity: 0, y: 20 });
-      ScrollTrigger.create({
-        trigger: card,
-        start: 'top 85%',
-        once: true,
-        onEnter: () => gsap.to(body, {
-          opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.2 + i * 0.05, stagger: 0.06,
-        }),
+      if (!body.length) return;
+      gsap.from(body, {
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        ease: 'power3.out',
+        delay: 0.2 + i * 0.05,
+        stagger: 0.06,
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          once: true,
+        },
       });
     });
 
     $$('.step').forEach((step, i) => {
       const body = step.querySelectorAll('.step-title, .step-desc');
-      gsap.set(body, { opacity: 0, y: 20 });
-      ScrollTrigger.create({
-        trigger: step,
-        start: 'top 88%',
-        once: true,
-        onEnter: () => gsap.to(body, {
-          opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.2 + i * 0.04, stagger: 0.06,
-        }),
+      if (!body.length) return;
+      gsap.from(body, {
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        ease: 'power3.out',
+        delay: 0.2 + i * 0.04,
+        stagger: 0.06,
+        scrollTrigger: {
+          trigger: step,
+          start: 'top 88%',
+          once: true,
+        },
       });
     });
 
@@ -299,23 +302,19 @@
       ...$$('.weal-services li'),
     ];
     genericBody.forEach(el => {
-      gsap.set(el, { opacity: 0, y: 20 });
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 90%',
-        once: true,
-        onEnter: () => gsap.to(el, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.15 }),
+      gsap.from(el, {
+        opacity: 0,
+        y: 20,
+        duration: 0.8,
+        ease: 'power3.out',
+        delay: 0.15,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 90%',
+          once: true,
+        },
       });
     });
-
-    // Prepare hero name letters
-    const nameEl = $('.hero-name');
-    if (nameEl) {
-      const chars = splitIntoLetters(nameEl);
-      if (!reducedMotion && chars.length) {
-        gsap.set(chars, { yPercent: 100 });
-      }
-    }
   });
 
   /* ─── HERO LOAD ANIMATIONS ─── */
@@ -325,13 +324,8 @@
     const heroEyebrow = $('.hero-eyebrow');
     const heroPills = $$('.hero-top .pill');
     const heroCTA = $('.hero-circle-cta');
-    const nameChars = $$('.hero-name .char');
     const heroTagline = $('.hero-tagline');
-    const heroTaglineWords = heroTagline ? (() => {
-      // Words are already wrapped inline in HTML as .word — if not, split textContent
-      const existing = $$('.word', heroTagline);
-      return existing;
-    })() : [];
+    const heroTaglineWords = heroTagline ? $$('.word', heroTagline) : [];
     const heroDot = $('.hero-tagline .dot-accent');
 
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -363,18 +357,6 @@
     if (heroCTA && !reducedMotion) {
       gsap.set(heroCTA, { opacity: 0, scale: 0.9 });
       tl.to(heroCTA, { opacity: 1, scale: 1, duration: 0.8 }, 1.0);
-    }
-
-    // Hero name — letter-by-letter, y 100% → 0, stagger 0.04s
-    if (nameChars.length && !reducedMotion) {
-      tl.to(nameChars, {
-        yPercent: 0,
-        duration: 0.8,
-        ease: 'power4.out',
-        stagger: 0.04,
-      }, 0.75);
-    } else if (nameChars.length) {
-      gsap.set(nameChars, { yPercent: 0 });
     }
 
     if (window.ScrollTrigger) ScrollTrigger.refresh();
@@ -507,7 +489,7 @@
     });
   }());
 
-  /* ─── VIDEO: pause offscreen for perf (no scroll-bound animation) ─── */
+  /* ─── VIDEO: pause offscreen for perf ─── */
   (function videoPerf() {
     if (!('IntersectionObserver' in window)) return;
     $$('.hero-video, .video-ambient-media').forEach(v => {

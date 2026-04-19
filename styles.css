@@ -504,32 +504,39 @@ html.cursor-ready .cursor { display: block; }
   z-index: 3;
 }
 
-.hero-name-wrap {
+.hero-marquee-wrap {
   position: absolute;
   left: 0;
   right: 0;
   bottom: clamp(1rem, 3vw, 2.5rem);
   z-index: 2;
   pointer-events: none;
-  overflow: visible;
-  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
 }
-.hero-name {
-  display: block;
+.hero-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: hero-marquee 40s linear infinite;
+  will-change: transform;
+}
+.hero-marquee-set {
   font-family: var(--font-display);
   font-weight: 500;
   font-size: clamp(7rem, 18vw, 16rem);
-  line-height: 0.82;
+  line-height: 1;
   letter-spacing: -0.03em;
   color: var(--ink);
-  margin: 0;
-  text-align: center;
   white-space: nowrap;
-  will-change: transform;
+  flex-shrink: 0;
+  padding-right: 0.25em;
 }
-.hero-name .char {
-  display: inline-block;
-  will-change: transform, opacity;
+@keyframes hero-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-25%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-marquee-track { animation: none; }
 }
 
 /* ════════ CIRCLE CTA ════════ */
@@ -632,50 +639,6 @@ html.cursor-ready .cursor { display: block; }
 .link-underline span { transition: transform 0.4s var(--ease-out); }
 .link-underline:hover span { transform: translateX(4px); }
 
-/* ════════ MARQUEE ════════ */
-.marquee {
-  position: relative;
-  height: 180px;
-  background: var(--ink);
-  color: var(--bg);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  border-top: 1px solid var(--line-inv);
-  border-bottom: 1px solid var(--line-inv);
-}
-.marquee-track {
-  display: flex;
-  gap: 0;
-  will-change: transform;
-  animation: marquee-scroll 32s linear infinite;
-}
-.marquee-set {
-  display: inline-flex;
-  align-items: center;
-  gap: 3rem;
-  padding-right: 3rem;
-  flex-shrink: 0;
-}
-.marquee-set span {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(4rem, 8vw, 7rem);
-  line-height: 1;
-  letter-spacing: -0.015em;
-  white-space: nowrap;
-}
-.marquee-dot {
-  font-style: normal !important;
-  color: var(--accent);
-  font-size: clamp(3rem, 6vw, 5rem) !important;
-  opacity: 0.9;
-}
-@keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-33.333%); }
-}
-
 /* ════════ CHI SONO ════════ */
 .chi-sono {
   padding: var(--section-pad) 0;
@@ -687,11 +650,13 @@ html.cursor-ready .cursor { display: block; }
   gap: 2rem clamp(2rem, 4vw, 4rem);
 }
 .chi-sono-figure {
-  grid-column: 1 / span 5;
+  grid-column: 1 / span 6;
   margin: 0;
   aspect-ratio: 4 / 5;
   overflow: hidden;
   background: var(--bg-alt);
+  width: 100%;
+  max-width: none;
 }
 .chi-sono-figure img {
   width: 100%;
@@ -704,7 +669,7 @@ html.cursor-ready .cursor { display: block; }
 .chi-sono-figure:hover img { transform: scale(1.08); }
 
 .chi-sono-text {
-  grid-column: 7 / span 6;
+  grid-column: 8 / span 5;
 }
 .chi-sono-body p + p { margin-top: 1.25rem; }
 .chi-sono-sign {
@@ -1461,7 +1426,7 @@ input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px 
     transform: translateY(-50%);
   }
   .hero-tagline { font-size: clamp(2.75rem, 10vw, 4.5rem); }
-  .hero-name {
+  .hero-marquee-set {
     font-size: clamp(5rem, 22vw, 9rem);
     letter-spacing: -0.035em;
   }
@@ -1472,9 +1437,6 @@ input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px 
     height: 112px;
   }
   .hero-circle-cta .circle-cta-label { font-size: 0.8125rem; }
-
-  .marquee { height: 120px; }
-  .marquee-set span { font-size: clamp(3rem, 11vw, 5rem); }
 
   .trasf-grid { grid-template-columns: 1fr; }
   .steps { grid-template-columns: 1fr; gap: 2rem; }
