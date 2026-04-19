@@ -12,7 +12,7 @@
 
   <link rel="preconnect" href="https://api.fontshare.com">
   <link rel="preload" as="video" href="assets/hero.mp4" type="video/mp4">
-  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,400i,500,600,700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -27,11 +27,6 @@
   <!-- ═══ NAV ═══ -->
   <header id="main-nav" class="nav" data-cursor-area>
     <div class="nav-inner">
-      <a href="#top" class="nav-pill" data-cursor-hover aria-label="Giorgia Piras, home">
-        <span class="nav-pill-dot" aria-hidden="true"></span>
-        Personal Trainer · Roma
-      </a>
-
       <nav class="nav-menu" aria-label="Menu principale">
         <a href="#servizi" data-cursor-hover>Servizi</a>
         <a href="#chi-sono" data-cursor-hover>Chi sono</a>
@@ -70,11 +65,6 @@
       <div class="hero-overlay" aria-hidden="true"></div>
 
       <div class="hero-top">
-        <span class="pill pill--sm pill--vertical" data-anim="fade-down">
-          <span class="pill-arrow" aria-hidden="true">↓</span>
-          Scorri
-        </span>
-
         <span class="pill pill--sm" data-anim="fade-down">
           <span class="pill-dot" aria-hidden="true"></span>
           <span id="clock">Roma — 00:00</span>
@@ -237,7 +227,7 @@
             <li>Osteopata</li>
             <li>Eventi</li>
           </ul>
-          <a class="link-underline weal-cta" href="https://wa.me/393935896994" target="_blank" rel="noopener" data-cursor-hover>
+          <a class="pill-outline weal-cta" href="https://wa.me/393935896994" target="_blank" rel="noopener" data-cursor-hover>
             Visita Weal House <span aria-hidden="true">→</span>
           </a>
         </div>
@@ -434,13 +424,14 @@
         <a href="#servizi" data-cursor-hover>Servizi</a>
         <a href="#chi-sono" data-cursor-hover>Chi sono</a>
         <a href="#weal-house" data-cursor-hover>Weal House</a>
-        <a href="#contatti" data-cursor-hover>Contatti</a>
+        <a href="https://wa.me/393935896994" target="_blank" rel="noopener" data-cursor-hover>Contatti</a>
       </nav>
 
       <div class="footer-col footer-meta">
         <a class="footer-social" href="https://www.instagram.com/lapiras93/" target="_blank" rel="noopener" data-cursor-hover>Instagram — @lapiras93</a>
         <a class="footer-mail" href="mailto:ciao@lapiras.it" data-cursor-hover>ciao@lapiras.it</a>
-        <p class="footer-credit">Sito by <a href="https://transiva.it" target="_blank" rel="noopener" data-cursor-hover>Transiva</a></p>
+        <span class="footer-sep" aria-hidden="true"></span>
+        <p class="footer-credit">Sito realizzato da <a href="https://transiva.it" target="_blank" rel="noopener" data-cursor-hover>Transiva</a></p>
       </div>
     </div>
   </footer>
