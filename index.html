@@ -3,35 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Giorgia Piras — Personal Trainer a Roma. Allenamento personalizzato, coaching online e programmi su misura. Founder di Weal House.">
-  <meta name="theme-color" content="#1B2E2A">
+  <meta name="description" content="Giorgia Piras — Personal Trainer a Roma. Metodo, ascolto, disciplina. Founder di Weal House Community.">
+  <meta name="theme-color" content="#F5F1E8">
   <meta property="og:title" content="Giorgia Piras — Personal Trainer · Roma">
-  <meta property="og:description" content="Allenamento personalizzato, risultati reali, metodo tuo.">
+  <meta property="og:description" content="Forza che non grida.">
   <meta property="og:type" content="website">
   <title>Giorgia Piras — Personal Trainer · Roma</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,100;1,9..144,300..700,100&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="video" href="assets/hero.mp4" type="video/mp4">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,100;1,9..144,300..900,100&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+  <!-- Custom cursor -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor-dot"></div>
+    <div class="cursor-halo"></div>
+  </div>
+
   <!-- ═══ NAV ═══ -->
-  <header id="main-nav" class="nav">
+  <header id="main-nav" class="nav" data-cursor-area>
     <div class="nav-inner">
-      <a href="#top" class="nav-logo" aria-label="Giorgia Piras, home">GIORGIA PIRAS</a>
+      <a href="#top" class="nav-pill" data-cursor-hover aria-label="Giorgia Piras, home">
+        <span class="nav-pill-dot" aria-hidden="true"></span>
+        Personal Trainer · Roma
+      </a>
 
       <nav class="nav-menu" aria-label="Menu principale">
-        <a href="#servizi">Servizi</a>
-        <a href="#chi-sono">Chi sono</a>
-        <a href="#weal-house">Weal House</a>
-        <a href="#contatti">Contatti</a>
+        <a href="#servizi" data-cursor-hover>Servizi</a>
+        <a href="#chi-sono" data-cursor-hover>Chi sono</a>
+        <a href="#weal-house" data-cursor-hover>Weal House</a>
+        <a href="#contatti" data-cursor-hover>Contatti</a>
       </nav>
 
-      <a class="nav-cta" href="https://wa.me/393935896994" target="_blank" rel="noopener">
-        WhatsApp <span aria-hidden="true">→</span>
+      <a class="nav-wa" href="https://wa.me/393935896994" target="_blank" rel="noopener" data-cursor-hover>
+        WhatsApp
+        <span class="nav-wa-underline" aria-hidden="true"></span>
       </a>
 
       <button class="nav-toggle" aria-label="Apri menu" aria-controls="mobile-menu" aria-expanded="false">
@@ -40,14 +51,13 @@
     </div>
   </header>
 
-  <!-- Mobile overlay menu -->
   <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
     <nav class="mobile-menu-inner" aria-label="Menu mobile">
       <a href="#servizi">Servizi.</a>
       <a href="#chi-sono">Chi sono.</a>
       <a href="#weal-house">Weal House.</a>
       <a href="#contatti">Contatti.</a>
-      <a class="mobile-menu-cta" href="https://wa.me/393935896994" target="_blank" rel="noopener">Scrivi su WhatsApp →</a>
+      <a class="mobile-menu-cta" href="https://wa.me/393935896994" target="_blank" rel="noopener">WhatsApp →</a>
     </nav>
   </div>
 
@@ -55,46 +65,93 @@
 
     <!-- ═══ HERO ═══ -->
     <section class="hero" aria-labelledby="hero-title">
-      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/risultato-1.png" aria-hidden="true">
+      <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/risultato-1.png" aria-hidden="true">
         <source src="assets/hero.mp4" type="video/mp4">
       </video>
       <div class="hero-overlay" aria-hidden="true"></div>
 
-      <div class="hero-content">
-        <span class="eyebrow reveal">Personal Trainer · Roma</span>
-        <h1 id="hero-title" class="hero-title reveal" style="--d:0.08s">Non c'è tempo<br>da perdere.</h1>
-        <p class="hero-sub reveal" style="--d:0.16s">Allenamento personalizzato, risultati reali, metodo tuo.</p>
-        <a class="btn-primary reveal" href="https://wa.me/393935896994" target="_blank" rel="noopener" style="--d:0.24s">
-          Prenota una call <span aria-hidden="true">→</span>
-        </a>
+      <div class="hero-top">
+        <span class="pill pill--sm pill--vertical" data-anim="fade-down">
+          <span class="pill-arrow" aria-hidden="true">↓</span>
+          Scorri
+        </span>
+
+        <span class="pill pill--sm" data-anim="fade-down">
+          <span class="pill-dot" aria-hidden="true"></span>
+          <span id="clock">Roma — 00:00</span>
+        </span>
       </div>
 
-      <div class="hero-scroll" aria-hidden="true">
-        <span>Scorri</span>
-        <div class="hero-scroll-line"></div>
+      <div class="hero-center">
+        <span class="eyebrow hero-eyebrow" data-anim="fade-up">Forza che non grida</span>
+        <h1 id="hero-title" class="hero-tagline" data-split-lines>
+          <span class="line"><span class="word">Forza</span> <span class="word">che</span> <span class="word">non</span></span>
+          <span class="line"><span class="word"><em>grida</em></span><span class="dot-accent">.</span></span>
+        </h1>
+      </div>
+
+      <a class="circle-cta hero-circle-cta" href="https://wa.me/393935896994" target="_blank" rel="noopener" data-cursor-hide>
+        <span class="circle-cta-label">
+          Prenota <span aria-hidden="true">→</span>
+        </span>
+      </a>
+
+      <div class="hero-name-wrap" aria-hidden="true">
+        <h2 class="hero-name" data-split-letters>GIORGIA PIRAS</h2>
       </div>
     </section>
+
+    <!-- ═══ MARQUEE ═══ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-set">
+          <span>Forza</span><span class="marquee-dot">•</span>
+          <span>Metodo</span><span class="marquee-dot">•</span>
+          <span>Ascolto</span><span class="marquee-dot">•</span>
+          <span>Disciplina</span><span class="marquee-dot">•</span>
+          <span>Crescita</span><span class="marquee-dot">•</span>
+        </div>
+        <div class="marquee-set">
+          <span>Forza</span><span class="marquee-dot">•</span>
+          <span>Metodo</span><span class="marquee-dot">•</span>
+          <span>Ascolto</span><span class="marquee-dot">•</span>
+          <span>Disciplina</span><span class="marquee-dot">•</span>
+          <span>Crescita</span><span class="marquee-dot">•</span>
+        </div>
+        <div class="marquee-set">
+          <span>Forza</span><span class="marquee-dot">•</span>
+          <span>Metodo</span><span class="marquee-dot">•</span>
+          <span>Ascolto</span><span class="marquee-dot">•</span>
+          <span>Disciplina</span><span class="marquee-dot">•</span>
+          <span>Crescita</span><span class="marquee-dot">•</span>
+        </div>
+      </div>
+    </div>
 
     <!-- ═══ CHI SONO ═══ -->
     <section id="chi-sono" class="chi-sono" aria-labelledby="chi-sono-title">
       <div class="container chi-sono-grid">
-        <figure class="chi-sono-figure reveal">
-          <img src="assets/chi-sono.png" alt="Giorgia Piras, personal trainer" loading="lazy">
+        <figure class="chi-sono-figure reveal-image">
+          <img src="assets/chi-sono.png" alt="Giorgia Piras, personal trainer a Roma" loading="lazy">
         </figure>
 
         <div class="chi-sono-text">
-          <span class="eyebrow reveal">Chi sono</span>
-          <h2 id="chi-sono-title" class="section-title reveal" style="--d:0.08s">Non faccio questo lavoro.<br>Lo vivo.</h2>
+          <span class="eyebrow" data-anim="fade-up">Chi sono <span class="eyebrow-num">01</span></span>
+          <h2 id="chi-sono-title" class="section-title" data-split-words>Non faccio questo lavoro. Lo vivo.</h2>
 
-          <p class="body-large reveal" style="--d:0.16s">
-            Sono una personal trainer, ma prima di tutto sono una persona che crede nel corpo come strumento di libertà. Il mio metodo nasce da anni di pratica, errori, studi e incontri — con donne che volevano tornare ad ascoltarsi, non solo a pesarsi.
-          </p>
+          <div class="chi-sono-body">
+            <p class="body-large" data-anim="fade-up">
+              Sono personal trainer, ma prima di tutto sono una che crede nel corpo come strumento di libertà. Il mio metodo nasce da anni di pratica, studi, errori — e dall'incontro con donne che volevano tornare ad ascoltarsi, non solo a pesarsi.
+            </p>
+            <p class="body-large" data-anim="fade-up">
+              Lavoro a Roma, di persona e online. Costruisco percorsi su misura, senza scorciatoie e senza promesse gridate. Il resto viene da solo.
+            </p>
+          </div>
 
-          <p class="body-large reveal" style="--d:0.24s">
-            Lavoro a Roma, di persona e online. Costruisco percorsi su misura, senza scorciatoie, senza promesse gridate. Ti insegno a muoverti, a mangiare, a riconoscerti. Il resto viene da solo.
-          </p>
-
-          <p class="chi-sono-note reveal" style="--d:0.32s">Founder di Weal House Community.</p>
+          <div class="chi-sono-sign" data-anim="fade-up">
+            <span class="sign-line" aria-hidden="true"></span>
+            <span class="sign-text">— Founder di Weal House Community</span>
+          </div>
         </div>
       </div>
     </section>
@@ -103,63 +160,93 @@
     <section id="servizi" class="servizi" aria-labelledby="servizi-title">
       <div class="container">
         <header class="section-header">
-          <span class="eyebrow reveal">Cosa offro</span>
-          <h2 id="servizi-title" class="section-title reveal" style="--d:0.08s">Tre modi di lavorare insieme.</h2>
+          <span class="eyebrow" data-anim="fade-up">Cosa offro <span class="eyebrow-num">02</span></span>
+          <h2 id="servizi-title" class="section-title" data-split-words>Tre vie, un metodo.</h2>
         </header>
 
-        <div class="servizi-grid">
-          <article class="servizio-card reveal" style="--d:0.12s">
+        <div class="servizi-grid" id="servizi-grid">
+          <article class="servizio-card" data-servizio="01" data-cursor-hover>
             <span class="servizio-num" aria-hidden="true">01</span>
-            <h3 class="servizio-title">Personal Training 1:1</h3>
-            <p class="servizio-desc">Allenamento in presenza, a Roma. Un'ora solo per te, tra Weal House e sessioni dedicate. Valutazione iniziale, piano tecnico, correzione costante.</p>
-            <a class="link-underline" href="https://wa.me/393935896994" target="_blank" rel="noopener">Scopri di più <span aria-hidden="true">→</span></a>
+            <span class="servizio-line" aria-hidden="true"></span>
+            <h3 class="servizio-title">Personal Training</h3>
+            <p class="servizio-desc">Un'ora, solo tua. In palestra a Roma. Valutazione iniziale, piano tecnico, correzione costante.</p>
+            <a class="link-underline" href="https://wa.me/393935896994" target="_blank" rel="noopener">
+              Scopri di più <span aria-hidden="true">→</span>
+            </a>
+            <span class="servizio-img" aria-hidden="true">
+              <img src="assets/weal-house.jpg" alt="" loading="lazy">
+            </span>
           </article>
 
-          <article class="servizio-card reveal" style="--d:0.2s">
+          <article class="servizio-card" data-servizio="02" data-cursor-hover>
             <span class="servizio-num" aria-hidden="true">02</span>
+            <span class="servizio-line" aria-hidden="true"></span>
             <h3 class="servizio-title">Coaching Online</h3>
-            <p class="servizio-desc">Ovunque tu sia. Scheda mensile personalizzata, check-in video, feedback continuo. Per chi vuole struttura e metodo senza vincoli geografici.</p>
-            <a class="link-underline" href="https://wa.me/393935896994" target="_blank" rel="noopener">Scopri di più <span aria-hidden="true">→</span></a>
+            <p class="servizio-desc">Metodo, ovunque tu sia. Scheda mensile personalizzata, check-in video, feedback continuo.</p>
+            <a class="link-underline" href="https://wa.me/393935896994" target="_blank" rel="noopener">
+              Scopri di più <span aria-hidden="true">→</span>
+            </a>
+            <span class="servizio-img" aria-hidden="true">
+              <img src="assets/chi-sono.png" alt="" loading="lazy">
+            </span>
           </article>
 
-          <article class="servizio-card reveal" style="--d:0.28s">
+          <article class="servizio-card" data-servizio="03" data-cursor-hover>
             <span class="servizio-num" aria-hidden="true">03</span>
+            <span class="servizio-line" aria-hidden="true"></span>
             <h3 class="servizio-title">Programmi Su Misura</h3>
-            <p class="servizio-desc">Per obiettivi specifici: ricomposizione, forza, recupero funzionale, preparazione eventi. Nulla di preconfezionato — il piano nasce da te.</p>
-            <a class="link-underline" href="https://wa.me/393935896994" target="_blank" rel="noopener">Scopri di più <span aria-hidden="true">→</span></a>
+            <p class="servizio-desc">Obiettivi precisi, piano preciso. Ricomposizione, forza, recupero, preparazione. Nulla di preconfezionato.</p>
+            <a class="link-underline" href="https://wa.me/393935896994" target="_blank" rel="noopener">
+              Scopri di più <span aria-hidden="true">→</span>
+            </a>
+            <span class="servizio-img" aria-hidden="true">
+              <img src="assets/risultato-1.png" alt="" loading="lazy">
+            </span>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- ═══ COME FUNZIONA (cream palette inversion) ═══ -->
+    <!-- ═══ VIDEO AMBIENT 2 ═══ -->
+    <section class="video-ambient" aria-label="Video ambient">
+      <video class="video-ambient-media" autoplay muted loop playsinline preload="metadata" poster="assets/risultato-2.png" aria-hidden="true">
+        <source src="assets/hero.mp4" type="video/mp4">
+      </video>
+      <div class="video-ambient-overlay" aria-hidden="true"></div>
+      <p class="video-ambient-caption" data-anim="fade-up">— Il metodo è nel movimento.</p>
+    </section>
+
+    <!-- ═══ COME FUNZIONA (palette invertita) ═══ -->
     <section id="come-funziona" class="come-funziona" aria-labelledby="come-funziona-title">
       <div class="container">
         <header class="section-header">
-          <span class="eyebrow reveal">Il percorso</span>
-          <h2 id="come-funziona-title" class="section-title reveal" style="--d:0.08s">Quattro passi,<br>una trasformazione.</h2>
+          <span class="eyebrow eyebrow--accent" data-anim="fade-up">Il percorso <span class="eyebrow-num">03</span></span>
+          <h2 id="come-funziona-title" class="section-title" data-split-words>Quattro passi, un percorso.</h2>
         </header>
 
         <ol class="steps">
-          <li class="step reveal" style="--d:0.12s">
+          <li class="step" data-step="01">
             <span class="step-num" aria-hidden="true">01</span>
+            <span class="step-connector" aria-hidden="true"></span>
             <h3 class="step-title">Parliamone</h3>
-            <p class="step-desc">Una call gratuita per capirci. Raccontami cosa cerchi, cosa hai provato, dove vuoi arrivare.</p>
+            <p class="step-desc">Una call. Senza impegno. Raccontami cosa cerchi.</p>
           </li>
-          <li class="step reveal" style="--d:0.2s">
+          <li class="step" data-step="02">
             <span class="step-num" aria-hidden="true">02</span>
+            <span class="step-connector" aria-hidden="true"></span>
             <h3 class="step-title">Il tuo piano</h3>
-            <p class="step-desc">Costruisco allenamenti e linee guida nutrizionali cuciti sul tuo corpo, sul tuo tempo, sulla tua vita.</p>
+            <p class="step-desc">Cucito sul tuo corpo, sul tuo tempo.</p>
           </li>
-          <li class="step reveal" style="--d:0.28s">
+          <li class="step" data-step="03">
             <span class="step-num" aria-hidden="true">03</span>
+            <span class="step-connector" aria-hidden="true"></span>
             <h3 class="step-title">Si lavora</h3>
-            <p class="step-desc">In palestra o online. Io osservo, correggo, aggiusto. Tu impari a sentire il tuo corpo con consapevolezza.</p>
+            <p class="step-desc">Insieme. In palestra o online. Io osservo, tu impari.</p>
           </li>
-          <li class="step reveal" style="--d:0.36s">
+          <li class="step" data-step="04">
             <span class="step-num" aria-hidden="true">04</span>
             <h3 class="step-title">Evolvi</h3>
-            <p class="step-desc">Il piano cambia con te. Ogni mese rivediamo, spingiamo, raffiniamo. Progredisci senza bruciarti.</p>
+            <p class="step-desc">Il piano cresce con te. Ogni mese rivediamo.</p>
           </li>
         </ol>
       </div>
@@ -169,24 +256,25 @@
     <section id="weal-house" class="weal" aria-labelledby="weal-title">
       <div class="container weal-grid">
         <div class="weal-text">
-          <span class="eyebrow reveal">Weal House</span>
-          <h2 id="weal-title" class="section-title reveal" style="--d:0.08s">La casa dove<br>tutto succede.</h2>
-          <p class="body-large reveal" style="--d:0.16s">
-            Weal House è lo spazio che ho fondato a Roma, in Via Michele Amari 51-55. Un centro dove corpo e mente trovano gli strumenti giusti — dal training funzionale alla cura osteopatica.
+          <span class="eyebrow" data-anim="fade-up">Weal House <span class="eyebrow-num">04</span></span>
+          <h2 id="weal-title" class="section-title" data-split-words>La casa dove tutto succede.</h2>
+          <p class="body-large" data-anim="fade-up">
+            Weal House è lo spazio che ho fondato a Roma, in Via Michele Amari 51–55. Un centro dove corpo e mente trovano gli strumenti giusti: training funzionale, calisthenics, pilates, cura nutrizionale e osteopatica.
           </p>
-          <ul class="weal-services reveal" style="--d:0.24s">
+          <ul class="weal-services" data-anim="fade-up">
             <li>Personal Training</li>
             <li>Calisthenics</li>
             <li>Pilates</li>
             <li>Nutrizionista</li>
             <li>Osteopata</li>
+            <li>Eventi</li>
           </ul>
-          <a class="link-underline reveal" href="https://wa.me/393935896994" target="_blank" rel="noopener" style="--d:0.32s">
+          <a class="link-underline weal-cta" href="https://wa.me/393935896994" target="_blank" rel="noopener" data-cursor-hover>
             Visita Weal House <span aria-hidden="true">→</span>
           </a>
         </div>
 
-        <figure class="weal-figure reveal" style="--d:0.12s">
+        <figure class="weal-figure reveal-image">
           <img src="assets/weal-house.jpg" alt="Interno di Weal House, Roma" loading="lazy">
         </figure>
       </div>
@@ -196,80 +284,60 @@
     <section id="trasformazioni" class="trasformazioni" aria-labelledby="trasf-title">
       <div class="container">
         <header class="section-header">
-          <span class="eyebrow reveal">Risultati reali</span>
-          <h2 id="trasf-title" class="section-title reveal" style="--d:0.08s">Cambiamenti che restano.</h2>
+          <span class="eyebrow" data-anim="fade-up">Risultati reali <span class="eyebrow-num">05</span></span>
+          <h2 id="trasf-title" class="section-title" data-split-words>Cambiamenti che restano.</h2>
         </header>
 
         <div class="trasf-grid">
-          <article class="trasf-card reveal" style="--d:0.12s">
-            <figure class="trasf-figure">
+          <article class="trasf-card">
+            <figure class="trasf-figure reveal-image">
               <img src="assets/risultato-1.png" alt="Trasformazione Cliente A" loading="lazy">
             </figure>
             <div class="trasf-meta">
               <h3 class="trasf-name">Cliente A</h3>
-              <p class="trasf-duration">Percorso di 6 mesi</p>
-              <p class="trasf-result">Ricomposizione corporea e ritrovata costanza.</p>
+              <p class="trasf-duration">6 mesi</p>
+              <p class="trasf-result">Ricomposizione corporea e costanza ritrovata.</p>
             </div>
           </article>
 
-          <article class="trasf-card reveal" style="--d:0.2s">
-            <figure class="trasf-figure">
+          <article class="trasf-card">
+            <figure class="trasf-figure reveal-image">
               <img src="assets/risultato-2.png" alt="Trasformazione Cliente B" loading="lazy">
             </figure>
             <div class="trasf-meta">
               <h3 class="trasf-name">Cliente B</h3>
-              <p class="trasf-duration">Percorso di 4 mesi</p>
-              <p class="trasf-result">Forza, tono e nuova relazione con il cibo.</p>
-            </div>
-          </article>
-
-          <article class="trasf-card reveal trasf-placeholder" style="--d:0.28s" aria-label="Trasformazione placeholder">
-            <div class="trasf-figure trasf-figure--placeholder" aria-hidden="true"></div>
-            <div class="trasf-meta">
-              <h3 class="trasf-name">Cliente C</h3>
-              <p class="trasf-duration">Percorso di 8 mesi</p>
-              <p class="trasf-result">Recupero funzionale dopo infortunio.</p>
-            </div>
-          </article>
-
-          <article class="trasf-card reveal trasf-placeholder" style="--d:0.36s" aria-label="Trasformazione placeholder">
-            <div class="trasf-figure trasf-figure--placeholder" aria-hidden="true"></div>
-            <div class="trasf-meta">
-              <h3 class="trasf-name">Cliente D</h3>
-              <p class="trasf-duration">Percorso di 12 mesi</p>
-              <p class="trasf-result">Preparazione atletica e benessere continuo.</p>
+              <p class="trasf-duration">4 mesi</p>
+              <p class="trasf-result">Forza, tono, nuova relazione con il cibo.</p>
             </div>
           </article>
         </div>
+        <!-- TODO: aggiungere altre card quando disponibili foto reali -->
       </div>
     </section>
 
     <!-- ═══ TESTIMONIANZE ═══ -->
-    <!-- PLACEHOLDER: sostituire con testimonianze reali -->
     <section id="testimonianze" class="testimonianze" aria-labelledby="test-title">
       <div class="container">
         <header class="section-header">
-          <span class="eyebrow reveal">Parole</span>
-          <h2 id="test-title" class="section-title reveal" style="--d:0.08s">Chi è passato di qui.</h2>
+          <span class="eyebrow" data-anim="fade-up">Parole <span class="eyebrow-num">06</span></span>
+          <h2 id="test-title" class="section-title" data-split-words>Chi è passato di qui.</h2>
         </header>
 
         <div class="test-grid">
-          <!-- PLACEHOLDER: sostituire con testimonianza reale -->
-          <figure class="test-card reveal" style="--d:0.12s">
+          <!-- PLACEHOLDER: sostituire con testimonianze reali di Giorgia -->
+          <figure class="test-card" data-cursor-hover>
             <span class="test-quote-mark" aria-hidden="true">&#8220;</span>
             <blockquote class="test-quote">[testimonianza da inserire]</blockquote>
             <figcaption class="test-author">[Nome Cliente]</figcaption>
           </figure>
 
-          <!-- PLACEHOLDER: sostituire con testimonianza reale -->
-          <figure class="test-card reveal" style="--d:0.2s">
+          <figure class="test-card" data-cursor-hover>
             <span class="test-quote-mark" aria-hidden="true">&#8220;</span>
             <blockquote class="test-quote">[testimonianza da inserire]</blockquote>
             <figcaption class="test-author">[Nome Cliente]</figcaption>
           </figure>
 
-          <!-- PLACEHOLDER: sostituire con testimonianza reale -->
-          <figure class="test-card reveal" style="--d:0.28s">
+          <figure class="test-card" data-cursor-hover>
             <span class="test-quote-mark" aria-hidden="true">&#8220;</span>
             <blockquote class="test-quote">[testimonianza da inserire]</blockquote>
             <figcaption class="test-author">[Nome Cliente]</figcaption>
@@ -282,19 +350,18 @@
     <section id="calcolatore" class="calcolatore" aria-labelledby="calc-title">
       <div class="container">
         <header class="section-header">
-          <span class="eyebrow reveal">Regalo per te</span>
-          <h2 id="calc-title" class="section-title reveal" style="--d:0.08s">Scopri i tuoi macro.</h2>
-          <p class="section-sub reveal" style="--d:0.16s">Un punto di partenza. Il tuo piano reale lo costruiamo insieme.</p>
+          <span class="eyebrow" data-anim="fade-up">Strumento utile <span class="eyebrow-num">07</span></span>
+          <h2 id="calc-title" class="section-title" data-split-words>Scopri i tuoi macro.</h2>
+          <p class="section-sub" data-anim="fade-up">Un punto di partenza. Il piano vero, insieme.</p>
         </header>
 
         <div class="calc-grid">
           <form class="calc-form" id="calc-form" autocomplete="off" novalidate>
-
             <fieldset class="calc-field">
               <legend class="calc-label">Sesso</legend>
               <div class="calc-pills">
-                <button type="button" class="pill active" data-mc="gender" data-val="F">Donna</button>
-                <button type="button" class="pill" data-mc="gender" data-val="M">Uomo</button>
+                <button type="button" class="pill-btn active" data-mc="gender" data-val="F">Donna</button>
+                <button type="button" class="pill-btn" data-mc="gender" data-val="M">Uomo</button>
               </div>
             </fieldset>
 
@@ -325,22 +392,21 @@
             <fieldset class="calc-field">
               <legend class="calc-label">Livello di attività</legend>
               <div class="calc-pills calc-pills--wrap">
-                <button type="button" class="pill" data-mc="activity" data-val="1.2">Sedentaria</button>
-                <button type="button" class="pill active" data-mc="activity" data-val="1.375">Poco attiva</button>
-                <button type="button" class="pill" data-mc="activity" data-val="1.55">Moderata</button>
-                <button type="button" class="pill" data-mc="activity" data-val="1.725">Molto attiva</button>
+                <button type="button" class="pill-btn" data-mc="activity" data-val="1.2">Sedentaria</button>
+                <button type="button" class="pill-btn active" data-mc="activity" data-val="1.375">Poco attiva</button>
+                <button type="button" class="pill-btn" data-mc="activity" data-val="1.55">Moderata</button>
+                <button type="button" class="pill-btn" data-mc="activity" data-val="1.725">Molto attiva</button>
               </div>
             </fieldset>
 
             <fieldset class="calc-field">
               <legend class="calc-label">Obiettivo</legend>
               <div class="calc-pills">
-                <button type="button" class="pill" data-mc="goal" data-val="cut">Dimagrire</button>
-                <button type="button" class="pill active" data-mc="goal" data-val="maintain">Mantenere</button>
-                <button type="button" class="pill" data-mc="goal" data-val="bulk">Aumentare</button>
+                <button type="button" class="pill-btn" data-mc="goal" data-val="cut">Dimagrire</button>
+                <button type="button" class="pill-btn active" data-mc="goal" data-val="maintain">Mantenere</button>
+                <button type="button" class="pill-btn" data-mc="goal" data-val="bulk">Aumentare</button>
               </div>
             </fieldset>
-
           </form>
 
           <aside class="calc-result" aria-live="polite">
@@ -366,7 +432,7 @@
 
             <p class="calc-disclaimer">Valori indicativi (formula Mifflin-St Jeor). Un piano cucito su di te lo costruiamo insieme.</p>
 
-            <a class="btn-primary btn-primary--outline" href="https://wa.me/393935896994" target="_blank" rel="noopener">
+            <a class="link-underline" href="https://wa.me/393935896994" target="_blank" rel="noopener" data-cursor-hover>
               Voglio un piano vero <span aria-hidden="true">→</span>
             </a>
           </aside>
@@ -377,10 +443,12 @@
     <!-- ═══ CTA FINALE ═══ -->
     <section id="contatti" class="final-cta" aria-labelledby="final-title">
       <div class="final-cta-inner">
-        <h2 id="final-title" class="final-title reveal">Iniziamo?</h2>
-        <p class="final-sub reveal" style="--d:0.12s">WhatsApp è il modo più veloce per parlare.</p>
-        <a class="btn-primary btn-primary--large reveal" href="https://wa.me/393935896994" target="_blank" rel="noopener" style="--d:0.24s">
-          Scrivi su WhatsApp <span aria-hidden="true">→</span>
+        <span class="eyebrow eyebrow--accent" data-anim="fade-up">— Contatti</span>
+        <h2 id="final-title" class="final-title" data-split-words>Iniziamo?</h2>
+        <p class="final-sub" data-anim="fade-up">WhatsApp è il modo più veloce per parlarmi.</p>
+
+        <a class="circle-cta circle-cta--xl final-circle" href="https://wa.me/393935896994" target="_blank" rel="noopener" data-cursor-hide>
+          <span class="circle-cta-label">Scrivi su<br>WhatsApp <span aria-hidden="true">→</span></span>
         </a>
       </div>
     </section>
@@ -390,24 +458,39 @@
   <!-- ═══ FOOTER ═══ -->
   <footer class="footer">
     <div class="container footer-inner">
-      <div class="footer-brand">
-        <p class="footer-logo">GIORGIA PIRAS</p>
+      <div class="footer-col">
+        <p class="footer-brand">Giorgia Piras</p>
         <p class="footer-tag">Personal Trainer · Roma</p>
       </div>
 
-      <div class="footer-right">
-        <a class="footer-link" href="https://www.instagram.com/giorgiapirassss/" target="_blank" rel="noopener">Instagram</a>
-        <p class="footer-credit">Sito realizzato da <a href="https://transiva.it" target="_blank" rel="noopener">Transiva</a></p>
+      <nav class="footer-col footer-nav" aria-label="Footer nav">
+        <a href="#servizi" data-cursor-hover>Servizi</a>
+        <a href="#chi-sono" data-cursor-hover>Chi sono</a>
+        <a href="#weal-house" data-cursor-hover>Weal House</a>
+        <a href="#contatti" data-cursor-hover>Contatti</a>
+      </nav>
+
+      <div class="footer-col footer-meta">
+        <a class="footer-social" href="https://www.instagram.com/lapiras93/" target="_blank" rel="noopener" data-cursor-hover>Instagram — @lapiras93</a>
+        <a class="footer-mail" href="mailto:ciao@lapiras.it" data-cursor-hover>ciao@lapiras.it</a>
+        <p class="footer-credit">Sito by <a href="https://transiva.it" target="_blank" rel="noopener" data-cursor-hover>Transiva</a></p>
       </div>
     </div>
   </footer>
 
   <!-- ═══ COOKIE BANNER ═══ -->
   <aside id="cookie-banner" class="cookie-banner" role="dialog" aria-label="Informativa cookie" hidden>
-    <p class="cookie-text">Usiamo cookie tecnici per far funzionare il sito. Nessun tracciamento pubblicitario.</p>
-    <button type="button" class="cookie-btn" id="cookie-accept">Ho capito</button>
+    <p class="cookie-text">Usiamo cookie tecnici essenziali. Nessun tracciamento.</p>
+    <button type="button" class="cookie-btn" id="cookie-accept" data-cursor-hover>
+      Ho capito
+      <span class="cookie-btn-underline" aria-hidden="true"></span>
+    </button>
   </aside>
 
-  <script src="script.js" defer></script>
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.42/bundled/lenis.min.js" defer></script>
+  <script src="scripts.js" defer></script>
 </body>
 </html>
