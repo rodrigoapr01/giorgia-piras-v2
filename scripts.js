@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════
-   GIORGIA PIRAS V3 — Editorial · Interactions
+   GIORGIA PIRAS V3.1 — Interactions (simplified)
    GSAP + ScrollTrigger + Lenis via CDN
    ════════════════════════════════════════════════════════════ */
 
@@ -16,7 +16,6 @@
     if (document.readyState !== 'loading') fn();
     else document.addEventListener('DOMContentLoaded', fn);
   }
-
   function loaded(fn) {
     if (document.readyState === 'complete') fn();
     else window.addEventListener('load', fn, { once: true });
@@ -27,22 +26,16 @@
     if (!el || el.dataset.splitDone) return [];
     const text = el.textContent;
     el.textContent = '';
-    const words = text.split(/(\s+)/);
     const nodes = [];
-    words.forEach(tok => {
+    text.split(/(\s+)/).forEach(tok => {
       if (/^\s+$/.test(tok)) {
         el.appendChild(document.createTextNode(' '));
       } else {
-        const wrap = document.createElement('span');
-        wrap.className = 'word-mask';
-        wrap.style.display = 'inline-block';
-        wrap.style.overflow = 'hidden';
-        wrap.style.verticalAlign = 'bottom';
         const word = document.createElement('span');
         word.className = 'word';
+        word.style.display = 'inline-block';
         word.textContent = tok;
-        wrap.appendChild(word);
-        el.appendChild(wrap);
+        el.appendChild(word);
         nodes.push(word);
       }
     });
@@ -60,16 +53,11 @@
         el.appendChild(document.createTextNode(' '));
         return;
       }
-      const wrap = document.createElement('span');
-      wrap.className = 'char-mask';
-      wrap.style.display = 'inline-block';
-      wrap.style.overflow = 'hidden';
-      wrap.style.verticalAlign = 'bottom';
       const c = document.createElement('span');
       c.className = 'char';
+      c.style.display = 'inline-block';
       c.textContent = ch;
-      wrap.appendChild(c);
-      el.appendChild(wrap);
+      el.appendChild(c);
       chars.push(c);
     });
     el.dataset.splitDone = '1';
@@ -123,16 +111,11 @@
     }
     requestAnimationFrame(raf);
 
-    // hover states
-    function bind(selector) {
-      $$(selector).forEach(n => {
-        n.addEventListener('mouseenter', () => el.classList.add('is-hover'));
-        n.addEventListener('mouseleave', () => el.classList.remove('is-hover'));
-      });
-    }
-    bind('a, button, [data-cursor-hover]');
+    $$('a, button, [data-cursor-hover]').forEach(n => {
+      n.addEventListener('mouseenter', () => el.classList.add('is-hover'));
+      n.addEventListener('mouseleave', () => el.classList.remove('is-hover'));
+    });
 
-    // Hide cursor over circular CTAs (they have their own visual)
     $$('[data-cursor-hide]').forEach(n => {
       n.addEventListener('mouseenter', () => el.classList.add('is-hidden'));
       n.addEventListener('mouseleave', () => el.classList.remove('is-hidden'));
@@ -163,7 +146,6 @@
       gsap.ticker.lagSmoothing(0);
     }
 
-    // anchor links
     document.addEventListener('click', (e) => {
       const a = e.target.closest('a[href^="#"]');
       if (!a) return;
@@ -217,28 +199,27 @@
   /* ─── GSAP SCROLL ANIMATIONS ─── */
   ready(() => {
     if (!window.gsap || !window.ScrollTrigger) {
-      // Graceful fallback: show everything
-      $$('[data-anim]').forEach(el => el.classList.add('is-in'));
-      $$('.reveal-image').forEach(el => el.classList.add('is-in'));
+      // Graceful fallback
+      $$('[data-anim]').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
       $$('[data-split-words]').forEach(splitIntoWords);
       return;
     }
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // Split titles into words, wrap in masks
+    // 1) Section titles — split by word, fade + y(40 → 0), stagger 0.08s
     $$('[data-split-words]').forEach(el => {
       const words = splitIntoWords(el);
       if (!words.length) return;
-      gsap.set(words, { yPercent: 110, opacity: 1 });
-
+      gsap.set(words, { opacity: 0, y: 40 });
       ScrollTrigger.create({
         trigger: el,
         start: 'top 85%',
         once: true,
         onEnter: () => {
           gsap.to(words, {
-            yPercent: 0,
+            opacity: 1,
+            y: 0,
             duration: 0.9,
             ease: 'power3.out',
             stagger: 0.08,
@@ -247,134 +228,92 @@
       });
     });
 
-    // Hero tagline words (already split in HTML) — lift on load
-    const heroWords = $$('.hero-tagline .word');
-    const heroDot = $('.hero-tagline .dot-accent');
-    const heroLines = $$('.hero-tagline .line');
-    if (heroLines.length) heroLines.forEach(l => l.style.overflow = 'hidden');
-    if (heroWords.length && !reducedMotion) {
-      gsap.set(heroWords, { yPercent: 110 });
-      if (heroDot) gsap.set(heroDot, { scale: 0, transformOrigin: 'left bottom' });
-    }
-
-    // Data-anim generic fades (exclude hero items)
+    // 2) Body text — fade + y(20 → 0), delay 0.15s
     $$('[data-anim]').forEach(el => {
-      const inHero = el.closest('.hero');
-      if (inHero) return;
-      const dir = el.dataset.anim;
-      const from = {
-        opacity: 0,
-        y: dir === 'fade-down' ? -16 : 24,
-      };
-      gsap.set(el, from);
+      if (el.closest('.hero')) return; // hero handled at load
+      gsap.set(el, { opacity: 0, y: el.dataset.anim === 'fade-down' ? -16 : 20 });
       ScrollTrigger.create({
         trigger: el,
         start: 'top 90%',
         once: true,
         onEnter: () => {
-          gsap.to(el, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', delay: 0.05 });
-          el.classList.add('is-in');
+          gsap.to(el, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', delay: 0.15 });
         }
       });
     });
 
-    // Image reveal (clip-path) — handled via CSS transition + .is-in class
-    $$('.reveal-image').forEach(el => {
+    // 3) Big numbers (01, 02, 03, 04) — fade + y(30 → 0), stagger across cards
+    const serviziNums = $$('.servizio-num');
+    if (serviziNums.length) {
+      gsap.set(serviziNums, { opacity: 0, y: 30 });
       ScrollTrigger.create({
-        trigger: el,
-        start: 'top 80%',
-        once: true,
-        onEnter: () => el.classList.add('is-in'),
-      });
-    });
-
-    // Service numbers scale-in + card body fade
-    $$('.servizio-card').forEach(card => {
-      const num = card.querySelector('.servizio-num');
-      const line = card.querySelector('.servizio-line');
-      const rest = card.querySelectorAll('.servizio-title, .servizio-desc, .link-underline');
-      gsap.set(num, { opacity: 0, scale: 0.7 });
-      gsap.set(line, { scaleX: 0, transformOrigin: 'left' });
-      gsap.set(rest, { opacity: 0, y: 20 });
-
-      ScrollTrigger.create({
-        trigger: card,
+        trigger: '.servizi-grid',
         start: 'top 82%',
         once: true,
-        onEnter: () => {
-          const tl = gsap.timeline();
-          tl.to(num, { opacity: 1, scale: 1, duration: 1, ease: 'power3.out' })
-            .to(line, { scaleX: 1, duration: 0.8, ease: 'power3.inOut' }, '-=0.55')
-            .to(rest, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08 }, '-=0.5');
-        }
+        onEnter: () => gsap.to(serviziNums, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08 }),
+      });
+    }
+
+    const stepNums = $$('.step-num');
+    if (stepNums.length) {
+      gsap.set(stepNums, { opacity: 0, y: 30 });
+      ScrollTrigger.create({
+        trigger: '.steps',
+        start: 'top 85%',
+        once: true,
+        onEnter: () => gsap.to(stepNums, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.08 }),
+      });
+    }
+
+    // Servizio & step body text — fade + y(20) with small delay after numbers
+    $$('.servizio-card').forEach((card, i) => {
+      const body = card.querySelectorAll('.servizio-title, .servizio-desc, .link-underline');
+      gsap.set(body, { opacity: 0, y: 20 });
+      ScrollTrigger.create({
+        trigger: card,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => gsap.to(body, {
+          opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.2 + i * 0.05, stagger: 0.06,
+        }),
       });
     });
 
-    // Step numbers + text
     $$('.step').forEach((step, i) => {
-      const num = step.querySelector('.step-num');
-      const title = step.querySelector('.step-title');
-      const desc = step.querySelector('.step-desc');
-      const conn = step.querySelector('.step-connector');
-      gsap.set(num, { opacity: 0, y: 30 });
-      gsap.set([title, desc], { opacity: 0, y: 18 });
-      if (conn) gsap.set(conn, { scaleX: 0, transformOrigin: 'left' });
-
+      const body = step.querySelectorAll('.step-title, .step-desc');
+      gsap.set(body, { opacity: 0, y: 20 });
       ScrollTrigger.create({
         trigger: step,
         start: 'top 88%',
         once: true,
-        onEnter: () => {
-          const tl = gsap.timeline();
-          tl.to(num, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' })
-            .to([title, desc], { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.08 }, '-=0.35');
-          if (conn) tl.to(conn, { scaleX: 1, duration: 0.6, ease: 'power3.inOut' }, '-=0.3');
-        }
+        onEnter: () => gsap.to(body, {
+          opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.2 + i * 0.04, stagger: 0.06,
+        }),
       });
     });
 
-    // Test cards fade
-    $$('.test-card').forEach((card, i) => {
-      gsap.set(card, { opacity: 0, y: 30 });
+    // Trasformation meta + test card + weal services — fade + y(20) as body
+    const genericBody = [
+      ...$$('.trasf-meta'),
+      ...$$('.test-card'),
+      ...$$('.weal-services li'),
+    ];
+    genericBody.forEach(el => {
+      gsap.set(el, { opacity: 0, y: 20 });
       ScrollTrigger.create({
-        trigger: card,
-        start: 'top 88%',
+        trigger: el,
+        start: 'top 90%',
         once: true,
-        onEnter: () => gsap.to(card, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: i * 0.08 })
+        onEnter: () => gsap.to(el, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.15 }),
       });
     });
 
-    // Trasformation cards
-    $$('.trasf-card').forEach((card, i) => {
-      const meta = card.querySelector('.trasf-meta');
-      if (!meta) return;
-      gsap.set(meta, { opacity: 0, y: 20 });
-      ScrollTrigger.create({
-        trigger: card,
-        start: 'top 85%',
-        once: true,
-        onEnter: () => gsap.to(meta, { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.25 + i * 0.1 })
-      });
-    });
-
-    // Weal services list stagger
-    const wealServices = $$('.weal-services li');
-    if (wealServices.length) {
-      gsap.set(wealServices, { opacity: 0, y: 14 });
-      ScrollTrigger.create({
-        trigger: '.weal-services',
-        start: 'top 85%',
-        once: true,
-        onEnter: () => gsap.to(wealServices, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.06 })
-      });
-    }
-
-    // HERO NAME — letter entrance + scroll parallax
+    // Prepare hero name letters
     const nameEl = $('.hero-name');
     if (nameEl) {
       const chars = splitIntoLetters(nameEl);
       if (!reducedMotion && chars.length) {
-        gsap.set(chars, { yPercent: 110 });
+        gsap.set(chars, { yPercent: 100 });
       }
     }
   });
@@ -383,22 +322,25 @@
   loaded(() => {
     if (!window.gsap) return;
 
-    const heroWords = $$('.hero-tagline .word');
-    const heroDot = $('.hero-tagline .dot-accent');
     const heroEyebrow = $('.hero-eyebrow');
     const heroPills = $$('.hero-top .pill');
     const heroCTA = $('.hero-circle-cta');
     const nameChars = $$('.hero-name .char');
+    const heroTagline = $('.hero-tagline');
+    const heroTaglineWords = heroTagline ? (() => {
+      // Words are already wrapped inline in HTML as .word — if not, split textContent
+      const existing = $$('.word', heroTagline);
+      return existing;
+    })() : [];
+    const heroDot = $('.hero-tagline .dot-accent');
 
-    const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    // Pills tiny fade
     if (heroPills.length) {
       gsap.set(heroPills, { opacity: 0, y: -12 });
-      tl.to(heroPills, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1 }, 0.2);
+      tl.to(heroPills, { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 }, 0.2);
     }
 
-    // Eyebrow
     if (heroEyebrow && !reducedMotion) {
       gsap.set(heroEyebrow, { opacity: 0, y: 20 });
       tl.to(heroEyebrow, { opacity: 1, y: 0, duration: 0.7 }, 0.4);
@@ -406,53 +348,35 @@
       heroEyebrow.style.opacity = '1';
     }
 
-    // Tagline words
-    if (heroWords.length && !reducedMotion) {
-      tl.to(heroWords, {
-        yPercent: 0,
-        duration: 0.9,
-        stagger: 0.08,
-      }, 0.55);
+    if (heroTaglineWords.length && !reducedMotion) {
+      gsap.set(heroTaglineWords, { opacity: 0, y: 40 });
+      tl.to(heroTaglineWords, { opacity: 1, y: 0, duration: 0.9, stagger: 0.08 }, 0.55);
+    } else if (heroTaglineWords.length) {
+      gsap.set(heroTaglineWords, { opacity: 1, y: 0 });
     }
 
-    // Accent dot pop
     if (heroDot && !reducedMotion) {
-      tl.to(heroDot, { scale: 1, duration: 0.5, ease: 'back.out(2)' }, 1.1);
+      gsap.set(heroDot, { opacity: 0 });
+      tl.to(heroDot, { opacity: 1, duration: 0.4 }, 1.1);
     }
 
-    // CTA
     if (heroCTA && !reducedMotion) {
-      gsap.set(heroCTA, { opacity: 0, scale: 0.85 });
-      tl.to(heroCTA, { opacity: 1, scale: 1, duration: 0.9 }, 1.0);
+      gsap.set(heroCTA, { opacity: 0, scale: 0.9 });
+      tl.to(heroCTA, { opacity: 1, scale: 1, duration: 0.8 }, 1.0);
     }
 
-    // Hero name — letters one by one from below
+    // Hero name — letter-by-letter, y 100% → 0, stagger 0.04s
     if (nameChars.length && !reducedMotion) {
       tl.to(nameChars, {
         yPercent: 0,
         duration: 0.8,
-        stagger: 0.035,
-      }, 0.8);
+        ease: 'power4.out',
+        stagger: 0.04,
+      }, 0.75);
     } else if (nameChars.length) {
       gsap.set(nameChars, { yPercent: 0 });
     }
 
-    // Scroll parallax for hero name — moves SLOWER than scroll (x-offset horizontally on scroll)
-    if (window.ScrollTrigger && !reducedMotion) {
-      gsap.to('.hero-name', {
-        xPercent: -3,
-        yPercent: 30,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.hero',
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        }
-      });
-    }
-
-    // Refresh ScrollTrigger once everything settles
     if (window.ScrollTrigger) ScrollTrigger.refresh();
   });
 
@@ -471,54 +395,6 @@
         setTimeout(() => r.remove(), 700);
       });
     });
-  }());
-
-  /* ─── SERVIZI HOVER REVEAL ─── */
-  (function serviziHover() {
-    if (isTouch) return;
-    const grid = $('#servizi-grid');
-    if (!grid) return;
-
-    const images = $$('.servizio-img', grid);
-    let active = null;
-    let tx = 0, ty = 0;
-    let cx = 0, cy = 0;
-    let rafId = null;
-
-    function loop() {
-      cx += (tx - cx) * 0.12;
-      cy += (ty - cy) * 0.12;
-      if (active) {
-        active.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
-      }
-      rafId = requestAnimationFrame(loop);
-    }
-
-    function onMove(e) {
-      tx = e.clientX - 190;
-      ty = e.clientY - 240;
-      if (!rafId) loop();
-    }
-
-    $$('.servizio-card', grid).forEach(card => {
-      const img = card.querySelector('.servizio-img');
-
-      card.addEventListener('mouseenter', () => {
-        images.forEach(i => i.classList.remove('servizio-img--active'));
-        img.classList.add('servizio-img--active');
-        active = img;
-        grid.classList.add('is-hovering');
-      });
-      card.addEventListener('mouseleave', () => {
-        img.classList.remove('servizio-img--active');
-        grid.classList.remove('is-hovering');
-        active = null;
-        cancelAnimationFrame(rafId);
-        rafId = null;
-      });
-    });
-
-    window.addEventListener('mousemove', onMove, { passive: true });
   }());
 
   /* ─── MACRO CALCULATOR ─── */
@@ -631,7 +507,7 @@
     });
   }());
 
-  /* ─── HERO VIDEO pause offscreen ─── */
+  /* ─── VIDEO: pause offscreen for perf (no scroll-bound animation) ─── */
   (function videoPerf() {
     if (!('IntersectionObserver' in window)) return;
     $$('.hero-video, .video-ambient-media').forEach(v => {
