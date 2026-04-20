@@ -327,6 +327,54 @@
     });
   }());
 
+  /* ─── BEFORE/AFTER COMPARISON SLIDER ─── */
+  (function comparison() {
+    const container = document.getElementById('comparisonContainer');
+    const slider    = document.getElementById('comparisonSlider');
+    if (!container || !slider) return;
+    const afterDiv  = container.querySelector('.comparison__after');
+    if (!afterDiv) return;
+
+    let dragging = false;
+
+    const setPos = (clientX) => {
+      const rect = container.getBoundingClientRect();
+      const pct  = Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100));
+      slider.style.left    = pct + '%';
+      afterDiv.style.width = pct + '%';
+    };
+
+    // Mouse
+    container.addEventListener('mousedown', (e) => {
+      dragging = true;
+      setPos(e.clientX);
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', (e) => { if (dragging) setPos(e.clientX); });
+    window.addEventListener('mouseup',   () => { dragging = false; });
+
+    // Touch
+    container.addEventListener('touchstart', (e) => {
+      dragging = true;
+      setPos(e.touches[0].clientX);
+    }, { passive: true });
+    container.addEventListener('touchmove', (e) => {
+      if (dragging) setPos(e.touches[0].clientX);
+    }, { passive: true });
+    container.addEventListener('touchend', () => { dragging = false; });
+
+    // Keyboard a11y
+    container.tabIndex = 0;
+    container.addEventListener('keydown', (e) => {
+      const rect = container.getBoundingClientRect();
+      const current = parseFloat(afterDiv.style.width) || 50;
+      if (e.key === 'ArrowLeft')  setPos(rect.left + rect.width * Math.max(0,   current - 5) / 100);
+      if (e.key === 'ArrowRight') setPos(rect.left + rect.width * Math.min(100, current + 5) / 100);
+      if (e.key === 'Home')       setPos(rect.left);
+      if (e.key === 'End')        setPos(rect.left + rect.width);
+    });
+  }());
+
   /* ─── VIDEO: pause offscreen for perf ─── */
   (function videoPerf() {
     if (!('IntersectionObserver' in window)) return;

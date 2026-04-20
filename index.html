@@ -224,33 +224,35 @@
     <!-- ═══ TRASFORMAZIONI ═══ -->
     <section id="trasformazioni" class="trasformazioni" aria-labelledby="trasf-title">
       <div class="container">
-        <header class="section-header">
-          <span class="eyebrow" data-anim="fade-up">Risultati reali <span class="eyebrow-num">05</span></span>
-          <h2 id="trasf-title" class="section-title" data-split-words>Cambiamenti che restano.</h2>
+        <header class="section-header section__header">
+          <span class="eyebrow">Trasformazioni <span aria-hidden="true">—</span> <span class="eyebrow-num">05</span></span>
+          <h2 id="trasf-title" class="section-title section__title">Cambiamenti che restano.</h2>
+          <p class="section__intro">Risultati reali, raggiunti con metodo, costanza e dedizione.</p>
         </header>
 
-        <div class="trasf-grid">
-          <article class="trasf-card">
-            <figure class="trasf-figure reveal-image">
-              <img src="assets/risultato-1.png" alt="Trasformazione Cliente A" loading="lazy">
-            </figure>
-            <div class="trasf-meta">
-              <h3 class="trasf-name">Cliente A</h3>
-              <p class="trasf-duration">6 mesi</p>
-              <p class="trasf-result">Ricomposizione corporea e costanza ritrovata.</p>
+        <div class="comparison">
+          <div class="comparison__container" id="comparisonContainer" role="img" aria-label="Confronto prima / dopo del percorso di trasformazione">
+            <img class="comparison__image comparison__image--before" src="assets/risultato-1.png" alt="Prima del percorso">
+            <div class="comparison__after" aria-hidden="true">
+              <img class="comparison__image comparison__image--after" src="assets/risultato-2.png" alt="Dopo il percorso">
             </div>
-          </article>
 
-          <article class="trasf-card">
-            <figure class="trasf-figure reveal-image">
-              <img src="assets/risultato-2.png" alt="Trasformazione Cliente B" loading="lazy">
-            </figure>
-            <div class="trasf-meta">
-              <h3 class="trasf-name">Cliente B</h3>
-              <p class="trasf-duration">4 mesi</p>
-              <p class="trasf-result">Forza, tono, nuova relazione con il cibo.</p>
+            <span class="comparison__label comparison__label--before">Prima</span>
+            <span class="comparison__label comparison__label--after">Dopo</span>
+
+            <div class="comparison__slider" id="comparisonSlider" aria-hidden="true">
+              <div class="comparison__handle">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M6 3L2 8L6 13M10 3L14 8L10 13" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
             </div>
-          </article>
+          </div>
+
+          <div class="comparison__meta">
+            <span>Cliente <span aria-hidden="true">—</span> percorso di 6 mesi</span>
+            <span>Ricomposizione corporea e costanza ritrovata</span>
+          </div>
         </div>
       </div>
     </section>
