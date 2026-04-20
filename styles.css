@@ -957,11 +957,13 @@ html.cursor-ready .cursor { display: block; }
   overflow: hidden;
   transition: width 0.05s linear;
   will-change: width;
-}
-.comparison__after .comparison__image {
-  /* double width so the "after" image is not stretched when the reveal shrinks */
-  width: 200%;
-  object-position: left center;
+  /* background-size is pinned to the OUTER container width (set by JS as
+     --comparison-width) so the after-image never stretches or rescales
+     when this reveal div shrinks or grows. */
+  background-size: var(--comparison-width, 100%) 100%;
+  background-position: left center;
+  background-repeat: no-repeat;
+  filter: saturate(0.9);
 }
 
 .comparison__label {

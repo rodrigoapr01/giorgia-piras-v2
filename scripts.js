@@ -337,6 +337,20 @@
 
     let dragging = false;
 
+    // Pin the after-image background-size to the OUTER container width.
+    // This prevents the background from scaling when .comparison__after shrinks.
+    const syncWidthVar = () => {
+      const rect = container.getBoundingClientRect();
+      container.style.setProperty('--comparison-width', rect.width + 'px');
+    };
+    syncWidthVar();
+
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(syncWidthVar).observe(container);
+    } else {
+      window.addEventListener('resize', syncWidthVar, { passive: true });
+    }
+
     const setPos = (clientX) => {
       const rect = container.getBoundingClientRect();
       const pct  = Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100));
