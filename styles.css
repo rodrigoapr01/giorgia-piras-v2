@@ -1375,23 +1375,16 @@ input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px 
 .cookie-btn:hover .cookie-btn-underline { background: var(--accent); }
 
 /* ════════ ANIMATION HELPERS ════════ */
-[data-anim] {
-  opacity: 0;
-  will-change: opacity, transform;
-}
-[data-anim="fade-up"] { transform: translateY(24px); }
-[data-anim="fade-down"] { transform: translateY(-16px); }
-
-.is-in [data-anim],
-[data-anim].is-in {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-[data-split-lines] .word,
-[data-split-words] .word,
-[data-split-letters] .char {
-  display: inline-block;
+/* Scroll-reveal removed — text is visible by default. Safety rule below
+   forces visibility on text across all non-hero sections so no inline style
+   or residual animation can hide them. Hero retains its one-shot intro. */
+section:not(.hero) :is(h1, h2, h3, h4, p, .eyebrow),
+.chi-sono__paragraph,
+.chi-sono__note,
+.chi-sono__content,
+.chi-sono__content > * {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 /* ════════ RESPONSIVE ════════ */

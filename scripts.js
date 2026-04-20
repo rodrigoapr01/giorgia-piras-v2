@@ -1,6 +1,7 @@
 /* ════════════════════════════════════════════════════════════
-   GIORGIA PIRAS V3.2 — Interactions
-   GSAP + ScrollTrigger + Lenis via CDN
+   GIORGIA PIRAS V3.3 — Interactions
+   GSAP (hero intro only) + Lenis via CDN
+   Scroll-reveal animations removed for stability + performance.
    ════════════════════════════════════════════════════════════ */
 
 (() => {
@@ -19,28 +20,6 @@
   function loaded(fn) {
     if (document.readyState === 'complete') fn();
     else window.addEventListener('load', fn, { once: true });
-  }
-
-  /* ─── SPLIT TEXT HELPERS ─── */
-  function splitIntoWords(el) {
-    if (!el || el.dataset.splitDone) return $$('.word', el);
-    const text = el.textContent;
-    el.textContent = '';
-    const nodes = [];
-    text.split(/(\s+)/).forEach(tok => {
-      if (/^\s+$/.test(tok)) {
-        el.appendChild(document.createTextNode(' '));
-      } else {
-        const word = document.createElement('span');
-        word.className = 'word';
-        word.style.display = 'inline-block';
-        word.textContent = tok;
-        el.appendChild(word);
-        nodes.push(word);
-      }
-    });
-    el.dataset.splitDone = '1';
-    return nodes;
   }
 
   /* ─── ROMA CLOCK ─── */
@@ -113,8 +92,7 @@
     });
     document.documentElement.classList.add('lenis-on');
 
-    if (window.ScrollTrigger && window.gsap) {
-      lenis.on('scroll', ScrollTrigger.update);
+    if (window.gsap) {
       gsap.ticker.add((time) => lenis.raf(time * 1000));
       gsap.ticker.lagSmoothing(0);
     } else {
@@ -175,192 +153,15 @@
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
   }());
 
-  /* ─── GSAP SCROLL ANIMATIONS ─── */
+  /* ─── TEXT VISIBILITY (scroll-reveal removed for stability/perf) ─── */
+  // Legacy data-anim / data-split-words attributes are kept harmless in markup.
+  // Force any residual inline styles back to visible on DOM ready, in case
+  // any other code path (or cached state) tries to hide them.
   ready(() => {
-    if (!window.gsap || !window.ScrollTrigger) {
-      // Graceful fallback — make everything visible
-      $$('[data-anim]').forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
-      $$('[data-split-words]').forEach(el => {
-        splitIntoWords(el);
-        $$('.word', el).forEach(w => { w.style.opacity = '1'; w.style.transform = 'none'; });
-      });
-      return;
-    }
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    // 1) Section titles — split by word, fade + y(40 → 0), stagger 0.08s
-    $$('[data-split-words]').forEach(el => {
-      const words = splitIntoWords(el);
-      if (!words.length) return;
-      gsap.set(words, { opacity: 0, y: 40 });
-      const play = () => gsap.to(words, {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        ease: 'power3.out',
-        stagger: 0.08,
-        clearProps: 'opacity,transform',
-      });
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.85) {
-        play();
-      } else {
-        ScrollTrigger.create({
-          trigger: el,
-          start: 'top 85%',
-          once: true,
-          onEnter: play,
-        });
-      }
+    $$('[data-anim], [data-split-words]').forEach(el => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
     });
-
-    // 2) Body text / eyebrows / generic fade-up — fade + y(20 → 0), delay 0.15s
-    $$('[data-anim]').forEach(el => {
-      if (el.closest('.hero')) return; // hero handled at load
-      const y = el.dataset.anim === 'fade-down' ? -16 : 20;
-      gsap.set(el, { opacity: 0, y });
-      const play = () => gsap.to(el, {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        ease: 'power3.out',
-        delay: 0.15,
-        clearProps: 'opacity,transform',
-      });
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.9 && rect.bottom > 0) {
-        play();
-      } else {
-        ScrollTrigger.create({
-          trigger: el,
-          start: 'top 90%',
-          once: true,
-          onEnter: play,
-        });
-      }
-    });
-
-    // 3) Big numbers (01, 02, 03, 04) — fade + y(30 → 0), stagger across cards
-    const serviziNums = $$('.servizio-num');
-    if (serviziNums.length) {
-      gsap.from(serviziNums, {
-        opacity: 0,
-        y: 30,
-        duration: 0.9,
-        ease: 'power3.out',
-        stagger: 0.08,
-        scrollTrigger: {
-          trigger: '.servizi-grid',
-          start: 'top 82%',
-          once: true,
-        },
-      });
-    }
-
-    const stepNums = $$('.step-num');
-    if (stepNums.length) {
-      gsap.from(stepNums, {
-        opacity: 0,
-        y: 30,
-        duration: 0.9,
-        ease: 'power3.out',
-        stagger: 0.08,
-        scrollTrigger: {
-          trigger: '.steps',
-          start: 'top 85%',
-          once: true,
-        },
-      });
-    }
-
-    // Servizio & step body text — fade + y(20) with small delay
-    $$('.servizio-card').forEach((card, i) => {
-      const body = card.querySelectorAll('.servizio-title, .servizio-desc, .link-underline');
-      if (!body.length) return;
-      gsap.from(body, {
-        opacity: 0,
-        y: 20,
-        duration: 0.8,
-        ease: 'power3.out',
-        delay: 0.2 + i * 0.05,
-        stagger: 0.06,
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 85%',
-          once: true,
-        },
-      });
-    });
-
-    $$('.step').forEach((step, i) => {
-      const body = step.querySelectorAll('.step-title, .step-desc');
-      if (!body.length) return;
-      gsap.set(body, { opacity: 0, y: 20 });
-      const play = () => gsap.to(body, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        delay: 0.2 + i * 0.04,
-        stagger: 0.06,
-        clearProps: 'opacity,transform',
-      });
-      const rect = step.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.88) {
-        play();
-      } else {
-        ScrollTrigger.create({
-          trigger: step,
-          start: 'top 88%',
-          once: true,
-          onEnter: play,
-        });
-      }
-    });
-
-    // Trasformation meta + test card + weal services — fade + y(20) as body
-    const genericBody = [
-      ...$$('.trasf-meta'),
-      ...$$('.test-card'),
-      ...$$('.weal-services li'),
-    ];
-    genericBody.forEach(el => {
-      gsap.from(el, {
-        opacity: 0,
-        y: 20,
-        duration: 0.8,
-        ease: 'power3.out',
-        delay: 0.15,
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 90%',
-          once: true,
-        },
-      });
-    });
-
-    ScrollTrigger.refresh();
-
-    // Safety net — if any animated element is still invisible after 3s, force visible
-    setTimeout(() => {
-      const selectors = [
-        '[data-split-words] .word',
-        '.step-title',
-        '.step-desc',
-        '[data-anim]',
-        '.chi-sono__content',
-        '.chi-sono__content *',
-      ];
-      $$(selectors.join(',')).forEach(el => {
-        if (el.closest('.hero')) return; // hero handled separately
-        const op = parseFloat(getComputedStyle(el).opacity);
-        if (op < 0.9) {
-          el.style.opacity = '1';
-          el.style.transform = 'none';
-        }
-      });
-    }, 3000);
   });
 
   /* ─── HERO LOAD ANIMATIONS ─── */
@@ -392,7 +193,11 @@
       tl.to(heroDots, { opacity: 1, duration: 0.4, stagger: 0.08 }, 0.9);
     }
 
-    if (window.ScrollTrigger) ScrollTrigger.refresh();
+    // Ensure no residual transform on final state (don't regress)
+    tl.set([heroEyebrow, ...heroLines, ...heroDots].filter(Boolean), {
+      clearProps: 'transform',
+      opacity: 1,
+    });
   });
 
   /* ─── CIRCLE CTA RIPPLE ─── */
