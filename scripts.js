@@ -346,46 +346,96 @@
     }, 3000);
   });
 
-  /* ─── HERO LOAD ANIMATIONS ─── */
+  /* ─── HERO LOAD + BLUEPRINT REVEAL ─── */
   loaded(() => {
     if (!window.gsap) return;
 
-    const heroEyebrow = $('.hero-eyebrow');
-    const heroPills = $$('.hero-top .pill');
-    const heroCTA = $('.hero-circle-cta');
-    const heroTagline = $('.hero-tagline');
-    const heroTaglineWords = heroTagline ? $$('.word', heroTagline) : [];
-    const heroDot = $('.hero-tagline .dot-accent');
+    const heroEyebrow = $('.hero__eyebrow');
+    const heroLines = $$('.hero__title-line');
+    const heroDots = $$('.hero__title-dot');
+    const annos = $$('.hero__blueprint .anno');
 
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    if (heroPills.length) {
-      gsap.set(heroPills, { opacity: 0, y: -12 });
-      tl.to(heroPills, { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 }, 0.2);
-    }
-
+    // Eyebrow
     if (heroEyebrow && !reducedMotion) {
       gsap.set(heroEyebrow, { opacity: 0, y: 20 });
-      tl.to(heroEyebrow, { opacity: 1, y: 0, duration: 0.7 }, 0.4);
+      tl.to(heroEyebrow, { opacity: 1, y: 0, duration: 0.7 }, 0.2);
     } else if (heroEyebrow) {
       heroEyebrow.style.opacity = '1';
     }
 
-    if (heroTaglineWords.length && !reducedMotion) {
-      gsap.set(heroTaglineWords, { opacity: 0, y: 40 });
-      tl.to(heroTaglineWords, { opacity: 1, y: 0, duration: 0.9, stagger: 0.08 }, 0.55);
-    } else if (heroTaglineWords.length) {
-      gsap.set(heroTaglineWords, { opacity: 1, y: 0 });
+    // Title lines stagger
+    if (heroLines.length && !reducedMotion) {
+      gsap.set(heroLines, { opacity: 0, y: 40 });
+      tl.to(heroLines, { opacity: 1, y: 0, duration: 0.9, stagger: 0.12 }, 0.4);
+    } else if (heroLines.length) {
+      heroLines.forEach(l => { l.style.opacity = '1'; });
     }
 
-    if (heroDot && !reducedMotion) {
-      gsap.set(heroDot, { opacity: 0 });
-      tl.to(heroDot, { opacity: 1, duration: 0.4 }, 1.1);
+    // Title dots accent pop
+    if (heroDots.length && !reducedMotion) {
+      gsap.set(heroDots, { opacity: 0 });
+      tl.to(heroDots, { opacity: 1, duration: 0.4, stagger: 0.08 }, 0.9);
     }
 
-    if (heroCTA && !reducedMotion) {
-      gsap.set(heroCTA, { opacity: 0, scale: 0.9 });
-      tl.to(heroCTA, { opacity: 1, scale: 1, duration: 0.8 }, 1.0);
+    // Blueprint annotations — sequence starting at 1s, stagger 0.3s
+    if (annos.length && !reducedMotion) {
+      annos.forEach((anno, i) => {
+        const lines = anno.querySelectorAll('.anno-line, .anno-underline');
+        const mark = anno.querySelector('.anno-mark');
+        const label = anno.querySelector('.anno-label');
+        const base = 1.0 + i * 0.3;
+
+        // Draw-in lines (dash offset)
+        lines.forEach((ln, j) => {
+          let len = 0;
+          try { len = ln.getTotalLength(); } catch (_) { len = 300; }
+          gsap.set(ln, { strokeDasharray: len, strokeDashoffset: len, opacity: 1 });
+          tl.to(ln, {
+            strokeDashoffset: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+          }, base + j * 0.1);
+        });
+
+        // Circle / arc — pop with scale + fade
+        if (mark) {
+          if (mark.tagName.toLowerCase() === 'path') {
+            let mlen = 300;
+            try { mlen = mark.getTotalLength(); } catch (_) {}
+            gsap.set(mark, { strokeDasharray: mlen, strokeDashoffset: mlen, opacity: 0 });
+            tl.to(mark, {
+              strokeDashoffset: 0,
+              opacity: 1,
+              duration: 0.45,
+              ease: 'power2.out',
+            }, base + 0.15);
+          } else {
+            gsap.set(mark, { opacity: 0, scale: 0.5, transformOrigin: '50% 50%' });
+            tl.to(mark, {
+              opacity: 1,
+              scale: 1,
+              duration: 0.3,
+              ease: 'back.out(2)',
+            }, base + 0.15);
+          }
+        }
+
+        // Label fade + slide
+        if (label) {
+          gsap.set(label, { opacity: 0, x: -10 });
+          tl.to(label, {
+            opacity: 1,
+            x: 0,
+            duration: 0.4,
+            ease: 'power2.out',
+          }, base + 0.2);
+        }
+      });
+    } else if (annos.length) {
+      // reduced motion — show all immediately
+      $$('.hero__blueprint *').forEach(el => { el.style.opacity = '1'; });
     }
 
     if (window.ScrollTrigger) ScrollTrigger.refresh();
@@ -521,7 +571,7 @@
   /* ─── VIDEO: pause offscreen for perf ─── */
   (function videoPerf() {
     if (!('IntersectionObserver' in window)) return;
-    $$('.hero-video, .video-ambient-media').forEach(v => {
+    $$('.video-ambient-media').forEach(v => {
       const io = new IntersectionObserver((entries) => {
         entries.forEach(e => {
           if (e.isIntersecting) v.play().catch(() => {});

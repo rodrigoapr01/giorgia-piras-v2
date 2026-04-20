@@ -11,7 +11,7 @@
   <title>Giorgia Piras — Personal Trainer · Roma</title>
 
   <link rel="preconnect" href="https://api.fontshare.com">
-  <link rel="preload" as="video" href="assets/hero.mp4" type="video/mp4">
+  <link rel="preload" as="image" href="assets/giorgia-hero-v4.png" fetchpriority="high">
   <link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,400i,500,600,700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
@@ -57,39 +57,59 @@
 
   <main id="top">
 
-    <!-- ═══ HERO ═══ -->
+    <!-- ═══ HERO (BLUEPRINT) ═══ -->
     <section class="hero" aria-labelledby="hero-title">
-      <video class="hero-video" autoplay muted loop playsinline preload="auto" src="assets/videohero2.mp4" aria-hidden="true"></video>
-      <div class="hero-overlay" aria-hidden="true"></div>
-
-      <div class="hero-top">
-        <span class="pill pill--sm" data-anim="fade-down">
-          <span class="pill-dot" aria-hidden="true"></span>
-          <span id="clock">Roma — 00:00</span>
-        </span>
+      <div class="hero__media">
+        <img class="hero__image" src="assets/giorgia-hero-v4.png" alt="Giorgia Piras corregge tecnica press manubri" fetchpriority="high">
+        <svg class="hero__blueprint" viewBox="0 0 1920 1080" preserveAspectRatio="none" aria-hidden="true">
+          <!-- 1 — PRESA NEUTRA -->
+          <g class="anno" data-anno="1">
+            <line class="anno-line" x1="1446" y1="582" x2="1700" y2="620"></line>
+            <circle class="anno-mark" cx="1440" cy="580" r="6"></circle>
+            <text class="anno-label" x="1710" y="625">PRESA NEUTRA</text>
+            <line class="anno-underline" x1="1710" y1="632" x2="1750" y2="632"></line>
+          </g>
+          <!-- 2 — 90° -->
+          <g class="anno" data-anno="2">
+            <path class="anno-mark anno-mark--arc" d="M 1340 680 A 50 50 0 0 1 1380 730"></path>
+            <text class="anno-label anno-label--angle" x="1290" y="695">90°</text>
+          </g>
+          <!-- 3 — SUPPORTO ATTIVO -->
+          <g class="anno" data-anno="3">
+            <line class="anno-line" x1="1194" y1="718" x2="950" y2="640"></line>
+            <circle class="anno-mark" cx="1200" cy="720" r="6"></circle>
+            <text class="anno-label" x="780" y="635">SUPPORTO ATTIVO</text>
+            <line class="anno-underline" x1="780" y1="642" x2="820" y2="642"></line>
+          </g>
+          <!-- 4 — STABILITÀ SCAPOLARE -->
+          <g class="anno" data-anno="4">
+            <line class="anno-line" x1="1536" y1="754" x2="1720" y2="820"></line>
+            <circle class="anno-mark" cx="1530" cy="750" r="6"></circle>
+            <text class="anno-label" x="1730" y="825">STABILITÀ SCAPOLARE</text>
+            <line class="anno-underline" x1="1730" y1="832" x2="1770" y2="832"></line>
+          </g>
+          <!-- 5 — esercizio meta -->
+          <g class="anno" data-anno="5">
+            <text class="anno-label anno-label--muted" x="1400" y="980">— ESERCIZIO: DUMBBELL PRESS · GUIDED</text>
+          </g>
+        </svg>
       </div>
-
-      <div class="hero-center">
-        <span class="eyebrow hero-eyebrow" data-anim="fade-up">Forza che non grida</span>
-        <h1 id="hero-title" class="hero-tagline" data-split-lines>
-          <span class="line"><span class="word">Forza</span> <span class="word">che</span> <span class="word">non</span></span>
-          <span class="line"><span class="word">grida</span><span class="dot-accent">.</span></span>
+      <div class="hero__content">
+        <span class="hero__eyebrow">— IL METODO</span>
+        <h1 id="hero-title" class="hero__title">
+          <span class="hero__title-line">Tecnica<span class="hero__title-dot">.</span></span>
+          <span class="hero__title-line">Prima della fatica<span class="hero__title-dot">.</span></span>
         </h1>
       </div>
+    </section>
 
-      <a class="circle-cta hero-circle-cta" href="https://wa.me/393935896994" target="_blank" rel="noopener" data-cursor-hide>
-        <span class="circle-cta-label">
-          Prenota <span aria-hidden="true">→</span>
-        </span>
-      </a>
-
-      <div class="hero-marquee-wrap" aria-hidden="true">
-        <div class="hero-marquee-track">
-          <span class="hero-marquee-set">METODO. MOVIMENTO. RISULTATO.&nbsp;</span>
-          <span class="hero-marquee-set">METODO. MOVIMENTO. RISULTATO.&nbsp;</span>
-          <span class="hero-marquee-set">METODO. MOVIMENTO. RISULTATO.&nbsp;</span>
-          <span class="hero-marquee-set">METODO. MOVIMENTO. RISULTATO.&nbsp;</span>
-        </div>
+    <!-- ═══ MARQUEE METODO (standalone) ═══ -->
+    <section class="marquee-section" aria-hidden="true">
+      <div class="hero-marquee-track">
+        <span class="hero-marquee-set">METODO. MOVIMENTO. RISULTATO.&nbsp;</span>
+        <span class="hero-marquee-set">METODO. MOVIMENTO. RISULTATO.&nbsp;</span>
+        <span class="hero-marquee-set">METODO. MOVIMENTO. RISULTATO.&nbsp;</span>
+        <span class="hero-marquee-set">METODO. MOVIMENTO. RISULTATO.&nbsp;</span>
       </div>
     </section>
 

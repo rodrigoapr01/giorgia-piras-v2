@@ -421,6 +421,7 @@ html.cursor-ready .cursor { display: block; }
 }
 
 /* ════════ HERO ════════ */
+/* ════════ HERO (BLUEPRINT) ════════ */
 .hero {
   position: relative;
   min-height: 100vh;
@@ -429,90 +430,104 @@ html.cursor-ready .cursor { display: block; }
   isolation: isolate;
   background: var(--bg);
 }
-.hero-video {
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.hero__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+  display: block;
+}
+.hero__blueprint {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  z-index: 0;
-  opacity: 0.5;
-  filter: saturate(0.85) contrast(1.05);
-}
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(120% 100% at 50% 50%, rgba(245,241,232,0.6) 0%, rgba(245,241,232,0.92) 70%);
+  pointer-events: none;
+  overflow: visible;
   z-index: 1;
 }
-
-.hero-top {
-  position: absolute;
-  top: calc(var(--nav-h) + 1.5rem);
-  left: var(--container-pad);
-  right: var(--container-pad);
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  z-index: 3;
-  pointer-events: none;
+.hero__blueprint .anno-line,
+.hero__blueprint .anno-underline {
+  stroke: var(--ink-muted);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
 }
-.hero-top > * { pointer-events: auto; }
-
-.hero-center {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  transform: translateY(-55%);
-  padding: 0 var(--container-pad);
+.hero__blueprint .anno-mark {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+.hero__blueprint .anno-label {
+  font-family: 'Inter', 'General Sans', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  fill: var(--ink);
+}
+.hero__blueprint .anno-label--angle {
+  font-family: var(--font-display), 'General Sans', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.hero__blueprint .anno-label--muted {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  fill: var(--ink-muted);
+}
+.hero__content {
+  position: relative;
+  z-index: 2;
+  padding: 8rem var(--container-pad) 0;
   max-width: var(--container-max);
   margin: 0 auto;
-  z-index: 3;
+  pointer-events: none;
 }
-.hero-eyebrow {
+.hero__eyebrow {
   display: block;
-  margin-bottom: 1.5rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--ink-muted);
+  margin: 0 0 1.5rem;
 }
-.hero-tagline {
+.hero__title {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(3rem, 7vw, 6rem);
+  font-size: clamp(3.5rem, 7vw, 6rem);
   line-height: 0.95;
   letter-spacing: -0.02em;
   color: var(--ink);
   margin: 0;
   max-width: 16ch;
 }
-.hero-tagline .line {
+.hero__title-line {
   display: block;
-  overflow: hidden;
 }
-.hero-tagline .word {
-  display: inline-block;
-}
-.hero-tagline .dot-accent {
+.hero__title-dot {
   color: var(--accent);
-  display: inline-block;
 }
 
-.hero-circle-cta {
-  position: absolute;
-  right: clamp(1.5rem, 4vw, 4rem);
-  bottom: clamp(11rem, 16vw, 16rem);
-  z-index: 3;
-}
-
-.hero-marquee-wrap {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: clamp(1rem, 3vw, 2.5rem);
-  z-index: 2;
-  pointer-events: none;
+/* ════════ MARQUEE SECTION (between hero and chi-sono) ════════ */
+.marquee-section {
   overflow: hidden;
-  width: 100%;
+  background: var(--bg);
+  padding: clamp(1.25rem, 3vw, 2.5rem) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 .hero-marquee-track {
   display: flex;
@@ -523,7 +538,7 @@ html.cursor-ready .cursor { display: block; }
 .hero-marquee-set {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(7rem, 18vw, 16rem);
+  font-size: clamp(4rem, 12vw, 10rem);
   line-height: 1;
   letter-spacing: -0.03em;
   color: var(--ink);
@@ -1453,6 +1468,13 @@ input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px 
 
 @media (max-width: 768px) {
   :root { --nav-h: 72px; }
+
+  .hero__image { object-position: center; }
+  .hero__content { padding-top: 6rem; }
+  .hero__title { font-size: clamp(2.5rem, 10vw, 4rem); }
+  .hero__blueprint .anno-label { font-size: 14px; }
+  .hero__blueprint .anno-label--angle { font-size: 16px; }
+  .hero__blueprint .anno-label--muted { font-size: 12px; }
 
   .nav-menu { display: none; }
   .nav-wa { display: none; }
