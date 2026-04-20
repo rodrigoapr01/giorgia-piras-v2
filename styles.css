@@ -442,54 +442,22 @@ html.cursor-ready .cursor { display: block; }
   object-position: right center;
   display: block;
 }
-.hero__blueprint {
+.hero__overlay {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: visible;
   z-index: 1;
-}
-.hero__blueprint .anno-line,
-.hero__blueprint .anno-underline {
-  stroke: var(--ink-muted);
-  stroke-width: 1;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  fill: none;
-}
-.hero__blueprint .anno-mark {
-  stroke: var(--accent);
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  fill: none;
-}
-.hero__blueprint .anno-label {
-  font-family: 'Inter', 'General Sans', system-ui, sans-serif;
-  font-weight: 500;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  fill: var(--ink);
-}
-.hero__blueprint .anno-label--angle {
-  font-family: var(--font-display), 'General Sans', system-ui, sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  text-transform: none;
-  letter-spacing: 0;
-}
-.hero__blueprint .anno-label--muted {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  fill: var(--ink-muted);
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(245, 241, 232, 0.85) 0%,
+    rgba(245, 241, 232, 0.55) 25%,
+    rgba(245, 241, 232, 0) 50%
+  );
 }
 .hero__content {
   position: relative;
   z-index: 2;
-  padding: 8rem var(--container-pad) 0;
+  padding: clamp(4rem, 8vh, 6rem) var(--container-pad) 0;
   max-width: var(--container-max);
   margin: 0 auto;
   pointer-events: none;
@@ -1470,11 +1438,16 @@ input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px 
   :root { --nav-h: 72px; }
 
   .hero__image { object-position: center; }
-  .hero__content { padding-top: 6rem; }
+  .hero__content { padding-top: 5rem; }
   .hero__title { font-size: clamp(2.5rem, 10vw, 4rem); }
-  .hero__blueprint .anno-label { font-size: 14px; }
-  .hero__blueprint .anno-label--angle { font-size: 16px; }
-  .hero__blueprint .anno-label--muted { font-size: 12px; }
+  .hero__overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(245, 241, 232, 0.85) 0%,
+      rgba(245, 241, 232, 0.55) 30%,
+      rgba(245, 241, 232, 0) 60%
+    );
+  }
 
   .nav-menu { display: none; }
   .nav-wa { display: none; }
