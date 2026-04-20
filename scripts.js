@@ -508,7 +508,7 @@
   /* ─── VIDEO: pause offscreen for perf ─── */
   (function videoPerf() {
     if (!('IntersectionObserver' in window)) return;
-    $$('.video-ambient-media').forEach(v => {
+    $$('.chi-sono-video').forEach(v => {
       const io = new IntersectionObserver((entries) => {
         entries.forEach(e => {
           if (e.isIntersecting) v.play().catch(() => {});

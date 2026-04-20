@@ -670,15 +670,18 @@ html.cursor-ready .cursor { display: block; }
   width: 100%;
   max-width: none;
 }
-.chi-sono-figure img {
+.chi-sono-figure img,
+.chi-sono-figure video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
   filter: saturate(0.95) contrast(1.02);
   transform: scale(1.02);
   transition: transform 1.8s var(--ease-out);
 }
-.chi-sono-figure:hover img { transform: scale(1.08); }
+.chi-sono-figure:hover img,
+.chi-sono-figure:hover video { transform: scale(1.08); }
 
 .chi-sono-text {
   grid-column: 8 / span 5;
@@ -686,6 +689,15 @@ html.cursor-ready .cursor { display: block; }
 .chi-sono-text .section-title {
   font-size: clamp(2.25rem, 4.5vw, 4rem);
   max-width: 100%;
+}
+.chi-sono-body p {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--ink);
+  margin: 0;
+  max-width: 52ch;
 }
 .chi-sono-body p + p { margin-top: 1.25rem; }
 .chi-sono-sign {
@@ -698,12 +710,12 @@ html.cursor-ready .cursor { display: block; }
   display: block;
   width: 200px;
   height: 1px;
-  background: var(--line-strong);
+  background: var(--line);
 }
 .sign-text {
   font-family: var(--font-body);
-  font-size: 0.8125rem;
-  font-weight: 500;
+  font-size: 0.875rem;
+  font-weight: 400;
   color: var(--ink-muted);
   letter-spacing: 0.04em;
 }
@@ -764,46 +776,6 @@ html.cursor-ready .cursor { display: block; }
   max-width: 34ch;
 }
 .servizio-card .link-underline { align-self: flex-start; }
-
-/* ════════ VIDEO AMBIENT 2 ════════ */
-.video-ambient {
-  position: relative;
-  min-height: 100vh;
-  min-height: 100svh;
-  overflow: hidden;
-  isolation: isolate;
-}
-.video-ambient-media {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-  filter: saturate(0.85) contrast(1.05) brightness(0.85);
-}
-.video-ambient-overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(26,24,23,0.15) 0%, rgba(26,24,23,0.55) 85%);
-  z-index: 1;
-}
-.video-ambient-caption {
-  position: absolute;
-  left: 3rem;
-  bottom: 3rem;
-  z-index: 2;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-style: italic;
-  font-size: 1.25rem;
-  letter-spacing: -0.005em;
-  color: var(--bg);
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-  margin: 0;
-  max-width: 30ch;
-}
 
 /* ════════ COME FUNZIONA (inversion) ════════ */
 .come-funziona {
