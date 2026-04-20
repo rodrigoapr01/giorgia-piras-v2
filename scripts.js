@@ -219,18 +219,26 @@
     $$('[data-anim]').forEach(el => {
       if (el.closest('.hero')) return; // hero handled at load
       const y = el.dataset.anim === 'fade-down' ? -16 : 20;
-      gsap.from(el, {
-        opacity: 0,
-        y,
+      gsap.set(el, { opacity: 0, y });
+      const play = () => gsap.to(el, {
+        opacity: 1,
+        y: 0,
         duration: 0.9,
         ease: 'power3.out',
         delay: 0.15,
-        scrollTrigger: {
+        clearProps: 'opacity,transform',
+      });
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.9 && rect.bottom > 0) {
+        play();
+      } else {
+        ScrollTrigger.create({
           trigger: el,
           start: 'top 90%',
           once: true,
-        },
-      });
+          onEnter: play,
+        });
+      }
     });
 
     // 3) Big numbers (01, 02, 03, 04) — fade + y(30 → 0), stagger across cards
@@ -336,7 +344,16 @@
 
     // Safety net — if any animated element is still invisible after 3s, force visible
     setTimeout(() => {
-      $$('[data-split-words] .word, .step-title, .step-desc').forEach(el => {
+      const selectors = [
+        '[data-split-words] .word',
+        '.step-title',
+        '.step-desc',
+        '[data-anim]',
+        '.chi-sono__content',
+        '.chi-sono__content *',
+      ];
+      $$(selectors.join(',')).forEach(el => {
+        if (el.closest('.hero')) return; // hero handled separately
         const op = parseFloat(getComputedStyle(el).opacity);
         if (op < 0.9) {
           el.style.opacity = '1';
