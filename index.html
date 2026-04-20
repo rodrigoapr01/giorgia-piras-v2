@@ -125,15 +125,18 @@
     <!-- ═══ CHI SONO ═══ -->
     <section id="chi-sono" class="chi-sono" aria-labelledby="chi-sono-title">
       <div class="container chi-sono-grid">
-        <figure class="chi-sono-figure">
+        <div class="chi-sono__media">
           <video class="chi-sono-video" autoplay muted loop playsinline preload="auto" poster="assets/risultato-2.png" aria-hidden="true">
             <source src="assets/hero.mp4" type="video/mp4">
           </video>
-        </figure>
+          <h2 id="chi-sono-title" class="chi-sono__quote" data-anim="fade-up">
+            <span>Non faccio questo lavoro.</span>
+            <span>Lo vivo.</span>
+          </h2>
+        </div>
 
         <div class="chi-sono-text">
-          <span class="eyebrow" data-anim="fade-up">Chi sono <span class="eyebrow-num">02</span></span>
-          <h2 id="chi-sono-title" class="section-title" data-split-words>Non faccio questo lavoro. Lo vivo.</h2>
+          <span class="eyebrow" data-anim="fade-up">Chi sono <span aria-hidden="true">—</span> <span class="eyebrow-num">02</span></span>
 
           <div class="chi-sono-body">
             <p data-anim="fade-up">
@@ -144,9 +147,25 @@
             </p>
           </div>
 
-          <div class="chi-sono-sign" data-anim="fade-up">
-            <span class="sign-line" aria-hidden="true"></span>
-            <span class="sign-text">— Founder di Weal House Community</span>
+          <hr class="chi-sono-divider" aria-hidden="true">
+
+          <div class="chi-sono-creds" data-anim="fade-up">
+            <div class="chi-sono-cred">
+              <p class="chi-sono-cred-label">Certificazioni</p>
+              <ul class="chi-sono-cred-list">
+                <li>Personal Trainer Certificata</li>
+                <li>Specializzazione Allenamento Femminile</li>
+                <li>Nutrizione Applicata allo Sport</li>
+              </ul>
+            </div>
+            <div class="chi-sono-cred">
+              <p class="chi-sono-cred-label">Esperienza</p>
+              <ul class="chi-sono-cred-list">
+                <li>10+ anni di pratica</li>
+                <li>Centinaia di percorsi seguiti</li>
+                <li>Founder di Weal House Community</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

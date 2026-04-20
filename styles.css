@@ -660,8 +660,9 @@ html.cursor-ready .cursor { display: block; }
   align-items: center;
   gap: 2rem clamp(2rem, 4vw, 4rem);
 }
-.chi-sono-figure {
+.chi-sono__media {
   grid-column: 1 / span 6;
+  position: relative;
   margin: 0;
   aspect-ratio: 4 / 5;
   min-height: 70vh;
@@ -670,8 +671,8 @@ html.cursor-ready .cursor { display: block; }
   width: 100%;
   max-width: none;
 }
-.chi-sono-figure img,
-.chi-sono-figure video {
+.chi-sono__media img,
+.chi-sono__media video {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -680,15 +681,32 @@ html.cursor-ready .cursor { display: block; }
   transform: scale(1.02);
   transition: transform 1.8s var(--ease-out);
 }
-.chi-sono-figure:hover img,
-.chi-sono-figure:hover video { transform: scale(1.08); }
+.chi-sono__media:hover img,
+.chi-sono__media:hover video { transform: scale(1.08); }
+
+.chi-sono__quote {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  right: 2rem;
+  z-index: 2;
+  margin: 0;
+  pointer-events: none;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+.chi-sono__quote span {
+  display: block;
+}
 
 .chi-sono-text {
   grid-column: 8 / span 5;
-}
-.chi-sono-text .section-title {
-  font-size: clamp(2.25rem, 4.5vw, 4rem);
-  max-width: 100%;
 }
 .chi-sono-body p {
   font-family: var(--font-body);
@@ -700,24 +718,40 @@ html.cursor-ready .cursor { display: block; }
   max-width: 52ch;
 }
 .chi-sono-body p + p { margin-top: 1.25rem; }
-.chi-sono-sign {
-  margin-top: 2.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-.sign-line {
-  display: block;
-  width: 200px;
+
+.chi-sono-divider {
+  width: 100%;
   height: 1px;
   background: var(--line);
+  border: 0;
+  margin: 2.5rem 0;
 }
-.sign-text {
+
+.chi-sono-creds {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem clamp(1.5rem, 3vw, 3rem);
+}
+.chi-sono-cred-label {
   font-family: var(--font-body);
-  font-size: 0.875rem;
-  font-weight: 400;
+  font-weight: 500;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
   color: var(--ink-muted);
-  letter-spacing: 0.04em;
+  margin: 0 0 1rem;
+}
+.chi-sono-cred-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.chi-sono-cred-list li {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--ink);
 }
 
 /* ════════ SERVIZI ════════ */
@@ -1384,9 +1418,11 @@ input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 6px 
 /* ════════ RESPONSIVE ════════ */
 @media (max-width: 1024px) {
   .chi-sono-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .chi-sono-figure, .chi-sono-text { grid-column: 1; }
-  .chi-sono-figure { max-width: 100%; min-height: 0; }
-  .chi-sono-text .section-title { font-size: clamp(2.25rem, 6vw, 3.5rem); }
+  .chi-sono__media, .chi-sono-text { grid-column: 1; }
+  .chi-sono__media { max-width: 100%; min-height: 0; aspect-ratio: 4 / 5; }
+  .chi-sono__quote { bottom: 1.5rem; left: 1.5rem; right: 1.5rem; font-size: clamp(1.5rem, 6vw, 2.25rem); }
+  .chi-sono-creds { grid-template-columns: 1fr; gap: 2rem; }
+  .chi-sono-divider { margin: 2rem 0; }
 
   .servizi-grid { grid-template-columns: 1fr; }
   .servizio-card { padding: 2.75rem 0 !important; border-left: 0 !important; }
