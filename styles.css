@@ -445,7 +445,7 @@ html.cursor-ready .cursor { display: block; }
 .hero__overlay {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
   background: linear-gradient(
     90deg,
@@ -456,11 +456,23 @@ html.cursor-ready .cursor { display: block; }
 }
 .hero__content {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   padding: clamp(4rem, 8vh, 6rem) var(--container-pad) 0;
   max-width: var(--container-max);
   margin: 0 auto;
   pointer-events: none;
+}
+.hero__marquee {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 140px;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
 }
 .hero__eyebrow {
   display: block;
@@ -489,14 +501,7 @@ html.cursor-ready .cursor { display: block; }
   color: var(--accent);
 }
 
-/* ════════ MARQUEE SECTION (between hero and chi-sono) ════════ */
-.marquee-section {
-  overflow: hidden;
-  background: var(--bg);
-  padding: clamp(1.25rem, 3vw, 2.5rem) 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
+/* ════════ MARQUEE (inside hero, bottom-aligned) ════════ */
 .hero-marquee-track {
   display: flex;
   width: max-content;
@@ -506,7 +511,7 @@ html.cursor-ready .cursor { display: block; }
 .hero-marquee-set {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(4rem, 12vw, 10rem);
+  font-size: clamp(5rem, 12vw, 10rem);
   line-height: 1;
   letter-spacing: -0.03em;
   color: var(--ink);
