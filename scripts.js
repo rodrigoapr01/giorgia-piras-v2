@@ -327,7 +327,7 @@
     });
   }());
 
-  /* ─── BEFORE/AFTER COMPARISON SLIDER (clip-path) ─── */
+  /* ─── BEFORE/AFTER COMPARISON SLIDER (clip-path + rAF lerp) ─── */
   (() => {
     const container    = document.getElementById('comparisonContainer');
     const afterWrapper = document.getElementById('comparisonAfter');
@@ -335,20 +335,35 @@
     if (!container || !afterWrapper || !handle) return;
 
     let isDragging = false;
-    let currentPct = 50;
+    let currentX   = 50;
+    let targetX    = 50;
+    let rafId      = null;
 
-    const updatePosition = (clientX) => {
-      const rect    = container.getBoundingClientRect();
-      const percent = Math.min(Math.max(((clientX - rect.left) / rect.width) * 100, 0), 100);
-      currentPct    = percent;
-      afterWrapper.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
-      handle.style.left           = percent + '%';
+    const render = () => {
+      currentX += (targetX - currentX) * 0.25;
+      afterWrapper.style.clipPath = `inset(0 ${100 - currentX}% 0 0)`;
+      handle.style.left           = currentX + '%';
+
+      if (Math.abs(targetX - currentX) > 0.1) {
+        rafId = requestAnimationFrame(render);
+      } else {
+        currentX = targetX;
+        afterWrapper.style.clipPath = `inset(0 ${100 - currentX}% 0 0)`;
+        handle.style.left           = currentX + '%';
+        rafId = null;
+      }
+    };
+
+    const updateTarget = (clientX) => {
+      const rect = container.getBoundingClientRect();
+      targetX = Math.min(Math.max(((clientX - rect.left) / rect.width) * 100, 0), 100);
+      if (!rafId) rafId = requestAnimationFrame(render);
     };
 
     const startDrag = (clientX) => {
       isDragging = true;
       container.classList.add('is-dragging');
-      updatePosition(clientX);
+      updateTarget(clientX);
     };
 
     const stopDrag = () => {
@@ -358,24 +373,14 @@
 
     /* Mouse */
     container.addEventListener('mousedown', (e) => { startDrag(e.clientX); e.preventDefault(); });
-    window.addEventListener('mousemove', (e) => { if (isDragging) updatePosition(e.clientX); });
+    window.addEventListener('mousemove', (e) => { if (isDragging) updateTarget(e.clientX); });
     window.addEventListener('mouseup', stopDrag);
     container.addEventListener('mouseleave', stopDrag);
 
     /* Touch */
     container.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX), { passive: true });
-    container.addEventListener('touchmove',  (e) => { if (isDragging) updatePosition(e.touches[0].clientX); }, { passive: true });
+    container.addEventListener('touchmove',  (e) => { if (isDragging) updateTarget(e.touches[0].clientX); }, { passive: true });
     container.addEventListener('touchend',   stopDrag);
-
-    /* Keyboard a11y */
-    container.tabIndex = 0;
-    container.addEventListener('keydown', (e) => {
-      const rect = container.getBoundingClientRect();
-      if (e.key === 'ArrowLeft')  updatePosition(rect.left + rect.width * Math.max(0,   currentPct - 5) / 100);
-      if (e.key === 'ArrowRight') updatePosition(rect.left + rect.width * Math.min(100, currentPct + 5) / 100);
-      if (e.key === 'Home')       updatePosition(rect.left);
-      if (e.key === 'End')        updatePosition(rect.left + rect.width);
-    });
   })();
 
   /* ─── VIDEO: pause offscreen for perf ─── */

@@ -957,9 +957,9 @@ html.cursor-ready .cursor { display: block; }
   width: 100%;
   height: 100%;
   clip-path: inset(0 50% 0 0);
-  transition: clip-path 0.05s linear;
   pointer-events: none;
   will-change: clip-path;
+  /* NO transition — real-time updates via requestAnimationFrame in JS */
 }
 
 .comparison__label {
@@ -976,8 +976,8 @@ html.cursor-ready .cursor { display: block; }
   z-index: 3;
   pointer-events: none;
 }
-.comparison__label--before { left: 1.5rem; }
-.comparison__label--after  { right: 1.5rem; }
+.comparison__label--before { right: 1.5rem; }
+.comparison__label--after  { left: 1.5rem; }
 
 .comparison__handle-line {
   position: absolute;
@@ -1528,8 +1528,8 @@ section:not(.hero) :is(h1, h2, h3, h4, p, .eyebrow),
 @media (max-width: 640px) {
   .comparison__meta { flex-direction: column; gap: 0.5rem; }
   .comparison__label { font-size: 0.65rem; padding: 0.4rem 0.75rem; top: 1rem; }
-  .comparison__label--before { left: 1rem; }
-  .comparison__label--after  { right: 1rem; }
+  .comparison__label--before { right: 1rem; }
+  .comparison__label--after  { left: 1rem; }
   .comparison__handle-circle { width: 40px; height: 40px; }
 }
 
