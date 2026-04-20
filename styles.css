@@ -936,34 +936,30 @@ html.cursor-ready .cursor { display: block; }
   overflow: hidden;
   user-select: none;
   cursor: ew-resize;
-  background: var(--bg);
-  touch-action: pan-y;
+  background: var(--bg-alt);
 }
-.comparison__image {
+.comparison__img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
-  filter: saturate(0.9);
+  pointer-events: none;
   -webkit-user-drag: none;
   user-drag: none;
+  filter: saturate(0.9);
 }
-.comparison__after {
+.comparison__after-wrapper {
   position: absolute;
   inset: 0;
-  width: 50%;
-  overflow: hidden;
-  transition: width 0.05s linear;
-  will-change: width;
-  /* background-size is pinned to the OUTER container width (set by JS as
-     --comparison-width) so the after-image never stretches or rescales
-     when this reveal div shrinks or grows. */
-  background-size: var(--comparison-width, 100%) 100%;
-  background-position: left center;
-  background-repeat: no-repeat;
-  filter: saturate(0.9);
+  width: 100%;
+  height: 100%;
+  clip-path: inset(0 50% 0 0);
+  transition: clip-path 0.05s linear;
+  pointer-events: none;
+  will-change: clip-path;
 }
 
 .comparison__label {
@@ -983,22 +979,21 @@ html.cursor-ready .cursor { display: block; }
 .comparison__label--before { left: 1.5rem; }
 .comparison__label--after  { right: 1.5rem; }
 
-.comparison__slider {
+.comparison__handle-line {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 50%;
   width: 2px;
-  background: var(--bg);
+  background: rgba(255, 255, 255, 0.8);
+  left: 50%;
   transform: translateX(-50%);
   z-index: 4;
   pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.comparison__handle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.comparison__handle-circle {
   width: 48px;
   height: 48px;
   background: var(--accent);
@@ -1007,13 +1002,11 @@ html.cursor-ready .cursor { display: block; }
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s var(--ease-out);
 }
-.comparison__container:hover .comparison__handle,
-.comparison__container:active .comparison__handle {
-  transform: translate(-50%, -50%) scale(1.08);
-  box-shadow: 0 6px 26px rgba(0, 0, 0, 0.22);
+.comparison__container.is-dragging .comparison__handle-circle {
+  transform: scale(1.1);
 }
 
 .comparison__meta {
@@ -1537,7 +1530,7 @@ section:not(.hero) :is(h1, h2, h3, h4, p, .eyebrow),
   .comparison__label { font-size: 0.65rem; padding: 0.4rem 0.75rem; top: 1rem; }
   .comparison__label--before { left: 1rem; }
   .comparison__label--after  { right: 1rem; }
-  .comparison__handle { width: 40px; height: 40px; }
+  .comparison__handle-circle { width: 40px; height: 40px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

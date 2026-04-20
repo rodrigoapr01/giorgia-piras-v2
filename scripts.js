@@ -327,67 +327,56 @@
     });
   }());
 
-  /* ─── BEFORE/AFTER COMPARISON SLIDER ─── */
-  (function comparison() {
-    const container = document.getElementById('comparisonContainer');
-    const slider    = document.getElementById('comparisonSlider');
-    if (!container || !slider) return;
-    const afterDiv  = container.querySelector('.comparison__after');
-    if (!afterDiv) return;
+  /* ─── BEFORE/AFTER COMPARISON SLIDER (clip-path) ─── */
+  (() => {
+    const container    = document.getElementById('comparisonContainer');
+    const afterWrapper = document.getElementById('comparisonAfter');
+    const handle       = document.getElementById('comparisonHandle');
+    if (!container || !afterWrapper || !handle) return;
 
-    let dragging = false;
+    let isDragging = false;
+    let currentPct = 50;
 
-    // Pin the after-image background-size to the OUTER container width.
-    // This prevents the background from scaling when .comparison__after shrinks.
-    const syncWidthVar = () => {
-      const rect = container.getBoundingClientRect();
-      container.style.setProperty('--comparison-width', rect.width + 'px');
-    };
-    syncWidthVar();
-
-    if ('ResizeObserver' in window) {
-      new ResizeObserver(syncWidthVar).observe(container);
-    } else {
-      window.addEventListener('resize', syncWidthVar, { passive: true });
-    }
-
-    const setPos = (clientX) => {
-      const rect = container.getBoundingClientRect();
-      const pct  = Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100));
-      slider.style.left    = pct + '%';
-      afterDiv.style.width = pct + '%';
+    const updatePosition = (clientX) => {
+      const rect    = container.getBoundingClientRect();
+      const percent = Math.min(Math.max(((clientX - rect.left) / rect.width) * 100, 0), 100);
+      currentPct    = percent;
+      afterWrapper.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+      handle.style.left           = percent + '%';
     };
 
-    // Mouse
-    container.addEventListener('mousedown', (e) => {
-      dragging = true;
-      setPos(e.clientX);
-      e.preventDefault();
-    });
-    window.addEventListener('mousemove', (e) => { if (dragging) setPos(e.clientX); });
-    window.addEventListener('mouseup',   () => { dragging = false; });
+    const startDrag = (clientX) => {
+      isDragging = true;
+      container.classList.add('is-dragging');
+      updatePosition(clientX);
+    };
 
-    // Touch
-    container.addEventListener('touchstart', (e) => {
-      dragging = true;
-      setPos(e.touches[0].clientX);
-    }, { passive: true });
-    container.addEventListener('touchmove', (e) => {
-      if (dragging) setPos(e.touches[0].clientX);
-    }, { passive: true });
-    container.addEventListener('touchend', () => { dragging = false; });
+    const stopDrag = () => {
+      isDragging = false;
+      container.classList.remove('is-dragging');
+    };
 
-    // Keyboard a11y
+    /* Mouse */
+    container.addEventListener('mousedown', (e) => { startDrag(e.clientX); e.preventDefault(); });
+    window.addEventListener('mousemove', (e) => { if (isDragging) updatePosition(e.clientX); });
+    window.addEventListener('mouseup', stopDrag);
+    container.addEventListener('mouseleave', stopDrag);
+
+    /* Touch */
+    container.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX), { passive: true });
+    container.addEventListener('touchmove',  (e) => { if (isDragging) updatePosition(e.touches[0].clientX); }, { passive: true });
+    container.addEventListener('touchend',   stopDrag);
+
+    /* Keyboard a11y */
     container.tabIndex = 0;
     container.addEventListener('keydown', (e) => {
       const rect = container.getBoundingClientRect();
-      const current = parseFloat(afterDiv.style.width) || 50;
-      if (e.key === 'ArrowLeft')  setPos(rect.left + rect.width * Math.max(0,   current - 5) / 100);
-      if (e.key === 'ArrowRight') setPos(rect.left + rect.width * Math.min(100, current + 5) / 100);
-      if (e.key === 'Home')       setPos(rect.left);
-      if (e.key === 'End')        setPos(rect.left + rect.width);
+      if (e.key === 'ArrowLeft')  updatePosition(rect.left + rect.width * Math.max(0,   currentPct - 5) / 100);
+      if (e.key === 'ArrowRight') updatePosition(rect.left + rect.width * Math.min(100, currentPct + 5) / 100);
+      if (e.key === 'Home')       updatePosition(rect.left);
+      if (e.key === 'End')        updatePosition(rect.left + rect.width);
     });
-  }());
+  })();
 
   /* ─── VIDEO: pause offscreen for perf ─── */
   (function videoPerf() {
