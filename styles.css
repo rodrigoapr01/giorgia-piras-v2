@@ -547,14 +547,14 @@ html.cursor-ready .cursor { display: block; }
 /* Hero watermark — provisional brand mark, top-left below fixed nav */
 .hero-watermark {
   position: absolute;
-  top: calc(var(--nav-h) + 20px);
+  top: calc(var(--nav-h) + 24px);
   left: var(--container-pad);
   z-index: 3;
   display: inline-block;
-  width: 104px;
+  width: 140px;
   line-height: 0;
   pointer-events: auto;
-  opacity: 0.92;
+  opacity: 0.95;
   transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
 }
 .hero-watermark:hover { opacity: 1; transform: translateY(-2px); }
@@ -571,10 +571,10 @@ html.cursor-ready .cursor { display: block; }
   filter: invert(1) hue-rotate(180deg);
 }
 @media (min-width: 768px) {
-  .hero-watermark { top: calc(var(--nav-h) + 32px); width: 144px; }
+  .hero-watermark { top: calc(var(--nav-h) + 40px); width: 208px; }
 }
 @media (min-width: 1280px) {
-  .hero-watermark { top: calc(var(--nav-h) + 40px); width: 184px; }
+  .hero-watermark { top: calc(var(--nav-h) + 52px); width: 280px; }
 }
 
 /* ════════ CIRCLE CTA ════════ */

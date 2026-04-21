@@ -182,12 +182,12 @@
     const watermark = $('.hero-watermark');
     if (reducedMotion) {
       if (caption) caption.style.opacity = '1';
-      if (watermark) watermark.style.opacity = '0.92';
+      if (watermark) watermark.style.opacity = '0.95';
       return;
     }
     if (watermark) {
       gsap.set(watermark, { opacity: 0, y: -6 });
-      gsap.to(watermark, { opacity: 0.92, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.4 });
+      gsap.to(watermark, { opacity: 0.95, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.4 });
     }
     if (caption) {
       gsap.set(caption, { opacity: 0, y: 8 });
