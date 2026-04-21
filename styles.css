@@ -553,7 +553,7 @@ html.cursor-ready .cursor { display: block; }
   left: 16px;
   z-index: 3;
   display: inline-block;
-  width: 88px;
+  width: 85px;
   line-height: 0;
   pointer-events: auto;
   opacity: 0.95;
