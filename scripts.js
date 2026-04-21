@@ -175,17 +175,24 @@
     });
   });
 
-  /* ─── HERO CAPTION LOAD ANIMATION ─── */
+  /* ─── HERO LOAD ANIMATION (watermark + caption) ─── */
   loaded(() => {
     if (!window.gsap) return;
     const caption = $('.hero-caption__text');
-    if (!caption) return;
+    const watermark = $('.hero-watermark');
     if (reducedMotion) {
-      caption.style.opacity = '1';
+      if (caption) caption.style.opacity = '1';
+      if (watermark) watermark.style.opacity = '0.88';
       return;
     }
-    gsap.set(caption, { opacity: 0, y: 8 });
-    gsap.to(caption, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: 0.6 });
+    if (watermark) {
+      gsap.set(watermark, { opacity: 0, y: -6 });
+      gsap.to(watermark, { opacity: 0.88, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.4 });
+    }
+    if (caption) {
+      gsap.set(caption, { opacity: 0, y: 8 });
+      gsap.to(caption, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: 0.7 });
+    }
   });
 
   /* ─── CIRCLE CTA RIPPLE ─── */
