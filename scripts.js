@@ -50,12 +50,23 @@
 
     document.documentElement.classList.add('cursor-ready');
 
-    let tx = window.innerWidth / 2, ty = window.innerHeight / 2;
+    /* Parte fuori schermo + invisibile: evita il "puntino orfano" al
+       centro del viewport finché l'utente non muove il mouse (anche su
+       dispositivi ibridi dove isTouch ritorna falso negativo). */
+    let tx = -100, ty = -100;
     let cx = tx, cy = ty;
     const ease = 0.18;
+    el.style.opacity = '0';
+    let hasMoved = false;
 
     window.addEventListener('mousemove', (e) => {
       tx = e.clientX; ty = e.clientY;
+      if (!hasMoved) {
+        /* Primo movimento reale: snap alla posizione corrente e rendi visibile */
+        cx = tx; cy = ty;
+        el.style.opacity = '';
+        hasMoved = true;
+      }
     }, { passive: true });
 
     document.addEventListener('mouseleave', () => el.classList.add('is-hidden'));
