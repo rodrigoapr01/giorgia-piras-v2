@@ -544,14 +544,14 @@ html.cursor-ready .cursor { display: block; }
   .hero-marquee-set { font-size: clamp(120px, 9vw, 180px); }
 }
 
-/* Hero watermark — provisional brand mark, top-left below fixed nav */
+/* Hero watermark — provisional brand mark, anchored top-left corner */
 .hero-watermark {
   position: absolute;
-  top: calc(var(--nav-h) + 24px);
-  left: var(--container-pad);
+  top: calc(var(--nav-h) + 8px);
+  left: 12px;
   z-index: 3;
   display: inline-block;
-  width: 140px;
+  width: 168px;
   line-height: 0;
   pointer-events: auto;
   opacity: 0.95;
@@ -571,10 +571,18 @@ html.cursor-ready .cursor { display: block; }
   filter: invert(1) hue-rotate(180deg);
 }
 @media (min-width: 768px) {
-  .hero-watermark { top: calc(var(--nav-h) + 40px); width: 208px; }
+  .hero-watermark {
+    top: calc(var(--nav-h) + 16px);
+    left: 24px;
+    width: 248px;
+  }
 }
 @media (min-width: 1280px) {
-  .hero-watermark { top: calc(var(--nav-h) + 52px); width: 280px; }
+  .hero-watermark {
+    top: calc(var(--nav-h) + 24px);
+    left: 40px;
+    width: 328px;
+  }
 }
 
 /* ════════ CIRCLE CTA ════════ */
