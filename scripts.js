@@ -383,19 +383,20 @@
     container.addEventListener('touchend',   stopDrag);
   })();
 
-  /* ─── TESTIMONIALS SHUFFLE STACK (drag to cycle) ─── */
+  /* ─── TESTIMONIALS SHUFFLE STACK (drag to cycle, N cards) ─── */
   (function testimonialsShuffle() {
     const stack = document.getElementById('testimonialsStack');
     if (!stack) return;
 
     const cards = Array.from(stack.querySelectorAll('.testimonial-card'));
-    if (cards.length !== 3) return;
+    if (cards.length < 3) return;
 
-    /* Ordine logico interno: [front, middle, back] */
+    /* Ordine logico: [front, middle, back, hidden, hidden, …] */
     let order = [...cards];
 
     const SWIPE_THRESHOLD = 150; /* px */
     const ROTATE_BASE     = -6;
+    const POSITIONS       = ['front', 'middle', 'back'];
 
     let isDragging      = false;
     let startX          = 0;
@@ -404,16 +405,15 @@
     let activePointerId = null;
 
     function applyPositions() {
-      order[0].setAttribute('data-position', 'front');
-      order[1].setAttribute('data-position', 'middle');
-      order[2].setAttribute('data-position', 'back');
-      /* reset inline transform per tornare a quelle del CSS */
-      order.forEach(c => { c.style.transform = ''; });
+      order.forEach((card, i) => {
+        card.setAttribute('data-position', i < 3 ? POSITIONS[i] : 'hidden');
+        card.style.transform = '';
+        card.classList.remove('is-leaving');
+      });
     }
 
     function shuffle() {
       const front = order.shift();
-      front.classList.remove('is-leaving');
       order.push(front);
       applyPositions();
     }
