@@ -454,51 +454,37 @@ html.cursor-ready .cursor { display: block; }
     rgba(245, 241, 232, 0) 50%
   );
 }
-.hero__content {
-  position: relative;
-  z-index: 3;
-  padding: clamp(4rem, 8vh, 6rem) var(--container-pad) 0;
-  max-width: var(--container-max);
-  margin: 0 auto;
-  pointer-events: none;
-}
 .hero__marquee {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   height: 140px;
-  z-index: 1;
+  z-index: 3;
   overflow: hidden;
   pointer-events: none;
   display: flex;
   align-items: center;
 }
-.hero__eyebrow {
-  display: block;
+
+/* ════════ HERO CAPTION (sotto il marquee, didascalia editoriale) ════════ */
+.hero-caption {
+  background: var(--bg);
+  padding: 20px 24px 28px;
+  display: flex;
+  justify-content: center;
+}
+.hero-caption__text {
   font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 0.75rem;
+  font-size: 11px;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
   color: var(--ink-muted);
-  margin: 0 0 1.5rem;
-}
-.hero__title {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(3.5rem, 7vw, 6rem);
-  line-height: 0.95;
-  letter-spacing: -0.02em;
-  color: var(--ink);
   margin: 0;
-  max-width: 16ch;
 }
-.hero__title-line {
-  display: block;
-}
-.hero__title-dot {
-  color: var(--accent);
+@media (min-width: 768px) {
+  .hero-caption { padding: 28px 40px 36px; }
+  .hero-caption__text { font-size: 12px; }
 }
 
 /* ════════ MARQUEE (inside hero, bottom-aligned) ════════ */
@@ -1896,14 +1882,12 @@ section:not(.hero) :is(h1, h2, h3, h4, p, .eyebrow),
   :root { --nav-h: 72px; }
 
   .hero__image { object-position: center; }
-  .hero__content { padding-top: 5rem; }
-  .hero__title { font-size: clamp(2.5rem, 10vw, 4rem); }
   .hero__overlay {
     background: linear-gradient(
       180deg,
-      rgba(245, 241, 232, 0.85) 0%,
-      rgba(245, 241, 232, 0.55) 30%,
-      rgba(245, 241, 232, 0) 60%
+      rgba(245, 241, 232, 0) 0%,
+      rgba(245, 241, 232, 0) 60%,
+      rgba(245, 241, 232, 0.25) 100%
     );
   }
 
@@ -1912,13 +1896,6 @@ section:not(.hero) :is(h1, h2, h3, h4, p, .eyebrow),
   .nav-toggle { display: flex; }
   .nav-inner { justify-content: flex-end; }
 
-  .hero-top { top: calc(var(--nav-h) + 1rem); justify-content: flex-end; }
-
-  .hero-center {
-    top: 46%;
-    transform: translateY(-50%);
-  }
-  .hero-tagline { font-size: clamp(2.75rem, 10vw, 4.5rem); }
   .hero-marquee-set {
     font-size: clamp(5rem, 22vw, 9rem);
     letter-spacing: -0.035em;

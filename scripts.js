@@ -175,40 +175,17 @@
     });
   });
 
-  /* ─── HERO LOAD ANIMATIONS ─── */
+  /* ─── HERO CAPTION LOAD ANIMATION ─── */
   loaded(() => {
     if (!window.gsap) return;
-
-    const heroEyebrow = $('.hero__eyebrow');
-    const heroLines = $$('.hero__title-line');
-    const heroDots = $$('.hero__title-dot');
-
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-    if (heroEyebrow && !reducedMotion) {
-      gsap.set(heroEyebrow, { opacity: 0, y: 20 });
-      tl.to(heroEyebrow, { opacity: 1, y: 0, duration: 0.7 }, 0.2);
-    } else if (heroEyebrow) {
-      heroEyebrow.style.opacity = '1';
+    const caption = $('.hero-caption__text');
+    if (!caption) return;
+    if (reducedMotion) {
+      caption.style.opacity = '1';
+      return;
     }
-
-    if (heroLines.length && !reducedMotion) {
-      gsap.set(heroLines, { opacity: 0, y: 40 });
-      tl.to(heroLines, { opacity: 1, y: 0, duration: 0.9, stagger: 0.12 }, 0.4);
-    } else if (heroLines.length) {
-      heroLines.forEach(l => { l.style.opacity = '1'; });
-    }
-
-    if (heroDots.length && !reducedMotion) {
-      gsap.set(heroDots, { opacity: 0 });
-      tl.to(heroDots, { opacity: 1, duration: 0.4, stagger: 0.08 }, 0.9);
-    }
-
-    // Ensure no residual transform on final state (don't regress)
-    tl.set([heroEyebrow, ...heroLines, ...heroDots].filter(Boolean), {
-      clearProps: 'transform',
-      opacity: 1,
-    });
+    gsap.set(caption, { opacity: 0, y: 8 });
+    gsap.to(caption, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', delay: 0.6 });
   });
 
   /* ─── CIRCLE CTA RIPPLE ─── */
