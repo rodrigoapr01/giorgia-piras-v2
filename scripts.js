@@ -383,6 +383,91 @@
     container.addEventListener('touchend',   stopDrag);
   })();
 
+  /* ─── TESTIMONIALS SHUFFLE STACK (drag to cycle) ─── */
+  (function testimonialsShuffle() {
+    const stack = document.getElementById('testimonialsStack');
+    if (!stack) return;
+
+    const cards = Array.from(stack.querySelectorAll('.testimonial-card'));
+    if (cards.length !== 3) return;
+
+    /* Ordine logico interno: [front, middle, back] */
+    let order = [...cards];
+
+    const SWIPE_THRESHOLD = 150; /* px */
+    const ROTATE_BASE     = -6;
+
+    let isDragging      = false;
+    let startX          = 0;
+    let deltaX          = 0;
+    let activeCard      = null;
+    let activePointerId = null;
+
+    function applyPositions() {
+      order[0].setAttribute('data-position', 'front');
+      order[1].setAttribute('data-position', 'middle');
+      order[2].setAttribute('data-position', 'back');
+      /* reset inline transform per tornare a quelle del CSS */
+      order.forEach(c => { c.style.transform = ''; });
+    }
+
+    function shuffle() {
+      const front = order.shift();
+      front.classList.remove('is-leaving');
+      order.push(front);
+      applyPositions();
+    }
+
+    function onPointerDown(e) {
+      const target = e.target.closest('.testimonial-card');
+      if (!target || target.getAttribute('data-position') !== 'front') return;
+
+      isDragging      = true;
+      activeCard      = target;
+      activePointerId = e.pointerId;
+      startX          = e.clientX;
+      deltaX          = 0;
+
+      activeCard.classList.add('is-dragging');
+      try { activeCard.setPointerCapture(e.pointerId); } catch (_) {}
+    }
+
+    function onPointerMove(e) {
+      if (!isDragging || !activeCard || e.pointerId !== activePointerId) return;
+      deltaX = e.clientX - startX;
+      const rotation = ROTATE_BASE + deltaX * 0.04;
+      activeCard.style.transform = `translateX(${deltaX}px) rotate(${rotation}deg)`;
+    }
+
+    function onPointerUp(e) {
+      if (!isDragging || !activeCard) return;
+      const swipedLeft = -deltaX > SWIPE_THRESHOLD;
+
+      activeCard.classList.remove('is-dragging');
+
+      if (swipedLeft) {
+        activeCard.classList.add('is-leaving');
+        activeCard.style.transform = '';
+        setTimeout(() => { shuffle(); }, 350);
+      } else {
+        activeCard.style.transform = '';
+      }
+
+      try { activeCard.releasePointerCapture(activePointerId); } catch (_) {}
+      isDragging      = false;
+      activeCard      = null;
+      activePointerId = null;
+      deltaX          = 0;
+    }
+
+    stack.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerUp);
+
+    applyPositions();
+  }());
+
   /* ─── VIDEO: pause offscreen for perf ─── */
   (function videoPerf() {
     if (!('IntersectionObserver' in window)) return;
