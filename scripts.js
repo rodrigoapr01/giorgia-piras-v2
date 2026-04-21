@@ -228,90 +228,112 @@
     });
   }());
 
-  /* ─── MACRO CALCULATOR ─── */
-  (function macroCalc() {
-    const form = $('#calc-form');
-    if (!form) return;
+  /* ─── MACRO CALCULATOR — Mifflin-St Jeor + counter rAF ─── */
+  (function initMacroCalc() {
+    const root = document.querySelector('.macro-calc');
+    if (!root) return;
 
     const state = {
-      gender: 'F', weight: 65, height: 165, age: 28, activity: 1.375, goal: 'maintain',
+      sesso: 'f',
+      peso: 65,
+      altezza: 165,
+      eta: 30,
+      attivita: 1.375,
+      obiettivo: 1,
     };
 
-    function calc() {
-      const { gender, weight, height, age, activity, goal } = state;
-      const bmr = 10 * weight + 6.25 * height - 5 * age + (gender === 'M' ? 5 : -161);
-      const tdee = bmr * activity;
-      const kcal = Math.round(goal === 'cut' ? tdee - 350 : goal === 'bulk' ? tdee + 300 : tdee);
-      const prot = Math.round(goal === 'bulk' ? weight * 2.2 : goal === 'cut' ? weight * 2 : weight * 1.8);
-      const fat  = Math.round(goal === 'cut' ? weight * 0.8 : weight * 1.0);
-      const carb = Math.max(0, Math.round((kcal - prot * 4 - fat * 9) / 4));
-      return { kcal, prot, fat, carb };
+    const outputs = {
+      peso:    root.querySelector('[data-output="peso"]'),
+      altezza: root.querySelector('[data-output="altezza"]'),
+      eta:     root.querySelector('[data-output="eta"]'),
+      kcal:    root.querySelector('[data-output="kcal"]'),
+      prot:    root.querySelector('[data-output="prot"]'),
+      carb:    root.querySelector('[data-output="carb"]'),
+      fat:     root.querySelector('[data-output="fat"]'),
+    };
+
+    function compute() {
+      const { sesso, peso, altezza, eta, attivita, obiettivo } = state;
+      /* Mifflin-St Jeor */
+      const bmr = sesso === 'f'
+        ? 10 * peso + 6.25 * altezza - 5 * eta - 161
+        : 10 * peso + 6.25 * altezza - 5 * eta + 5;
+      const tdee = bmr * attivita;
+      const kcal = Math.round(tdee * obiettivo);
+      /* Split 25/50/25 (prot/carb/fat) in calorie → grammi */
+      const prot = Math.round((kcal * 0.25) / 4);
+      const carb = Math.round((kcal * 0.50) / 4);
+      const fat  = Math.round((kcal * 0.25) / 9);
+      return { kcal, prot, carb, fat };
     }
 
-    function animateNum(id, target) {
-      const el = document.getElementById(id);
+    function animateNumber(el, to, duration = 400) {
       if (!el) return;
-      if (reducedMotion) { el.textContent = target; return; }
-      const start = parseFloat(el.textContent) || 0;
-      const duration = 600;
+      const from = parseInt(el.textContent.replace(/\D/g, ''), 10) || 0;
+      if (from === to) return;
+      if (reducedMotion) { el.textContent = to.toLocaleString('it-IT'); return; }
       const t0 = performance.now();
       function step(now) {
-        const t = Math.min((now - t0) / duration, 1);
-        const eased = 1 - Math.pow(1 - t, 3);
-        el.textContent = Math.round(start + (target - start) * eased);
-        if (t < 1) requestAnimationFrame(step);
+        const p = Math.min((now - t0) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(from + (to - from) * eased).toLocaleString('it-IT');
+        if (p < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
     }
 
-    function updateFill(input) {
-      const pct = ((input.value - input.min) / (input.max - input.min)) * 100;
-      input.style.setProperty('--fill', `${pct}%`);
-    }
-
     function update() {
-      const { kcal, prot, fat, carb } = calc();
-      animateNum('mc-kcal', kcal);
-      animateNum('mc-prot', prot);
-      animateNum('mc-fat',  fat);
-      animateNum('mc-carb', carb);
+      const { kcal, prot, carb, fat } = compute();
+      animateNumber(outputs.kcal, kcal);
+      animateNumber(outputs.prot, prot);
+      animateNumber(outputs.carb, carb);
+      animateNumber(outputs.fat, fat);
     }
 
-    $$('[data-mc]', form).forEach(btn => {
-      btn.addEventListener('click', () => {
-        const group = btn.dataset.mc;
-        $$(`[data-mc="${group}"]`, form).forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        state[group] = group === 'activity' ? parseFloat(btn.dataset.val) : btn.dataset.val;
+    function updateSliderFill(slider) {
+      const min = parseFloat(slider.min);
+      const max = parseFloat(slider.max);
+      const val = parseFloat(slider.value);
+      const pct = ((val - min) / (max - min)) * 100;
+      slider.style.background = `linear-gradient(to right, #C4391D 0%, #C4391D ${pct}%, #222 ${pct}%, #222 100%)`;
+    }
+
+    /* Slider binding */
+    root.querySelectorAll('.mc-slider').forEach(slider => {
+      const key = slider.getAttribute('data-input');
+      updateSliderFill(slider);
+      slider.addEventListener('input', () => {
+        const val = parseInt(slider.value, 10);
+        state[key] = val;
+        if (outputs[key]) outputs[key].textContent = val;
+        updateSliderFill(slider);
         update();
       });
     });
 
-    [
-      ['mc-weight', 'weight', 'mc-weight-val', 'kg'],
-      ['mc-height', 'height', 'mc-height-val', 'cm'],
-      ['mc-age',    'age',    'mc-age-val',    'anni'],
-    ].forEach(([id, key, dispId, unit]) => {
-      const input = document.getElementById(id);
-      const disp = document.getElementById(dispId);
-      if (!input) return;
-      updateFill(input);
-      input.addEventListener('input', () => {
-        state[key] = parseInt(input.value, 10);
-        disp.textContent = `${input.value} ${unit}`;
-        updateFill(input);
+    /* Pills binding */
+    root.querySelectorAll('.mc-pills').forEach(group => {
+      const key = group.getAttribute('data-group');
+      group.addEventListener('click', (e) => {
+        const btn = e.target.closest('.mc-pill');
+        if (!btn) return;
+        group.querySelectorAll('.mc-pill').forEach(p => p.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        const raw = btn.getAttribute('data-value');
+        const parsed = parseFloat(raw);
+        state[key] = isNaN(parsed) ? raw : parsed;
         update();
       });
     });
 
-    const section = $('#calcolatore');
-    if (section && 'IntersectionObserver' in window) {
+    /* Primo render solo quando la sezione entra in viewport → counter è animato */
+    if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
         entries.forEach(e => {
           if (e.isIntersecting) { update(); io.unobserve(e.target); }
         });
       }, { threshold: 0.2 });
-      io.observe(section);
+      io.observe(root);
     } else {
       update();
     }

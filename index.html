@@ -359,96 +359,122 @@
       </div>
     </section>
 
-    <!-- ═══ CALCOLATORE MACRO ═══ -->
-    <section id="calcolatore" class="calcolatore" aria-labelledby="calc-title">
-      <div class="container">
-        <header class="section-header">
-          <span class="eyebrow" data-anim="fade-up">Strumento utile <span class="eyebrow-num">07</span></span>
-          <h2 id="calc-title" class="section-title" data-split-words>Scopri i tuoi macro.</h2>
-          <p class="section-sub" data-anim="fade-up">Un punto di partenza. Il piano vero, insieme.</p>
+    <!-- ═══ MACRO CALC — dark contrast ═══ -->
+    <section class="macro-calc" id="macro" aria-labelledby="macro-title">
+      <div class="macro-calc__inner">
+
+        <header class="macro-calc__header">
+          <p class="macro-calc__eyebrow">Strumento <span>07</span></p>
+          <h2 id="macro-title" class="macro-calc__title">
+            Il tuo piano.<br/>
+            <em>In numeri.</em>
+          </h2>
+          <p class="macro-calc__lead">
+            Un punto di partenza. Il piano vero lo costruiamo insieme.
+          </p>
         </header>
 
-        <div class="calc-grid">
-          <form class="calc-form" id="calc-form" autocomplete="off" novalidate>
-            <fieldset class="calc-field">
-              <legend class="calc-label">Sesso</legend>
-              <div class="calc-pills">
-                <button type="button" class="pill-btn active" data-mc="gender" data-val="F">Donna</button>
-                <button type="button" class="pill-btn" data-mc="gender" data-val="M">Uomo</button>
+        <div class="macro-calc__body">
+
+          <!-- Colonna input -->
+          <div class="macro-calc__form">
+
+            <fieldset class="mc-field">
+              <legend class="mc-label">Sesso</legend>
+              <div class="mc-pills" data-group="sesso">
+                <button type="button" class="mc-pill is-active" data-value="f">Donna</button>
+                <button type="button" class="mc-pill" data-value="m">Uomo</button>
               </div>
             </fieldset>
 
-            <div class="calc-field">
-              <div class="calc-field-row">
-                <label class="calc-label" for="mc-weight">Peso</label>
-                <span class="calc-val" id="mc-weight-val">65 kg</span>
+            <div class="mc-field mc-field--slider">
+              <div class="mc-field__head">
+                <span class="mc-label">Peso</span>
+                <span class="mc-value"><span data-output="peso">65</span> kg</span>
               </div>
-              <input type="range" id="mc-weight" min="40" max="150" value="65" step="1" aria-label="Peso in kg">
+              <input type="range" min="40" max="150" value="65" step="1" data-input="peso" class="mc-slider" aria-label="Peso in kg" />
             </div>
 
-            <div class="calc-field">
-              <div class="calc-field-row">
-                <label class="calc-label" for="mc-height">Altezza</label>
-                <span class="calc-val" id="mc-height-val">165 cm</span>
+            <div class="mc-field mc-field--slider">
+              <div class="mc-field__head">
+                <span class="mc-label">Altezza</span>
+                <span class="mc-value"><span data-output="altezza">165</span> cm</span>
               </div>
-              <input type="range" id="mc-height" min="140" max="210" value="165" step="1" aria-label="Altezza in cm">
+              <input type="range" min="140" max="210" value="165" step="1" data-input="altezza" class="mc-slider" aria-label="Altezza in cm" />
             </div>
 
-            <div class="calc-field">
-              <div class="calc-field-row">
-                <label class="calc-label" for="mc-age">Età</label>
-                <span class="calc-val" id="mc-age-val">28 anni</span>
+            <div class="mc-field mc-field--slider">
+              <div class="mc-field__head">
+                <span class="mc-label">Età</span>
+                <span class="mc-value"><span data-output="eta">30</span> anni</span>
               </div>
-              <input type="range" id="mc-age" min="16" max="70" value="28" step="1" aria-label="Età in anni">
+              <input type="range" min="16" max="80" value="30" step="1" data-input="eta" class="mc-slider" aria-label="Età in anni" />
             </div>
 
-            <fieldset class="calc-field">
-              <legend class="calc-label">Livello di attività</legend>
-              <div class="calc-pills calc-pills--wrap">
-                <button type="button" class="pill-btn" data-mc="activity" data-val="1.2">Sedentaria</button>
-                <button type="button" class="pill-btn active" data-mc="activity" data-val="1.375">Poco attiva</button>
-                <button type="button" class="pill-btn" data-mc="activity" data-val="1.55">Moderata</button>
-                <button type="button" class="pill-btn" data-mc="activity" data-val="1.725">Molto attiva</button>
+            <fieldset class="mc-field">
+              <legend class="mc-label">Livello di attività</legend>
+              <div class="mc-pills" data-group="attivita">
+                <button type="button" class="mc-pill" data-value="1.2">Sedentaria</button>
+                <button type="button" class="mc-pill is-active" data-value="1.375">Poco attiva</button>
+                <button type="button" class="mc-pill" data-value="1.55">Moderata</button>
+                <button type="button" class="mc-pill" data-value="1.725">Molto attiva</button>
               </div>
             </fieldset>
 
-            <fieldset class="calc-field">
-              <legend class="calc-label">Obiettivo</legend>
-              <div class="calc-pills">
-                <button type="button" class="pill-btn" data-mc="goal" data-val="cut">Dimagrire</button>
-                <button type="button" class="pill-btn active" data-mc="goal" data-val="maintain">Mantenere</button>
-                <button type="button" class="pill-btn" data-mc="goal" data-val="bulk">Aumentare</button>
+            <fieldset class="mc-field">
+              <legend class="mc-label">Obiettivo</legend>
+              <div class="mc-pills" data-group="obiettivo">
+                <button type="button" class="mc-pill" data-value="0.8">Dimagrire</button>
+                <button type="button" class="mc-pill is-active" data-value="1">Mantenere</button>
+                <button type="button" class="mc-pill" data-value="1.15">Aumentare</button>
               </div>
             </fieldset>
-          </form>
 
-          <aside class="calc-result" aria-live="polite">
-            <div class="calc-kcal">
-              <span class="calc-kcal-num" id="mc-kcal">0</span>
-              <span class="calc-kcal-label">kcal / giorno</span>
+          </div>
+
+          <!-- Colonna output -->
+          <div class="macro-calc__output">
+
+            <p class="mc-output__label">Fabbisogno giornaliero</p>
+            <div class="mc-output__kcal" aria-live="polite">
+              <span data-output="kcal">1898</span>
+            </div>
+            <p class="mc-output__unit">kcal</p>
+
+            <div class="mc-output__bar" role="img" aria-label="Distribuzione macronutrienti">
+              <div class="mc-bar__seg mc-bar__seg--prot" data-seg="prot"></div>
+              <div class="mc-bar__seg mc-bar__seg--carb" data-seg="carb"></div>
+              <div class="mc-bar__seg mc-bar__seg--fat" data-seg="fat"></div>
             </div>
 
-            <div class="calc-macros">
-              <div class="calc-macro">
-                <span class="calc-macro-num" id="mc-prot">0</span><span class="calc-macro-unit">g</span>
-                <span class="calc-macro-label">Proteine</span>
+            <div class="mc-output__macros">
+              <div class="mc-macro">
+                <span class="mc-macro__dot mc-macro__dot--prot"></span>
+                <span class="mc-macro__label">Proteine</span>
+                <span class="mc-macro__value"><span data-output="prot">119</span>g</span>
               </div>
-              <div class="calc-macro">
-                <span class="calc-macro-num" id="mc-carb">0</span><span class="calc-macro-unit">g</span>
-                <span class="calc-macro-label">Carboidrati</span>
+              <div class="mc-macro">
+                <span class="mc-macro__dot mc-macro__dot--carb"></span>
+                <span class="mc-macro__label">Carboidrati</span>
+                <span class="mc-macro__value"><span data-output="carb">237</span>g</span>
               </div>
-              <div class="calc-macro">
-                <span class="calc-macro-num" id="mc-fat">0</span><span class="calc-macro-unit">g</span>
-                <span class="calc-macro-label">Grassi</span>
+              <div class="mc-macro">
+                <span class="mc-macro__dot mc-macro__dot--fat"></span>
+                <span class="mc-macro__label">Grassi</span>
+                <span class="mc-macro__value"><span data-output="fat">53</span>g</span>
               </div>
             </div>
 
-            <p class="calc-disclaimer">Valori indicativi (formula Mifflin-St Jeor). Un piano cucito su di te lo costruiamo insieme.</p>
+            <p class="mc-output__disclaimer">
+              Valori indicativi calcolati con formula Mifflin-St Jeor. Il piano reale lo costruiamo sulla tua vita, non su una formula.
+            </p>
 
-            <a class="link-underline" href="https://wa.me/393935896994" target="_blank" rel="noopener" data-cursor-hover>
-              Voglio un piano vero <span aria-hidden="true">→</span>
+            <a class="mc-output__cta" href="https://wa.me/393935896994" target="_blank" rel="noopener noreferrer">
+              Costruiamo il tuo piano insieme <span aria-hidden="true">→</span>
             </a>
-          </aside>
+
+          </div>
+
         </div>
       </div>
     </section>
