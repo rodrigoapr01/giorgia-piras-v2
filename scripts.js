@@ -418,7 +418,27 @@
       applyPositions();
     }
 
+    /* Reset robusto: qualsiasi cosa succeda, riportiamo lo stato a zero.
+       Chiamata dai safety net (blur, visibilitychange, contextmenu, pointerleave). */
+    function resetDragState() {
+      if (activeCard) {
+        activeCard.classList.remove('is-dragging');
+        activeCard.style.transform = '';
+        if (activePointerId !== null) {
+          try { activeCard.releasePointerCapture(activePointerId); } catch (_) {}
+        }
+      }
+      isDragging      = false;
+      activeCard      = null;
+      activePointerId = null;
+      deltaX          = 0;
+      startX          = 0;
+    }
+
     function onPointerDown(e) {
+      /* Solo bottone primario (0) — ignora tasto destro/centrale */
+      if (e.button !== undefined && e.button !== 0) return;
+
       const target = e.target.closest('.testimonial-card');
       if (!target || target.getAttribute('data-position') !== 'front') return;
 
@@ -441,29 +461,59 @@
 
     function onPointerUp(e) {
       if (!isDragging || !activeCard) return;
-      const swipedLeft = -deltaX > SWIPE_THRESHOLD;
+      /* Ignora pointer secondari diversi da quello attivo */
+      if (e.pointerId !== undefined && e.pointerId !== activePointerId) return;
 
-      activeCard.classList.remove('is-dragging');
+      /* Cattura riferimenti + stato locale PRIMA di resettare */
+      const card       = activeCard;
+      const pid        = activePointerId;
+      const savedDelta = deltaX;
 
-      if (swipedLeft) {
-        activeCard.classList.add('is-leaving');
-        activeCard.style.transform = '';
-        setTimeout(() => { shuffle(); }, 350);
-      } else {
-        activeCard.style.transform = '';
-      }
-
-      try { activeCard.releasePointerCapture(activePointerId); } catch (_) {}
+      /* Reset stato SUBITO, prima di qualsiasi altra operazione.
+         Così anche se il setTimeout viene preempted da un'altra gesture,
+         gli altri elementi della pagina ricevono già pointer events puliti. */
       isDragging      = false;
       activeCard      = null;
       activePointerId = null;
       deltaX          = 0;
+
+      card.classList.remove('is-dragging');
+      try { card.releasePointerCapture(pid); } catch (_) {}
+
+      if (-savedDelta > SWIPE_THRESHOLD) {
+        card.classList.add('is-leaving');
+        card.style.transform = '';
+        setTimeout(() => { shuffle(); }, 350);
+      } else {
+        card.style.transform = '';
+      }
     }
 
+    /* Safety net: qualsiasi evento "sporco" resetta lo stato */
+    function onPointerCancel()   { resetDragState(); }
+    function onWindowBlur()      { resetDragState(); }
+    function onVisibilityChange(){ if (document.hidden) resetDragState(); }
+    function onContextMenu()     { resetDragState(); }
+
+    /* pointerdown solo sullo stack — non globale */
     stack.addEventListener('pointerdown', onPointerDown);
+
+    /* move/up su window — necessari per tracciare drag oltre l'elemento */
     window.addEventListener('pointermove', onPointerMove);
-    window.addEventListener('pointerup', onPointerUp);
-    window.addEventListener('pointercancel', onPointerUp);
+    window.addEventListener('pointerup',   onPointerUp);
+
+    /* Safety net listeners */
+    window.addEventListener('pointercancel', onPointerCancel);
+    window.addEventListener('blur',          onWindowBlur);
+    window.addEventListener('contextmenu',   onContextMenu);
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    /* Puntatore esce dalla finestra del browser durante il drag → reset */
+    document.addEventListener('pointerleave', (e) => {
+      if (isDragging && e.target === document.documentElement) {
+        resetDragState();
+      }
+    });
 
     applyPositions();
   }());
