@@ -545,13 +545,16 @@ html.cursor-ready .cursor { display: block; }
 }
 
 /* Hero watermark — provisional brand mark, anchored top-left corner */
+/* Mobile: sits above nav-h since mobile nav is transparent and its
+   only visible element (hamburger) lives in the top-right. The logo
+   can occupy the entire empty top-left quadrant. */
 .hero-watermark {
   position: absolute;
-  top: calc(var(--nav-h) + 8px);
-  left: 12px;
+  top: 20px;
+  left: 4px;
   z-index: 3;
   display: inline-block;
-  width: 168px;
+  width: 240px;
   line-height: 0;
   pointer-events: auto;
   opacity: 0.95;
