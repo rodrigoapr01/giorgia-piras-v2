@@ -454,25 +454,12 @@ html.cursor-ready .cursor { display: block; }
     rgba(245, 241, 232, 0) 50%
   );
 }
-.hero__marquee {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 140px;
-  z-index: 3;
-  overflow: hidden;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-}
-
-/* ════════ HERO CAPTION (sotto il marquee, didascalia editoriale) ════════ */
+/* ════════ HERO CAPTION (sopra il marquee, sinistra) ════════ */
 .hero-caption {
   background: var(--bg);
-  padding: 20px 24px 28px;
-  display: flex;
-  justify-content: center;
+  padding: 28px var(--container-pad) 16px;
+  display: block;
+  text-align: left;
 }
 .hero-caption__text {
   font-family: var(--font-body);
@@ -481,13 +468,25 @@ html.cursor-ready .cursor { display: block; }
   text-transform: uppercase;
   color: var(--ink-muted);
   margin: 0;
+  text-align: left;
 }
 @media (min-width: 768px) {
-  .hero-caption { padding: 28px 40px 36px; }
+  .hero-caption { padding: 36px var(--container-pad) 20px; }
   .hero-caption__text { font-size: 12px; }
 }
 
-/* ════════ MARQUEE (inside hero, bottom-aligned) ════════ */
+/* ════════ HERO MARQUEE (mantra scorrevole, sotto la caption) ════════ */
+.hero-marquee {
+  background: var(--bg);
+  overflow: hidden;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  padding: clamp(0.25rem, 1.5vw, 1rem) 0 clamp(1.5rem, 4vw, 3rem);
+}
+.marquee-dot-accent {
+  color: var(--accent);
+}
 .hero-marquee-track {
   display: flex;
   width: max-content;
