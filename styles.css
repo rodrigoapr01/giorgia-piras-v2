@@ -545,16 +545,15 @@ html.cursor-ready .cursor { display: block; }
 }
 
 /* Hero watermark — provisional brand mark, anchored top-left corner */
-/* Mobile: sits above nav-h since mobile nav is transparent and its
-   only visible element (hamburger) lives in the top-right. The logo
-   can occupy the entire empty top-left quadrant. */
+/* Note: PNG was cropped to remove transparent padding so "width" now
+   corresponds to actual letterform width (aspect ratio ~0.57 w/h). */
 .hero-watermark {
   position: absolute;
-  top: 20px;
-  left: 4px;
+  top: 16px;
+  left: 16px;
   z-index: 3;
   display: inline-block;
-  width: 240px;
+  width: 88px;
   line-height: 0;
   pointer-events: auto;
   opacity: 0.95;
@@ -575,16 +574,16 @@ html.cursor-ready .cursor { display: block; }
 }
 @media (min-width: 768px) {
   .hero-watermark {
-    top: calc(var(--nav-h) + 16px);
+    top: calc(var(--nav-h) + 12px);
     left: 24px;
-    width: 248px;
+    width: 120px;
   }
 }
 @media (min-width: 1280px) {
   .hero-watermark {
-    top: calc(var(--nav-h) + 24px);
+    top: calc(var(--nav-h) + 20px);
     left: 40px;
-    width: 328px;
+    width: 160px;
   }
 }
 
