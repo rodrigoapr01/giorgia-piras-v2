@@ -144,7 +144,16 @@
         </h2>
 
         <figure class="chi-sono__media">
-          <img src="assets/chi-sono.png" alt="Giorgia Piras — ritratto" loading="lazy">
+          <video
+            class="chi-sono-video chi-sono__video"
+            src="assets/video/giorgia-hero.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            aria-hidden="true"
+          ></video>
           <span class="chi-sono__grain" aria-hidden="true"></span>
         </figure>
 
@@ -197,7 +206,7 @@
           <li class="step" data-step="04">
             <span class="step-num" aria-hidden="true">04</span>
             <h3 class="step-title">Evolvi</h3>
-            <p class="step-desc">Il piano cresce con te. Ogni mese rivediamo.</p>
+            <p class="step-desc">Il piano cresce con te. Ogni mese cambia, ogni obiettivo nuovo.</p>
           </li>
         </ol>
       </div>
@@ -308,64 +317,48 @@
       </div>
     </section>
 
-    <!-- ═══ TESTIMONIANZE ═══ -->
-    <!-- TODO: testi di esempio — sostituire con testimonianze reali quando Giorgia le manda -->
-    <section id="testimonianze" class="testimonianze testimonials-shuffle" aria-labelledby="test-title">
+    <!-- ═══ TESTIMONIANZE — editorial quotes ═══ -->
+    <!-- PLACEHOLDER: sostituire con testimonianze reali quando Giorgia le manda -->
+    <section id="testimonianze" class="testimonianze testimonials-edit" aria-labelledby="test-title">
       <div class="container">
-        <header class="section-header">
-          <span class="eyebrow" data-anim="fade-up">Parole <span class="eyebrow-num">06</span></span>
+        <header class="section-header testimonials-edit__header">
+          <span class="eyebrow" data-anim="fade-up">Parole <span aria-hidden="true">—</span> <span class="eyebrow-num">08</span></span>
           <h2 id="test-title" class="section-title" data-split-words>Chi è passato di qui.</h2>
         </header>
 
-        <div class="testimonials-shuffle__stage">
-          <div class="testimonials-shuffle__stack" id="testimonialsStack" role="region" aria-label="Testimonianze trascinabili">
-            <article class="testimonial-card" data-position="front">
-              <div class="testimonial-card__media">
-                <img src="assets/img/testimonianze/testimonianze-01.jpg" alt="Marco durante un allenamento con Giorgia" loading="lazy">
-              </div>
-              <div class="testimonial-card__body">
-                <span class="testimonial-card__quote" aria-hidden="true">&ldquo;</span>
-                <p class="testimonial-card__text">Avevo provato di tutto: palestre, app, corsi online. Con Giorgia ho capito cosa mi mancava — qualcuno che ti guarda negli occhi e ti chiede conto. Non molli.</p>
-                <p class="testimonial-card__author">Marco L.</p>
-              </div>
-            </article>
+        <ol class="testimonials-edit__list" role="list">
+          <!-- PLACEHOLDER: sostituire con testimonianza reale -->
+          <li class="testimonial-quote testimonial-quote--left" role="listitem">
+            <span class="testimonial-quote__mark" aria-hidden="true">—</span>
+            <blockquote class="testimonial-quote__text">
+              Avevo provato di tutto: palestre, app, corsi online. Con Giorgia ho capito cosa mi mancava — qualcuno che guardi negli occhi e ti chieda come stai. Non molli.
+            </blockquote>
+            <p class="testimonial-quote__author">Marta G.</p>
+            <p class="testimonial-quote__meta">35 anni, percorso di 8 mesi</p>
+            <span class="testimonial-quote__rule" aria-hidden="true"></span>
+          </li>
 
-            <article class="testimonial-card" data-position="middle">
-              <div class="testimonial-card__media">
-                <img src="assets/img/testimonianze/testimonianze-02.jpg" alt="Chiara durante un allenamento con Giorgia" loading="lazy">
-              </div>
-              <div class="testimonial-card__body">
-                <span class="testimonial-card__quote" aria-hidden="true">&ldquo;</span>
-                <p class="testimonial-card__text">Sono arrivata da Giorgia senza sapere cosa volevo davvero. Dopo tre mesi non mi riconoscevo più: più forte, più lucida, più presente. Lei non ti allena, ti cambia.</p>
-                <p class="testimonial-card__author">Chiara M.</p>
-              </div>
-            </article>
+          <!-- PLACEHOLDER: sostituire con testimonianza reale -->
+          <li class="testimonial-quote testimonial-quote--right" role="listitem">
+            <span class="testimonial-quote__mark" aria-hidden="true">—</span>
+            <blockquote class="testimonial-quote__text">
+              Dopo Giorgia mi sono rimessa in forma. Dopo tre mesi con Giorgia ho capito cosa vuol dire muoversi davvero.
+            </blockquote>
+            <p class="testimonial-quote__author">Elena R.</p>
+            <p class="testimonial-quote__meta">42 anni, percorso di 1 anno</p>
+            <span class="testimonial-quote__rule" aria-hidden="true"></span>
+          </li>
 
-            <article class="testimonial-card" data-position="back">
-              <div class="testimonial-card__media">
-                <img src="assets/img/testimonianze/testimonianze-03.jpg" alt="Alessandro durante un allenamento con Giorgia" loading="lazy">
-              </div>
-              <div class="testimonial-card__body">
-                <span class="testimonial-card__quote" aria-hidden="true">&ldquo;</span>
-                <p class="testimonial-card__text">Mi alleno con Giorgia da due anni. È la prima volta che ho una routine che dura, e non perché mi costringe — perché finalmente mi piace quello che faccio.</p>
-                <p class="testimonial-card__author">Alessandro D.</p>
-              </div>
-            </article>
-
-            <article class="testimonial-card" data-position="hidden">
-              <div class="testimonial-card__media">
-                <img src="assets/img/testimonianze/testimonianze-04.jpg" alt="Lorenzo durante un allenamento con Giorgia" loading="lazy">
-              </div>
-              <div class="testimonial-card__body">
-                <span class="testimonial-card__quote" aria-hidden="true">&ldquo;</span>
-                <p class="testimonial-card__text">Pensavo fosse una questione di muscoli. Era una questione di testa. Giorgia mi ha insegnato a smettere di combattermi e a lavorare insieme al mio corpo.</p>
-                <p class="testimonial-card__author">Lorenzo B.</p>
-              </div>
-            </article>
-          </div>
-        </div>
-
-        <p class="testimonials-shuffle__hint" aria-hidden="true">Trascina la card per scorrere</p>
+          <!-- PLACEHOLDER: sostituire con testimonianza reale -->
+          <li class="testimonial-quote testimonial-quote--left" role="listitem">
+            <span class="testimonial-quote__mark" aria-hidden="true">—</span>
+            <blockquote class="testimonial-quote__text">
+              Arrivi da Giorgia pensando di dover dimagrire. Esci con la testa più forte, il corpo più tuo, e una routine che ti costruisci tu.
+            </blockquote>
+            <p class="testimonial-quote__author">Sara M.</p>
+            <p class="testimonial-quote__meta">29 anni, percorso in corso</p>
+          </li>
+        </ol>
       </div>
     </section>
 
