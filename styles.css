@@ -1972,22 +1972,13 @@ html.cursor-ready .cursor { display: block; }
   .macro-calc__output { padding-left: clamp(3rem, 5vw, 4rem); }
 }
 
-/* ════════ FINAL CTA — editorial off-white ════════
-   overflow: visible + z-index: 1 per permettere al background
-   animato (.bg-paths-wrapper) di sfumare sopra il footer. */
+/* ════════ FINAL CTA — editorial off-white ════════ */
 .final-cta {
   position: relative;
   background: var(--bg);
   color: var(--ink);
   text-align: center;
   padding: var(--space-section-y) var(--container-pad);
-  overflow: visible;
-  z-index: 1;
-}
-/* Tutto il contenuto interno sta sopra il background decorativo */
-.final-cta > :not(.bg-paths-wrapper) {
-  position: relative;
-  z-index: 2;
 }
 .final-cta-inner {
   max-width: 44rem;
@@ -2042,105 +2033,6 @@ html.cursor-ready .cursor { display: block; }
   height: 44%;
   color: #ffffff;
   display: block;
-}
-
-/* ════════ BACKGROUND PATHS — contenuti DENTRO la sezione CTA ════════
-   16 path SVG (8 per gruppo) evenly-spread lungo tutto l'asse X del
-   viewBox, in modo che — anche con preserveAspectRatio="none" che
-   stira lo stage sui viewport stretti — non si raggruppino tutti
-   nello stesso angolo. Il wrapper è contenuto al 100% nella sezione
-   .final-cta (niente bleed nel footer). Animazione puramente CSS
-   (stroke-dashoffset) — nessun JS. Il wrapper è decorativo:
-   pointer-events: none, aria-hidden, z-index: 0 rispetto al contenuto
-   (che sta a z-index: 2). */
-.bg-paths-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;                  /* CONTENUTO nella sezione: niente footer bleed */
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-}
-.bg-paths-svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  color: var(--accent);       /* stroke="currentColor" → accent rosso mattone */
-  /* Mask gradient: tratti che emergono dall'alto e si dissolvono in
-     basso, così la sezione inizia e finisce pulita, senza bordi netti
-     tra le linee e i limiti della .final-cta. */
-  -webkit-mask-image: linear-gradient(to bottom,
-    transparent 0%,
-    #000 14%,
-    #000 82%,
-    transparent 100%);
-          mask-image: linear-gradient(to bottom,
-    transparent 0%,
-    #000 14%,
-    #000 82%,
-    transparent 100%);
-}
-
-/* ── Animazione "flusso" ──
-   Trattini (400 solid / 200 gap) che scorrono lungo ciascun path.
-   Dasharray totale 600, duration 14s → circa 2-3 trattini visibili
-   per path sui layout wide, percepibile ma mai frenetico.
-   GPU-friendly: solo stroke-dashoffset (SVG-native, composited). */
-@keyframes bg-paths-draw {
-  from { stroke-dashoffset: 0; }
-  to   { stroke-dashoffset: -600; }
-}
-
-.paths-group path {
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-dasharray: 400 200;
-  animation: bg-paths-draw 14s linear infinite;
-  will-change: stroke-dashoffset;
-}
-
-/* Sfasamento progressivo degli 8 path: ogni linea parte in un punto
-   diverso del ciclo (14s/8 ≈ 1.75s l'uno dall'altro), così l'insieme
-   produce un flusso continuo invece di pulsare all'unisono. */
-.paths-group path:nth-child(1) { animation-delay: 0s; }
-.paths-group path:nth-child(2) { animation-delay: -1.75s; }
-.paths-group path:nth-child(3) { animation-delay: -3.5s; }
-.paths-group path:nth-child(4) { animation-delay: -5.25s; }
-.paths-group path:nth-child(5) { animation-delay: -7s; }
-.paths-group path:nth-child(6) { animation-delay: -8.75s; }
-.paths-group path:nth-child(7) { animation-delay: -10.5s; }
-.paths-group path:nth-child(8) { animation-delay: -12.25s; }
-
-/* Il secondo gruppo scorre nella stessa direzione del primo, con path
-   interleaved (offset +100 su X, +20 su Y) e durata diversa (17s)
-   così i trattini dei due strati non si allineano mai. */
-.paths-group-b path {
-  animation-duration: 17s;
-}
-
-/* ── Mobile (<768px): lascia solo il gruppo A ──
-   Su viewport stretti, 8 linee diagonali distribuite lungo l'asse X
-   bastano per il fondale. Il gruppo B verrebbe compresso sullo stesso
-   "fascio" del gruppo A e appesantirebbe solo il rendering. */
-@media (max-width: 767px) {
-  .paths-group-b {
-    display: none;
-  }
-  .paths-group path {
-    animation-duration: 20s; /* leggermente più lento per stare a 60fps */
-  }
-}
-
-/* ── Accessibilità: niente movimento se l'utente lo ha richiesto ── */
-@media (prefers-reduced-motion: reduce) {
-  .paths-group path {
-    animation: none;
-    stroke-dasharray: none;
-  }
 }
 
 /* ════════ SITE FOOTER — editorial off-white (redesign) ════════
