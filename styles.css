@@ -1972,14 +1972,22 @@ html.cursor-ready .cursor { display: block; }
   .macro-calc__output { padding-left: clamp(3rem, 5vw, 4rem); }
 }
 
-/* ════════ FINAL CTA — editorial off-white ════════ */
+/* ════════ FINAL CTA — editorial off-white ════════
+   overflow: visible + z-index: 1 per permettere al background
+   animato (.bg-paths-wrapper) di sfumare sopra il footer. */
 .final-cta {
   position: relative;
   background: var(--bg);
   color: var(--ink);
   text-align: center;
   padding: var(--space-section-y) var(--container-pad);
-  overflow: hidden;
+  overflow: visible;
+  z-index: 1;
+}
+/* Tutto il contenuto interno sta sopra il background decorativo */
+.final-cta > :not(.bg-paths-wrapper) {
+  position: relative;
+  z-index: 2;
 }
 .final-cta-inner {
   max-width: 44rem;
@@ -2034,6 +2042,121 @@ html.cursor-ready .cursor { display: block; }
   height: 44%;
   color: #ffffff;
   display: block;
+}
+
+/* ════════ BACKGROUND PATHS — sezione CTA + sfumatura nel footer ════════
+   24 path SVG (12 per gruppo) ancorati in fondo alla sezione CTA che
+   proseguono oltre il bottom e sfumano dentro il footer. Animazione
+   puramente CSS (stroke-dashoffset + opacity) — nessun JS. Il wrapper
+   è decorativo: pointer-events: none, aria-hidden, e z-index: 0 rispetto
+   al contenuto della sezione (che sta a z-index: 2). */
+.bg-paths-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: -180px;             /* sborda nel footer per ~180px su mobile */
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.bg-paths-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--accent);       /* stroke="currentColor" → accent rosso mattone */
+  /* Mask gradient: opaco fino al 70% dell'altezza del wrapper, sfuma
+     rapidamente tra 70% e 88%, trasparente verso il fondo. Il fondo
+     del wrapper cade dentro al footer ⇒ le linee ci entrano e
+     svaniscono in modo naturale. */
+  -webkit-mask-image: linear-gradient(to bottom,
+    #000 0%,
+    #000 70%,
+    rgba(0,0,0,0.35) 88%,
+    transparent 100%);
+          mask-image: linear-gradient(to bottom,
+    #000 0%,
+    #000 70%,
+    rgba(0,0,0,0.35) 88%,
+    transparent 100%);
+}
+
+/* Proprietà condivise dai path (già inline, ma le ripetiamo per sicurezza) */
+.paths-group path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+}
+
+/* ── Animazione "flusso" ──
+   Sposta la dash pattern lungo ciascun path producendo una scia che
+   attraversa la linea, accoppiata a un respiro di opacità. GPU-friendly:
+   solo stroke-dashoffset (SVG-native, composited) + opacity. */
+@keyframes bg-paths-draw {
+  0%   { stroke-dashoffset: 0;     opacity: 0.4; }
+  50%  { stroke-dashoffset: -1200; opacity: 0.9; }
+  100% { stroke-dashoffset: -2400; opacity: 0.4; }
+}
+
+.paths-group path {
+  stroke-dasharray: 1200 800;
+  animation: bg-paths-draw 25s linear infinite;
+  will-change: stroke-dashoffset, opacity;
+}
+
+/* Sfasamento progressivo dei 12 path: ogni linea parte in un punto
+   diverso del ciclo, così l'insieme produce un flusso continuo invece
+   di pulsare all'unisono. */
+.paths-group path:nth-child(1)  { animation-delay: 0s; }
+.paths-group path:nth-child(2)  { animation-delay: -2s; }
+.paths-group path:nth-child(3)  { animation-delay: -4s; }
+.paths-group path:nth-child(4)  { animation-delay: -6s; }
+.paths-group path:nth-child(5)  { animation-delay: -8s; }
+.paths-group path:nth-child(6)  { animation-delay: -10s; }
+.paths-group path:nth-child(7)  { animation-delay: -12s; }
+.paths-group path:nth-child(8)  { animation-delay: -14s; }
+.paths-group path:nth-child(9)  { animation-delay: -16s; }
+.paths-group path:nth-child(10) { animation-delay: -18s; }
+.paths-group path:nth-child(11) { animation-delay: -20s; }
+.paths-group path:nth-child(12) { animation-delay: -22s; }
+
+/* Il secondo gruppo scorre in senso opposto con durata leggermente
+   diversa, per evitare che i due flussi si ri-sincronizzino. */
+.paths-group-b path {
+  animation-duration: 28s;
+  animation-direction: reverse;
+}
+
+/* ── Tablet + (≥768px): bleeding più generoso dentro il footer ── */
+@media (min-width: 768px) {
+  .bg-paths-wrapper {
+    bottom: -240px;
+  }
+}
+
+/* ── Mobile (<768px): dimezza il carico grafico ──
+   Metà dei path nascosti + animazione più lenta per stare a 60fps
+   anche su dispositivi meno performanti. */
+@media (max-width: 767px) {
+  .paths-group path:nth-child(n+7) {
+    display: none;
+  }
+  .paths-group path {
+    animation-duration: 35s;
+  }
+  .paths-group-b path {
+    animation-duration: 38s;
+  }
+}
+
+/* ── Accessibilità: niente movimento se l'utente lo ha richiesto ── */
+@media (prefers-reduced-motion: reduce) {
+  .paths-group path {
+    animation: none;
+    stroke-dasharray: none;
+    opacity: 0.55;
+  }
 }
 
 /* ════════ SITE FOOTER — editorial off-white (redesign) ════════
