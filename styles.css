@@ -23,11 +23,31 @@
 
   --container-max: 1440px;
   --container-pad: clamp(1.5rem, 5vw, 5rem);
-  --section-pad: clamp(8rem, 14vw, 16rem);
+
+  /* ── Spaziature verticali (design tokens) ── */
+  --space-section-y: 72px;      /* padding top/bottom sezione (mobile) */
+  --space-heading-gap: 24px;    /* eyebrow → H2, H2 → paragrafo */
+  --space-block-gap: 32px;      /* tra blocchi nella stessa sezione */
+  --space-cta-gap: 32px;        /* content → CTA */
+  --space-micro: 12px;          /* gap piccoli (eyebrow → numero, label → campo) */
+
+  /* Legacy alias: qualsiasi regola che ancora riferisce --section-pad
+     eredita il nuovo ritmo senza override manuali. */
+  --section-pad: var(--space-section-y);
 
   --nav-h: 80px;
 
   --accent-punct: var(--accent);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --space-section-y: 112px;
+    --space-heading-gap: 32px;
+    --space-block-gap: 48px;
+    --space-cta-gap: 40px;
+    --space-micro: 16px;
+  }
 }
 
 /* ════════ RESET ════════ */
@@ -203,7 +223,9 @@ html.cursor-ready .cursor { display: block; }
 }
 
 .section-header {
-  margin-bottom: clamp(4rem, 8vw, 7rem);
+  /* header di sezione (eyebrow + h2 + intro) → contenuto.
+     Usa il token --space-block-gap per allinearsi al ritmo globale. */
+  margin-bottom: var(--space-block-gap);
 }
 
 /* ════════ PILLS (nav + top-hero badges) ════════ */
@@ -737,9 +759,8 @@ html.cursor-ready .cursor { display: block; }
    of the container. */
 .chi-sono {
   --font-editorial: 'Playfair Display', 'Iowan Old Style', Georgia, serif;
-  --chisono-pad-y: clamp(5rem, 12vh, 9rem);
   position: relative;
-  padding: var(--chisono-pad-y) 0;
+  padding: var(--space-section-y) 0;
   overflow: hidden; /* contain the bleed of the "02" */
 }
 
@@ -901,7 +922,10 @@ html.cursor-ready .cursor { display: block; }
 
 /* — Signature ———————————————————— */
 .chi-sono__sign {
+  /* Lo stacco verso la sezione successiva è gestito dal padding-bottom della
+     sezione tramite --space-section-y. Niente margin-bottom qui. */
   margin: clamp(1rem, 3vh, 2rem) 0 0;
+  margin-bottom: 0;
   align-self: flex-end;
   text-align: right;
   font-family: var(--font-editorial);
@@ -914,9 +938,6 @@ html.cursor-ready .cursor { display: block; }
 
 /* — Desktop grid (>=768px): asymmetric 12-col editorial layout —— */
 @media (min-width: 768px) {
-  .chi-sono {
-    --chisono-pad-y: clamp(6rem, 12vh, 10rem);
-  }
   .chi-sono__wrap {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -951,7 +972,7 @@ html.cursor-ready .cursor { display: block; }
 
 /* ════════ SERVIZI ════════ */
 .servizi {
-  padding: var(--section-pad) 0;
+  padding: var(--space-section-y) 0;
   position: relative;
 }
 .servizi-grid {
@@ -959,6 +980,9 @@ html.cursor-ready .cursor { display: block; }
   grid-template-columns: repeat(3, 1fr);
   gap: 0;
   position: relative;
+  /* Lo stacco sotto la griglia è il padding-bottom della sezione, non un
+     margin della griglia stessa. Evita il doppio spazio. */
+  margin: 0;
 }
 .servizio-card {
   position: relative;
@@ -1013,7 +1037,7 @@ html.cursor-ready .cursor { display: block; }
    Chi Sono. */
 .come-funziona {
   position: relative;
-  padding: clamp(5rem, 10vh, 9rem) 0;
+  padding: var(--space-section-y) 0;
   background: var(--bg);
   color: var(--ink);
   overflow: hidden;
@@ -1021,7 +1045,8 @@ html.cursor-ready .cursor { display: block; }
 .come-funziona__header {
   position: relative;
   z-index: 1;
-  margin-bottom: clamp(3rem, 7vh, 5rem);
+  /* Header Metodo → griglia step. Token condiviso per ritmo uniforme. */
+  margin-bottom: var(--space-block-gap);
 }
 .come-funziona__title {
   font-family: var(--font-editorial, 'Playfair Display', Georgia, serif);
@@ -1055,6 +1080,11 @@ html.cursor-ready .cursor { display: block; }
   display: flex;
   flex-direction: column;
   gap: clamp(2.5rem, 6vh, 3.5rem);
+  /* Kill default <ol> vertical margin — evita il doppio spazio tra
+     l'ultimo step e il padding-bottom della sezione. */
+  margin: 0;
+  padding-inline-start: 0;
+  list-style: none;
 }
 .step {
   position: relative;
@@ -1092,9 +1122,7 @@ html.cursor-ready .cursor { display: block; }
 }
 
 @media (min-width: 768px) {
-  .come-funziona {
-    padding: clamp(6rem, 12vh, 10rem) 0;
-  }
+  /* desktop padding preso dal token --space-section-y su :root @768 */
   .come-funziona__title {
     font-size: clamp(2.5rem, 5vw, 3.5rem);
     max-width: 22ch;
@@ -1357,7 +1385,7 @@ html.cursor-ready .cursor { display: block; }
 
 /* ════════ TRASFORMAZIONI ════════ */
 .trasformazioni {
-  padding: var(--section-pad) 0;
+  padding: var(--space-section-y) 0;
   background: var(--bg-alt);
 }
 
@@ -1467,7 +1495,7 @@ html.cursor-ready .cursor { display: block; }
 
 /* ════════ TESTIMONIANZE — editorial quotes ════════ */
 .testimonianze {
-  padding: clamp(5rem, 10vh, 9rem) 0;
+  padding: var(--space-section-y) 0;
   background: var(--bg);
   overflow: hidden;
   position: relative;
@@ -1562,7 +1590,7 @@ html.cursor-ready .cursor { display: block; }
   position: relative;
   background: var(--bg);
   color: var(--ink);
-  padding: clamp(5rem, 10vh, 9rem) 0;
+  padding: var(--space-section-y) 0;
   margin: 0;
   overflow: hidden;
 }
@@ -1579,7 +1607,8 @@ html.cursor-ready .cursor { display: block; }
 .macro-calc__header {
   position: relative;
   z-index: 1;
-  margin-bottom: clamp(3rem, 6vh, 4.5rem);
+  /* Header macro-calc → form/output. Token condiviso. */
+  margin-bottom: var(--space-block-gap);
 }
 .macro-calc__bignum {
   /* inherits .come-funziona__bignum base; override palette number */
@@ -1830,7 +1859,9 @@ html.cursor-ready .cursor { display: block; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem 0.75rem;
-  margin: 0 0 2rem;
+  /* Niente margin-bottom qui: il ritmo macros → disclaimer → CTA è gestito
+     dai margin-top sugli elementi successivi tramite i token di spaziatura. */
+  margin: 0;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(10, 10, 10, 0.1);
 }
@@ -1868,7 +1899,9 @@ html.cursor-ready .cursor { display: block; }
   font-size: 0.8125rem;
   line-height: 1.55;
   color: var(--ink-muted);
-  margin: 0 0 1.5rem;
+  /* Distanza risultati (macros) → disclaimer. Lo stacco verso la CTA sotto
+     è invece controllato da .mc-output__cta margin-top. */
+  margin: var(--space-block-gap) 0 0;
   max-width: 56ch;
   text-align: left;
 }
@@ -1876,6 +1909,8 @@ html.cursor-ready .cursor { display: block; }
 /* Editorial link CTA (no filled button) */
 .mc-output__cta {
   display: inline-block;
+  /* Distanza dai risultati sopra: esattamente --space-cta-gap (32/40px). */
+  margin-top: var(--space-cta-gap);
   padding: 0 0 2px;
   background: transparent;
   color: var(--accent);
@@ -1897,8 +1932,8 @@ html.cursor-ready .cursor { display: block; }
 
 /* ── Desktop: 2-col asymmetric (form 6 / spacer 2 / output 4) ── */
 @media (min-width: 768px) {
-  .macro-calc { padding: clamp(6rem, 12vh, 10rem) 0; }
-  .macro-calc__header { margin-bottom: clamp(4rem, 8vh, 6rem); max-width: 720px; }
+  /* desktop padding preso dal token --space-section-y su :root @768 */
+  .macro-calc__header { margin-bottom: var(--space-block-gap); max-width: 720px; }
   .macro-calc__bignum { font-size: clamp(12rem, 22vw, 18rem); }
   .macro-calc__title { font-size: clamp(2.75rem, 6vw, 4rem); }
   .macro-calc__body {
@@ -1931,7 +1966,7 @@ html.cursor-ready .cursor { display: block; }
   background: var(--bg);
   color: var(--ink);
   text-align: center;
-  padding: clamp(7rem, 15vh, 12rem) var(--container-pad);
+  padding: var(--space-section-y) var(--container-pad);
   overflow: hidden;
 }
 .final-cta-inner {
@@ -2136,6 +2171,21 @@ section:not(.hero) :is(h1, h2, h3, h4, p, .eyebrow),
 .chi-sono__content > * {
   opacity: 1 !important;
   transform: none !important;
+}
+
+/* ════════ RITMO INTERNO (design tokens) ════════
+   Regole leggere e non distruttive che allineano il rhythm dentro le
+   sezioni. Non toccano i layout flex/grid che usano già `gap`. */
+
+/* Paragrafi consecutivi nella stessa sezione */
+section p + p {
+  margin-top: 16px;
+}
+
+/* CTA inline alla fine di un blocco di contenuto editoriale
+   (link-underline nei servizi, circle CTA nella final-cta se servisse) */
+.final-cta-inner .final-circle {
+  margin-top: 0; /* lo stacco è già gestito dal gap del contenitore flex */
 }
 
 /* ════════ RESPONSIVE ════════ */
