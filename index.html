@@ -161,7 +161,7 @@
             <span class="step-num" aria-hidden="true">03</span>
             <span class="step-connector" aria-hidden="true"></span>
             <h3 class="step-title">Si lavora</h3>
-            <p class="step-desc">Insieme. In palestra o online. Io osservo, tu impari.</p>
+            <p class="step-desc">Insieme. In palestra o online. Ti seguo passo passo.</p>
           </li>
           <li class="step" data-step="04">
             <span class="step-num" aria-hidden="true">04</span>
@@ -240,7 +240,7 @@
 
           <p class="weal-house__role">Co-fondatrice</p>
 
-          <h2 id="weal-house-title" class="weal-house__title">
+          <h2 id="weal-house-title" class="section-title weal-house__title">
             Il mio<br/>posto.
           </h2>
 
@@ -463,9 +463,9 @@
             <div class="mc-output__kcal" aria-live="polite">
               <span data-output="kcal">1898</span>
             </div>
-            <p class="mc-output__unit">kcal</p>
+            <p class="mc-output__unit">kcal/giorno &middot; indicativo</p>
 
-            <div class="mc-output__bar" role="img" aria-label="Distribuzione macronutrienti">
+            <div class="mc-output__bar" role="img" aria-label="Distribuzione macronutrienti 25% proteine, 50% carboidrati, 25% grassi">
               <div class="mc-bar__seg mc-bar__seg--prot" data-seg="prot"></div>
               <div class="mc-bar__seg mc-bar__seg--carb" data-seg="carb"></div>
               <div class="mc-bar__seg mc-bar__seg--fat" data-seg="fat"></div>
@@ -490,23 +490,37 @@
             </div>
 
             <p class="mc-output__disclaimer">
-              Valori indicativi calcolati con formula Mifflin-St Jeor. Il piano reale lo costruiamo sulla tua vita, non su una formula.
+              Formula Mifflin-St Jeor. Il piano vero lo costruiamo sulla tua vita.
             </p>
 
-            <a class="mc-output__cta" href="https://wa.me/393935896994" target="_blank" rel="noopener noreferrer">
-              Costruiamo il tuo piano vero
+            <a class="mc-output__cta" href="https://wa.me/393935896994?text=Ciao%20Giorgia%2C%20ho%20calcolato%20il%20mio%20fabbisogno%20e%20vorrei%20un%20piano" target="_blank" rel="noopener noreferrer">
+              Parlami su WhatsApp
+              <span aria-hidden="true">&rarr;</span>
             </a>
 
           </div>
 
         </div>
+
+        <div class="mc-sticky" aria-live="polite" data-mc-sticky>
+          <div class="mc-sticky__inner">
+            <div class="mc-sticky__data">
+              <span class="mc-sticky__kcal" data-mc-sticky-kcal>1898</span>
+              <span class="mc-sticky__unit">kcal</span>
+            </div>
+            <a class="mc-sticky__cta" href="https://wa.me/393935896994?text=Ciao%20Giorgia%2C%20ho%20calcolato%20il%20mio%20fabbisogno%20e%20vorrei%20un%20piano" target="_blank" rel="noopener">
+              Parlane con me &rarr;
+            </a>
+          </div>
+        </div>
+
       </div>
     </section>
 
     <!-- ═══ CTA FINALE — editorial off-white ═══ -->
     <section id="contatti" class="final-cta" aria-labelledby="final-title">
       <div class="final-cta-inner">
-        <span class="eyebrow" data-anim="fade-up"><span class="eyebrow-num">08</span><span class="eyebrow-sep" aria-hidden="true">/</span>Inizia ora</span>
+        <span class="eyebrow" data-anim="fade-up"><span class="eyebrow-num">08</span></span>
         <h2 id="final-title" class="final-title">Iniziamo?</h2>
         <p class="final-sub" data-anim="fade-up">WhatsApp è il modo più veloce per parlarci.</p>
 
@@ -592,6 +606,13 @@
     <!-- Divider + bottom bar -->
     <div class="footer-bottom">
       <div class="footer-bottom-inner">
+        <nav class="footer-legal" aria-label="Navigazione legale">
+          <a href="/privacy.html" data-cursor-hover>Privacy Policy</a>
+          <span aria-hidden="true">·</span>
+          <a href="/cookie-policy.html" data-cursor-hover>Cookie Policy</a>
+          <span aria-hidden="true">·</span>
+          <span>P.IVA DA INSERIRE</span>
+        </nav>
         <p class="footer-copy">&copy; 2026 Giorgia Piras · Tutti i diritti riservati.</p>
         <p class="footer-credit">Sito realizzato da <a href="https://transiva.it" target="_blank" rel="noopener noreferrer" data-cursor-hover>Transiva</a></p>
       </div>
@@ -624,6 +645,6 @@
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.42/bundled/lenis.min.js" defer></script>
-  <script src="scripts.js" defer></script>
+  <script src="scripts.js?v=sticky-1" defer></script>
 </body>
 </html>

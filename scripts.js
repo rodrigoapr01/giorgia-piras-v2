@@ -227,13 +227,14 @@
     };
 
     const outputs = {
-      peso:    root.querySelector('[data-output="peso"]'),
-      altezza: root.querySelector('[data-output="altezza"]'),
-      eta:     root.querySelector('[data-output="eta"]'),
-      kcal:    root.querySelector('[data-output="kcal"]'),
-      prot:    root.querySelector('[data-output="prot"]'),
-      carb:    root.querySelector('[data-output="carb"]'),
-      fat:     root.querySelector('[data-output="fat"]'),
+      peso:       root.querySelector('[data-output="peso"]'),
+      altezza:    root.querySelector('[data-output="altezza"]'),
+      eta:        root.querySelector('[data-output="eta"]'),
+      kcal:       root.querySelector('[data-output="kcal"]'),
+      prot:       root.querySelector('[data-output="prot"]'),
+      carb:       root.querySelector('[data-output="carb"]'),
+      fat:        root.querySelector('[data-output="fat"]'),
+      stickyKcal: root.querySelector('[data-mc-sticky-kcal]'),
     };
 
     function compute() {
@@ -269,6 +270,7 @@
     function update() {
       const { kcal, prot, carb, fat } = compute();
       animateNumber(outputs.kcal, kcal);
+      animateNumber(outputs.stickyKcal, kcal);
       animateNumber(outputs.prot, prot);
       animateNumber(outputs.carb, carb);
       animateNumber(outputs.fat, fat);
@@ -321,6 +323,18 @@
     } else {
       update();
     }
+
+    /* Sticky bar visibility: is-hidden quando la sezione esce dal viewport */
+    const sticky = root.querySelector('[data-mc-sticky]');
+    if (sticky && 'IntersectionObserver' in window) {
+      sticky.classList.add('is-hidden');
+      const stickyIO = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          sticky.classList.toggle('is-hidden', !e.isIntersecting);
+        });
+      }, { threshold: 0 });
+      stickyIO.observe(root);
+    }
   }());
 
   /* ─── COOKIE BANNER ─── */
@@ -351,15 +365,31 @@
     const handle       = document.getElementById('comparisonHandle');
     if (!container || !afterWrapper || !handle) return;
 
+    /* Label "DOPO" = sul lato destro (markup __label--before).
+       Label "PRIMA" = sul lato sinistro (markup __label--after).
+       Naming invertito nel markup esistente, manteniamo la semantica visiva. */
+    const dopoLabel  = container.querySelector('.comparison__label--before');
+    const primaLabel = container.querySelector('.comparison__label--after');
+
     let isDragging = false;
     let currentX   = 50;
     let targetX    = 50;
     let rafId      = null;
 
+    const FADE_THRESHOLD = 15; /* % di visibilità sotto cui parte il fade */
+    const updateLabels = (x) => {
+      if (!dopoLabel || !primaLabel) return;
+      const dopoVis  = x;           /* % immagine "dopo" visibile */
+      const primaVis = 100 - x;     /* % immagine "prima" visibile */
+      dopoLabel.style.opacity  = (dopoVis  >= FADE_THRESHOLD ? 1 : dopoVis  / FADE_THRESHOLD).toFixed(2);
+      primaLabel.style.opacity = (primaVis >= FADE_THRESHOLD ? 1 : primaVis / FADE_THRESHOLD).toFixed(2);
+    };
+
     const render = () => {
       currentX += (targetX - currentX) * 0.25;
       afterWrapper.style.clipPath = `inset(0 ${100 - currentX}% 0 0)`;
       handle.style.left           = currentX + '%';
+      updateLabels(currentX);
 
       if (Math.abs(targetX - currentX) > 0.1) {
         rafId = requestAnimationFrame(render);
@@ -367,6 +397,7 @@
         currentX = targetX;
         afterWrapper.style.clipPath = `inset(0 ${100 - currentX}% 0 0)`;
         handle.style.left           = currentX + '%';
+        updateLabels(currentX);
         rafId = null;
       }
     };

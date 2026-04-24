@@ -8,8 +8,9 @@
   --bg: #F5F1E8;
   --bg-alt: #EBE5D4;
   --ink: #1A1817;
-  --ink-muted: #6E6A64;
+  --ink-muted: #5A5650;
   --accent: #C44E2C;
+  --accent-text: #9B3A20;
   --accent-deep: #9B3A20;
   --line: rgba(26, 24, 23, 0.12);
   --line-strong: rgba(26, 24, 23, 0.24);
@@ -182,15 +183,15 @@ html.cursor-ready .cursor { display: block; }
   font-weight: 400;
   transform: translateY(-0.02em);
 }
-.eyebrow--accent { color: var(--accent); }
-.eyebrow--accent .eyebrow-num { color: var(--accent); opacity: 0.6; }
+.eyebrow--accent { color: var(--accent-text); }
+.eyebrow--accent .eyebrow-num { color: var(--accent-text); opacity: 0.6; }
 
 .section-title {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(3rem, 6vw, 5.5rem);
-  line-height: 1;
-  letter-spacing: -0.015em;
+  font-family: var(--font-editorial, 'Playfair Display', Georgia, serif);
+  font-weight: 400;
+  font-size: clamp(2.25rem, 8vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   color: var(--ink);
   margin: 0 0 clamp(2rem, 4vw, 3.5rem);
   max-width: 14ch;
@@ -699,6 +700,17 @@ html.cursor-ready .cursor { display: block; }
   position: relative;
   transition: color 0.3s;
 }
+/* Tap area extender — ::before e ::after del link sono già usati
+   dalla sottolineatura animata, quindi usiamo il <span> interno
+   (già presente: contiene la freccia "→"). La pseudo, assoluta,
+   si posiziona rispetto a .link-underline (position: relative)
+   ed estende l'hit area a 44px+ senza alterare il layout. */
+.link-underline > span::before {
+  content: '';
+  position: absolute;
+  inset: -12px 0;
+  pointer-events: auto;
+}
 .link-underline::before {
   content: '';
   position: absolute;
@@ -1038,7 +1050,7 @@ html.cursor-ready .cursor { display: block; }
 .come-funziona {
   position: relative;
   padding: var(--space-section-y) 0;
-  background: var(--bg);
+  background: var(--bg-alt);
   color: var(--ink);
   overflow: hidden;
 }
@@ -1142,8 +1154,8 @@ html.cursor-ready .cursor { display: block; }
    Colonne 50/50: foto a sinistra, blocco editoriale a destra.
    Usa le variabili globali del design system (ink, bg-alt, accent, ink-muted). */
 .weal-house {
-  background: var(--bg-alt);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--bg);
   padding: 0;
   overflow: hidden;
 }
@@ -1189,7 +1201,7 @@ html.cursor-ready .cursor { display: block; }
   letter-spacing: 0.18em;
   text-transform: uppercase;
   margin: 0;
-  color: color-mix(in srgb, var(--accent, #C9A96E) 85%, transparent);
+  color: color-mix(in srgb, var(--accent, #C9A96E) 65%, var(--bg) 35%);
   display: inline-flex;
   align-items: baseline;
   gap: 0.45em;
@@ -1206,7 +1218,7 @@ html.cursor-ready .cursor { display: block; }
   font-weight: 500;
 }
 .weal-house__eyebrow-sep {
-  color: color-mix(in srgb, var(--accent, #C9A96E) 50%, transparent);
+  color: color-mix(in srgb, var(--accent, #C9A96E) 40%, var(--bg) 60%);
   font-weight: 400;
   transform: translateY(-0.02em);
 }
@@ -1217,8 +1229,10 @@ html.cursor-ready .cursor { display: block; }
   align-self: flex-start;
   margin: 0.5rem 0 0;
   display: block;
-  /* Il JPG del logo ha sfondo scuro: lo lasciamo pieno, fa da "placca"
-     editorial e stacca sul cream di sfondo. */
+  background: var(--bg);
+  padding: 10px 14px;
+  border-radius: 4px;
+  box-sizing: content-box;
 }
 
 .weal-house__role {
@@ -1227,25 +1241,23 @@ html.cursor-ready .cursor { display: block; }
   font-size: 0.6875rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--ink-muted);
+  color: rgba(245, 241, 232, 0.7);
   margin: 0;
 }
 
 .weal-house__title {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(3rem, 5.5vw, 5.25rem);
+  /* inherits font-family (Playfair), font-weight (400) from .section-title.
+     Override .section-title dark color — this section is inverted. */
+  color: var(--bg);
   line-height: 0.98;
-  letter-spacing: -0.02em;
   margin: 0;
-  color: var(--ink);
 }
 
 .weal-house__lead {
   font-family: var(--font-body);
   font-size: 1.0625rem;
   line-height: 1.55;
-  color: var(--ink);
+  color: rgba(245, 241, 232, 0.85);
   margin: 0.75rem 0 0;
   max-width: 480px;
 }
@@ -1257,14 +1269,14 @@ html.cursor-ready .cursor { display: block; }
   font-size: 0.6875rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--ink-muted);
+  color: rgba(245, 241, 232, 0.7);
   margin: 0 0 1rem;
 }
 
 /* Lista servizi numerata */
 .weal-house__services {
   margin-top: 1.25rem;
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid rgba(245, 241, 232, 0.24);
   padding-top: 1.75rem;
 }
 .weal-house__services-list {
@@ -1279,11 +1291,11 @@ html.cursor-ready .cursor { display: block; }
   grid-template-columns: 40px 1fr;
   align-items: baseline;
   padding: 0.875rem 0;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(245, 241, 232, 0.12);
   font-family: var(--font-body);
   font-size: 1.125rem;
   font-weight: 400;
-  color: var(--ink);
+  color: var(--bg);
 }
 .weal-house__services-list li:last-child { border-bottom: none; }
 .weal-house__services-list li span {
@@ -1296,7 +1308,7 @@ html.cursor-ready .cursor { display: block; }
 /* Indirizzo */
 .weal-house__address {
   margin-top: 0.5rem;
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid rgba(245, 241, 232, 0.24);
   padding-top: 1.75rem;
 }
 .weal-house__address address {
@@ -1305,26 +1317,33 @@ html.cursor-ready .cursor { display: block; }
   font-size: 1.125rem;
   line-height: 1.4;
   margin: 0 0 0.75rem;
-  color: var(--ink);
+  color: var(--bg);
 }
 .weal-house__address address span {
-  color: var(--ink-muted);
+  color: rgba(245, 241, 232, 0.7);
   font-size: 0.875rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 .weal-house__maps-link {
   display: inline-block;
+  position: relative;
   font-family: var(--font-body);
   font-weight: 500;
   font-size: 0.75rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: var(--ink);
+  color: var(--bg);
   text-decoration: none;
-  border-bottom: 1px solid var(--ink);
+  border-bottom: 1px solid rgba(245, 241, 232, 0.4);
   padding-bottom: 2px;
   transition: color 0.25s ease, border-color 0.25s ease;
+}
+/* Tap area extender — ::after non è usato dal componente. */
+.weal-house__maps-link::after {
+  content: '';
+  position: absolute;
+  inset: -12px 0;
 }
 .weal-house__maps-link:hover {
   color: var(--accent);
@@ -1336,11 +1355,21 @@ html.cursor-ready .cursor { display: block; }
    classe riusabile .weal-house__section-label. */
 .weal-online {
   margin-top: 0.5rem;
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid rgba(245, 241, 232, 0.24);
   padding-top: 1.75rem;
 }
 .weal-online .social-icons {
   gap: 12px;
+}
+/* Social icons on dark — invert default cream, keep accent hover. */
+.weal-online .social-icons a {
+  color: var(--bg);
+  border-color: rgba(245, 241, 232, 0.4);
+}
+.weal-online .social-icons a:hover,
+.weal-online .social-icons a:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* CTA pill */
@@ -1351,8 +1380,8 @@ html.cursor-ready .cursor { display: block; }
   align-items: center;
   gap: 0.75rem;
   padding: 1.125rem 2rem;
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--accent);
+  color: #fff;
   text-decoration: none;
   font-family: var(--font-body);
   font-weight: 500;
@@ -1363,7 +1392,7 @@ html.cursor-ready .cursor { display: block; }
   transition: background 0.3s var(--ease-out), transform 0.3s var(--ease-out);
 }
 .weal-house__cta:hover {
-  background: var(--accent);
+  background: var(--accent-deep);
   transform: translateY(-1px);
 }
 .weal-house__cta span { transition: transform 0.25s var(--ease-out); }
@@ -1461,6 +1490,7 @@ html.cursor-ready .cursor { display: block; }
   text-transform: uppercase;
   z-index: 3;
   pointer-events: none;
+  transition: opacity 0.18s var(--ease-out, ease-out);
 }
 .comparison__label--before { right: 1.5rem; }
 .comparison__label--after  { left: 1.5rem; }
@@ -1742,7 +1772,7 @@ html.cursor-ready .cursor { display: block; }
 .mc-pill {
   appearance: none;
   -webkit-appearance: none;
-  padding: 0.65rem 1.15rem;
+  padding: 12px 18.4px;
   border-radius: 0;
   background: transparent;
   border: 1px solid var(--ink);
@@ -1753,7 +1783,7 @@ html.cursor-ready .cursor { display: block; }
   letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
-  min-height: 40px;
+  min-height: 44px;
   transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
   touch-action: manipulation;
 }
@@ -1854,17 +1884,29 @@ html.cursor-ready .cursor { display: block; }
   font-feature-settings: "tnum";
 }
 .mc-output__unit {
-  font-family: var(--font-body);
+  font-family: 'Outfit', var(--font-body);
   font-weight: 500;
   font-size: 0.6875rem;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--ink-muted);
-  margin: 0.5rem 0 1.75rem;
+  margin: 0.5rem 0 1.5rem;
 }
 
-/* Barra segmentata: nascosta in off-white (non è più il linguaggio) */
-.mc-output__bar { display: none; }
+/* Barra segmentata riattivata: 25% prot / 50% carb / 25% fat */
+.mc-output__bar {
+  display: flex;
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(10, 10, 10, 0.06);
+  margin: 0 0 1.5rem;
+}
+.mc-bar__seg { height: 100%; display: block; }
+.mc-bar__seg--prot { width: 25%; background: var(--accent); }
+.mc-bar__seg--carb { width: 50%; background: color-mix(in srgb, var(--ink) 40%, transparent); }
+.mc-bar__seg--fat  { width: 25%; background: var(--ink-muted); }
 
 /* Macros in grid 3-col */
 .mc-output__macros {
@@ -1897,7 +1939,7 @@ html.cursor-ready .cursor { display: block; }
 .mc-macro__value {
   font-family: var(--font-editorial, 'Playfair Display', Georgia, serif);
   font-weight: 400;
-  font-size: clamp(1.75rem, 7vw, 2.5rem);
+  font-size: clamp(1.125rem, 5vw, 1.5rem);
   line-height: 1;
   letter-spacing: -0.01em;
   color: var(--ink);
@@ -1918,28 +1960,110 @@ html.cursor-ready .cursor { display: block; }
   text-align: left;
 }
 
-/* Editorial link CTA (no filled button) */
+/* CTA pill: accent solido, bianco, alto contrasto */
 .mc-output__cta {
-  display: inline-block;
-  /* Distanza dai risultati sopra: esattamente --space-cta-gap (32/40px). */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   margin-top: var(--space-cta-gap);
-  padding: 0 0 2px;
-  background: transparent;
-  color: var(--accent);
+  padding: 18px 32px;
+  min-height: 44px;
+  background: var(--accent);
+  color: #fff;
   text-decoration: none;
-  font-family: var(--font-editorial, 'Playfair Display', Georgia, serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 1.25rem;
-  letter-spacing: 0;
-  text-transform: none;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   border: 0;
-  border-bottom: 1px solid var(--accent);
-  transition: color 0.3s ease, border-color 0.3s ease;
+  border-radius: 999px;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 .mc-output__cta:hover {
-  color: var(--accent-deep, #9B3A20);
-  border-bottom-color: var(--accent-deep, #9B3A20);
+  background: var(--accent-deep, #9B3A20);
+  transform: translateY(-1px);
+}
+.mc-output__cta:focus-visible {
+  outline: 2px solid var(--accent-deep, #9B3A20);
+  outline-offset: 3px;
+}
+
+/* ── Sticky bar mobile: visibile solo mentre .macro-calc è in viewport ── */
+.mc-sticky {
+  display: none;
+}
+@media (max-width: 767px) {
+  .mc-sticky {
+    display: block;
+    /* fixed (non sticky) perché .macro-calc ha overflow:hidden e romperebbe sticky */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    padding: 12px var(--container-pad);
+    background: rgba(26, 24, 23, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(245, 241, 232, 0.12);
+    transform: translateY(0);
+    transition: transform 0.3s var(--ease-out);
+  }
+  .mc-sticky.is-hidden {
+    transform: translateY(100%);
+  }
+  .mc-sticky__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+  .mc-sticky__data {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    color: var(--bg);
+  }
+  .mc-sticky__kcal {
+    font-family: var(--font-editorial, 'Playfair Display', serif);
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1;
+    font-feature-settings: "tnum";
+  }
+  .mc-sticky__unit {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .mc-sticky__cta {
+    background: var(--accent);
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 999px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    transition: background 0.25s var(--ease-out);
+  }
+  .mc-sticky__cta:hover,
+  .mc-sticky__cta:focus-visible {
+    background: var(--accent-deep, #9B3A20);
+    outline: none;
+  }
 }
 
 /* ── Desktop: 2-col asymmetric (form 6 / spacer 2 / output 4) ── */
@@ -1975,7 +2099,7 @@ html.cursor-ready .cursor { display: block; }
 /* ════════ FINAL CTA — editorial off-white ════════ */
 .final-cta {
   position: relative;
-  background: var(--bg);
+  background: var(--bg-alt);
   color: var(--ink);
   text-align: center;
   padding: var(--space-section-y) var(--container-pad);
@@ -2203,8 +2327,10 @@ html.cursor-ready .cursor { display: block; }
   margin: 0;
 }
 .footer-credit a {
-  color: var(--accent);
+  color: var(--accent-text);
   text-decoration: none;
+  display: inline-block;
+  padding: 6px 4px;
   transition: opacity 0.2s var(--ease-out);
 }
 .footer-credit a:hover,
@@ -2212,6 +2338,34 @@ html.cursor-ready .cursor { display: block; }
   opacity: 0.75;
   text-decoration: underline;
   outline: none;
+}
+
+/* ── Legal nav (privacy / cookie / P.IVA) ── */
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 12px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-bottom: 12px;
+}
+.footer-legal a {
+  color: var(--ink-muted);
+  text-decoration: none;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+.footer-legal a:hover,
+.footer-legal a:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  outline: none;
+}
+@media (min-width: 768px) {
+  .footer-legal { justify-content: flex-start; }
 }
 
 /* ═══ Tablet + (≥768px): brand sinistra / social destra, bottom-bar split ═══ */
@@ -2408,7 +2562,7 @@ section p + p {
 /* ════════ FLOATING WHATSAPP — mobile only ════════ */
 .whatsapp-float {
   position: fixed;
-  bottom: 140px;
+  bottom: 88px;
   right: 20px;
   width: 56px;
   height: 56px;
@@ -2462,7 +2616,7 @@ section p + p {
 
 /* Lift the button above the cookie banner while it's visible so they don't stack. */
 body:has(.cookie-banner.is-visible) .whatsapp-float {
-  bottom: 184px;
+  bottom: 132px;
 }
 
 /* Hide on desktop — WhatsApp link already lives in the header nav there. */
