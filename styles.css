@@ -2120,11 +2120,12 @@ html.cursor-ready .cursor { display: block; }
 .paths-group path:nth-child(11) { animation-delay: -11s; }
 .paths-group path:nth-child(12) { animation-delay: -12.1s; }
 
-/* Il secondo gruppo scorre in senso opposto con durata leggermente
-   diversa, per evitare che i due flussi si ri-sincronizzino. */
+/* Il secondo gruppo scorre nella STESSA direzione del primo (dall'alto
+   a sinistra al basso a destra) con path leggermente sfalsati e una
+   durata diversa, per mantenere la densità del flusso senza creare
+   un effetto "X". */
 .paths-group-b path {
   animation-duration: 17s;
-  animation-direction: reverse;
 }
 
 /* ── Tablet + (≥768px): footer è più basso (layout orizzontale),
