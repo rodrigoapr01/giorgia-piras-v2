@@ -365,11 +365,12 @@
     const handle       = document.getElementById('comparisonHandle');
     if (!container || !afterWrapper || !handle) return;
 
-    /* Label "DOPO" = sul lato destro (markup __label--before).
-       Label "PRIMA" = sul lato sinistro (markup __label--after).
-       Naming invertito nel markup esistente, manteniamo la semantica visiva. */
-    const dopoLabel  = container.querySelector('.comparison__label--before');
-    const primaLabel = container.querySelector('.comparison__label--after');
+    /* Fade label: ci basiamo sul textContent, non sulla classe (i nomi
+       --before/--after nel markup si riferiscono al lato del clip-path,
+       non al testo visibile). Comportamento osservato:
+         slider a destra (x=100) → è visibile la foto PRIMA → label DOPO fade
+         slider a sinistra (x=0) → è visibile la foto DOPO  → label PRIMA fade */
+    const fadeLabels = Array.from(container.querySelectorAll('.comparison__label--before, .comparison__label--after'));
 
     let isDragging = false;
     let currentX   = 50;
@@ -378,11 +379,15 @@
 
     const FADE_THRESHOLD = 15; /* % di visibilità sotto cui parte il fade */
     const updateLabels = (x) => {
-      if (!dopoLabel || !primaLabel) return;
-      const dopoVis  = x;           /* % immagine "dopo" visibile */
-      const primaVis = 100 - x;     /* % immagine "prima" visibile */
-      dopoLabel.style.opacity  = (dopoVis  >= FADE_THRESHOLD ? 1 : dopoVis  / FADE_THRESHOLD).toFixed(2);
-      primaLabel.style.opacity = (primaVis >= FADE_THRESHOLD ? 1 : primaVis / FADE_THRESHOLD).toFixed(2);
+      fadeLabels.forEach((label) => {
+        const text = label.textContent.trim().toUpperCase();
+        let visibility;
+        if (text === 'PRIMA')      visibility = x;           /* visibile quando slider a destra */
+        else if (text === 'DOPO')  visibility = 100 - x;     /* visibile quando slider a sinistra */
+        else return;
+        const op = visibility >= FADE_THRESHOLD ? 1 : visibility / FADE_THRESHOLD;
+        label.style.opacity = op.toFixed(2);
+      });
     };
 
     const render = () => {
