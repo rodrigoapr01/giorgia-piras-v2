@@ -2214,3 +2214,86 @@ section:not(.hero) :is(h1, h2, h3, h4, p, .eyebrow),
   }
   .cursor { display: none !important; }
 }
+
+/* ════════ UTILITY ════════ */
+/* Hide placeholder sections until content is ready (e.g. testimonials). */
+.is-hidden { display: none !important; }
+
+/* ════════ FLOATING WHATSAPP — mobile only ════════ */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  background: #25D366;
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  /* Slight outline keeps the green from feeling like an intrusion on cream bg. */
+  outline: 1px solid rgba(0, 0, 0, 0.04);
+  outline-offset: 0;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: whatsappFadeIn 0.45s var(--ease-out, cubic-bezier(0.4, 0, 0.2, 1)) forwards;
+  animation-delay: 2s;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    bottom 0.4s var(--ease-out, cubic-bezier(0.4, 0, 0.2, 1));
+  -webkit-tap-highlight-color: transparent;
+}
+.whatsapp-float:hover,
+.whatsapp-float:focus-visible {
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+  outline-offset: 2px;
+}
+.whatsapp-float:active {
+  transform: scale(0.98);
+}
+.whatsapp-float:focus-visible {
+  outline: 2px solid #FFFFFF;
+}
+.whatsapp-float__icon {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+  display: block;
+}
+
+@keyframes whatsappFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Lift the button above the cookie banner while it's visible so they don't stack. */
+body:has(.cookie-banner.is-visible) .whatsapp-float {
+  bottom: 184px;
+}
+
+/* Hide on desktop — WhatsApp link already lives in the header nav there. */
+@media (min-width: 1024px) {
+  .whatsapp-float { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-float {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .whatsapp-float:hover,
+  .whatsapp-float:focus-visible,
+  .whatsapp-float:active {
+    transform: none;
+  }
+}
