@@ -2055,7 +2055,7 @@ html.cursor-ready .cursor { display: block; }
   top: 0;
   left: 0;
   right: 0;
-  bottom: -180px;             /* sborda nel footer per ~180px su mobile */
+  bottom: -720px;             /* copre l'intero footer su mobile (stack) */
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
@@ -2066,19 +2066,22 @@ html.cursor-ready .cursor { display: block; }
   width: 100%;
   height: 100%;
   color: var(--accent);       /* stroke="currentColor" → accent rosso mattone */
-  /* Mask gradient: tratti completamente visibili dentro tutta la
-     sezione CTA (fino al 72% ≈ bordo sezione/footer), poi sfumano
-     rapidamente nei 28% inferiori che sbordano nel footer. */
+  /* Mask gradient: tratti a piena intensità dentro tutta la sezione
+     CTA, poi attenuazione progressiva ma MAI completa nel footer —
+     così le linee arrivano fino alla parte di sotto senza
+     coprire i testi. */
   -webkit-mask-image: linear-gradient(to bottom,
     #000 0%,
-    #000 72%,
-    rgba(0,0,0,0.55) 86%,
-    transparent 100%);
+    #000 45%,
+    rgba(0,0,0,0.85) 60%,
+    rgba(0,0,0,0.6) 80%,
+    rgba(0,0,0,0.45) 100%);
           mask-image: linear-gradient(to bottom,
     #000 0%,
-    #000 72%,
-    rgba(0,0,0,0.55) 86%,
-    transparent 100%);
+    #000 45%,
+    rgba(0,0,0,0.85) 60%,
+    rgba(0,0,0,0.6) 80%,
+    rgba(0,0,0,0.45) 100%);
 }
 
 /* ── Animazione "flusso" ──
@@ -2124,10 +2127,11 @@ html.cursor-ready .cursor { display: block; }
   animation-direction: reverse;
 }
 
-/* ── Tablet + (≥768px): bleeding più generoso dentro il footer ── */
+/* ── Tablet + (≥768px): footer è più basso (layout orizzontale),
+   basta un bleed più contenuto per arrivare fino al copyright. ── */
 @media (min-width: 768px) {
   .bg-paths-wrapper {
-    bottom: -240px;
+    bottom: -540px;
   }
 }
 
