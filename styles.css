@@ -2408,7 +2408,7 @@ section p + p {
 /* ════════ FLOATING WHATSAPP — mobile only ════════ */
 .whatsapp-float {
   position: fixed;
-  bottom: 20px;
+  bottom: 140px;
   right: 20px;
   width: 56px;
   height: 56px;
