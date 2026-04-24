@@ -2036,61 +2036,96 @@ html.cursor-ready .cursor { display: block; }
   display: block;
 }
 
-/* ════════ FOOTER — editorial off-white ════════ */
-.footer {
+/* ════════ SITE FOOTER — editorial off-white (redesign) ════════
+   Due blocchi: brand (logo "GP." + tagline + contatti) a sinistra,
+   gruppi social (Giorgia + Weal House) a destra. Bottom bar separata
+   con copyright + credit Transiva. Mobile-first → stack verticale;
+   da 768px in su layout orizzontale a due colonne.
+   NB: social-icons sono condivise con .weal-online nella sezione
+   Weal House — qualunque modifica qui si riflette anche lì. */
+
+.site-footer {
   background: var(--bg);
   color: var(--ink);
-  padding: clamp(3rem, 6vh, 4rem) 0;
-  border-top: 1px solid rgba(10, 10, 10, 0.1);
+  padding-top: var(--space-section-y);
+  padding-bottom: 24px;
+  border-top: 1px solid var(--line);
 }
 .footer-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  align-items: flex-start;
+  gap: 48px;
 }
-.footer-col {
+
+/* ── Brand block (logo + tagline + contatti) ── */
+.footer-brand {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  align-items: flex-start;
-  text-align: left;
+  gap: 24px;
+  max-width: 480px;
 }
-.footer-col--brand { gap: 0.25rem; }
-.footer-wordmark {
-  font-family: var(--font-editorial, 'Playfair Display', Georgia, serif);
-  font-weight: 400;
-  font-size: 1.5rem;
+.footer-logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  width: fit-content;
   line-height: 1;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-  margin: 0;
 }
-.footer-tag {
+.logo-mark {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: var(--ink);
+}
+.logo-dot {
+  color: var(--accent);
+}
+.footer-tagline {
   font-family: var(--font-body);
-  font-size: 0.875rem;
+  font-size: 15px;
+  line-height: 1.55;
   color: var(--ink-muted);
   margin: 0;
+  max-width: 42ch;
 }
-.footer-nav {
+
+/* ── Contatti minimal (WhatsApp + indirizzo) ── */
+.footer-contact {
+  display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 4px;
+  margin-top: 4px;
 }
-.footer-nav a {
+.footer-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  color: var(--ink-muted);
+  text-decoration: none;
   font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 400;
-  color: var(--ink);
-  transition: color 0.3s;
+  font-size: 14px;
+  transition: color 0.25s var(--ease-out);
 }
-.footer-nav a:hover { color: var(--accent); }
+.footer-contact-item:hover,
+.footer-contact-item:focus-visible {
+  color: var(--accent);
+  outline: none;
+}
+.footer-contact-item svg {
+  flex-shrink: 0;
+  color: currentColor;
+}
 
-.footer-meta { gap: 1rem; }
-
-/* ══ Social groups (footer) ══
-   Due colonne "Giorgia Piras" / "Weal House", ognuna con label eyebrow
-   piccola e coppia di icone circolari. Mobile-first: stack verticale,
-   affiancate da 768px in su. */
+/* ── Social groups ──
+   Eyebrow small-caps in accent, coppia di icone circolari sotto.
+   Mobile-first: stack; su desktop i due gruppi si affiancano. */
 .footer-socials {
   display: flex;
   flex-direction: column;
@@ -2102,26 +2137,19 @@ html.cursor-ready .cursor { display: block; }
 }
 .social-group-label {
   display: block;
-  font-family: 'Outfit', var(--font-body);
+  font-family: var(--font-body);
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--accent) 85%, transparent);
+  color: color-mix(in srgb, var(--accent) 90%, transparent);
   margin: 0 0 12px;
   line-height: 1;
 }
-@media (min-width: 768px) {
-  .footer-socials { flex-direction: row; gap: 48px; }
-  .social-group-label {
-    font-size: 13px;
-    letter-spacing: 0.22em;
-  }
-}
 
-/* ══ Social icons — shared (footer + weal-house __online) ══
-   Cerchio 44×44 con bordo sottile; hover/focus in accent. Monocromatiche
-   (currentColor) per restare coerenti con l'estetica editorial off-white. */
+/* ── Social icons — condivise con .weal-online ──
+   Cerchio 44×44 con bordo sottile; hover/focus in accent con lift.
+   Monocromatiche (currentColor) per coerenza con l'editorial off-white. */
 .social-icons {
   display: flex;
   gap: 12px;
@@ -2153,36 +2181,73 @@ html.cursor-ready .cursor { display: block; }
   fill: currentColor;
   display: block;
 }
-.footer-credit {
+
+/* ── Bottom bar (divider + copyright + credit Transiva) ── */
+.footer-bottom {
+  margin-top: 48px;
+  border-top: 1px solid var(--line);
+}
+.footer-bottom-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 20px var(--container-pad);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   font-family: var(--font-body);
-  font-size: 0.8rem;
-  color: var(--ink-muted);
+  font-size: 12px;
+  color: color-mix(in srgb, var(--ink) 60%, transparent);
+  text-align: center;
+}
+.footer-copy,
+.footer-credit {
   margin: 0;
-  line-height: 1.5;
 }
 .footer-credit a {
-  color: var(--ink);
-  border-bottom: 1px solid var(--ink);
-  padding-bottom: 1px;
-  transition: color 0.3s, border-color 0.3s;
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.2s var(--ease-out);
 }
-.footer-credit a:hover { color: var(--accent); border-color: var(--accent); }
-.footer-copyright {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  color: var(--ink-muted);
-  margin: 0;
-  line-height: 1.5;
+.footer-credit a:hover,
+.footer-credit a:focus-visible {
+  opacity: 0.75;
+  text-decoration: underline;
+  outline: none;
 }
 
+/* ═══ Tablet + (≥768px): brand sinistra / social destra, bottom-bar split ═══ */
 @media (min-width: 768px) {
-  .footer-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: start;
+  .site-footer {
+    padding-bottom: 32px;
   }
-  .footer-meta { gap: 1.5rem; }
+  .footer-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 64px;
+  }
+  .footer-brand {
+    flex: 1 1 auto;
+  }
+  .footer-socials {
+    flex-direction: row;
+    gap: 56px;
+    flex-shrink: 0;
+  }
+  .social-group-label {
+    font-size: 13px;
+    letter-spacing: 0.22em;
+  }
+  .footer-bottom {
+    margin-top: 64px;
+  }
+  .footer-bottom-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    padding-block: 24px;
+  }
 }
 
 /* ════════ COOKIE BANNER ════════ */

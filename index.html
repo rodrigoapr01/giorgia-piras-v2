@@ -520,58 +520,80 @@
 
   </main>
 
-  <!-- ═══ FOOTER — editorial off-white ═══ -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="footer-col footer-col--brand">
-        <p class="footer-wordmark">Giorgia Piras</p>
-        <p class="footer-tag">Personal Trainer <span aria-hidden="true">—</span> Roma</p>
+  <!-- ═══ FOOTER — editorial off-white (redesign: brand + socials + bottom bar) ═══ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+
+      <!-- Blocco sinistro: brand + tagline + contatti -->
+      <div class="footer-brand">
+        <a href="#top" class="footer-logo" aria-label="Giorgia Piras — torna in cima" data-cursor-hover>
+          <span class="logo-mark">GP<span class="logo-dot">.</span></span>
+        </a>
+
+        <p class="footer-tagline">
+          Personal training a Roma e online — risultati reali, zero promesse.
+        </p>
+
+        <div class="footer-contact">
+          <a href="https://wa.me/393935896994" class="footer-contact-item" target="_blank" rel="noopener noreferrer" aria-label="Scrivimi su WhatsApp" data-cursor-hover>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false" width="18" height="18">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+            </svg>
+            <span>+39 393 589 6994</span>
+          </a>
+
+          <a href="https://maps.google.com/?q=Via+Michele+Amari+51+Roma" class="footer-contact-item" target="_blank" rel="noopener noreferrer" aria-label="Indirizzo Weal House — apri in Google Maps" data-cursor-hover>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" width="18" height="18">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span>Via Michele Amari 51, Roma</span>
+          </a>
+        </div>
       </div>
 
-      <nav class="footer-col footer-nav" aria-label="Footer nav">
-        <a href="#chi-sono" data-cursor-hover>Chi sono</a>
-        <a href="#come-funziona" data-cursor-hover>Il Metodo</a>
-        <a href="#servizi" data-cursor-hover>Servizi</a>
-        <a href="#weal-house" data-cursor-hover>Weal House</a>
-        <a href="#contatti" data-cursor-hover>Contatti</a>
-      </nav>
-
-      <div class="footer-col footer-meta">
-        <div class="footer-socials">
-          <div class="social-group">
-            <span class="social-group-label">Giorgia Piras</span>
-            <div class="social-icons">
-              <a href="https://www.instagram.com/lapiras93/" target="_blank" rel="noopener noreferrer" aria-label="Giorgia Piras su Instagram" data-cursor-hover>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.849.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.265.058-1.644.07-4.849.07-3.204 0-3.584-.012-4.849-.07-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.747 2.163 15.368 2.163 12s.012-3.584.07-4.849c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.141 0-3.505.012-4.744.068-.95.043-1.504.195-1.857.325-.467.181-.8.398-1.15.748-.35.35-.567.683-.748 1.15-.13.353-.282.906-.325 1.857-.056 1.239-.068 1.603-.068 4.744s.012 3.505.068 4.744c.043.95.195 1.504.325 1.857.181.467.398.8.748 1.15.35.35.683.567 1.15.748.353.13.906.282 1.857.325 1.239.056 1.603.068 4.744.068 3.141 0 3.505-.012 4.744-.068.95-.043 1.504-.195 1.857-.325.467-.181.8-.398 1.15-.748.35-.35.567-.683.748-1.15.13-.353.282-.906.325-1.857.056-1.239.068-1.603.068-4.744s-.012-3.505-.068-4.744c-.043-.95-.195-1.504-.325-1.857-.181-.467-.398-.8-.748-1.15-.35-.35-.683-.567-1.15-.748-.353-.13-.906-.282-1.857-.325-1.239-.056-1.603-.068-4.744-.068zM12 6.865a5.135 5.135 0 1 1 0 10.27 5.135 5.135 0 0 1 0-10.27zm0 8.468a3.333 3.333 0 1 0 0-6.666 3.333 3.333 0 0 0 0 6.666zm6.538-8.671a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/>
-                </svg>
-              </a>
-              <a href="https://www.facebook.com/giorgia.piras.3" target="_blank" rel="noopener noreferrer" aria-label="Giorgia Piras su Facebook" data-cursor-hover>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-
-          <div class="social-group">
-            <span class="social-group-label">Weal House</span>
-            <div class="social-icons">
-              <a href="https://www.instagram.com/wealhousecommunity/" target="_blank" rel="noopener noreferrer" aria-label="Weal House su Instagram" data-cursor-hover>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.849.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.265.058-1.644.07-4.849.07-3.204 0-3.584-.012-4.849-.07-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.747 2.163 15.368 2.163 12s.012-3.584.07-4.849c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.141 0-3.505.012-4.744.068-.95.043-1.504.195-1.857.325-.467.181-.8.398-1.15.748-.35.35-.567.683-.748 1.15-.13.353-.282.906-.325 1.857-.056 1.239-.068 1.603-.068 4.744s.012 3.505.068 4.744c.043.95.195 1.504.325 1.857.181.467.398.8.748 1.15.35.35.683.567 1.15.748.353.13.906.282 1.857.325 1.239.056 1.603.068 4.744.068 3.141 0 3.505-.012 4.744-.068.95-.043 1.504-.195 1.857-.325.467-.181.8-.398 1.15-.748.35-.35.567-.683.748-1.15.13-.353.282-.906.325-1.857.056-1.239.068-1.603.068-4.744s-.012-3.505-.068-4.744c-.043-.95-.195-1.504-.325-1.857-.181-.467-.398-.8-.748-1.15-.35-.35-.683-.567-1.15-.748-.353-.13-.906-.282-1.857-.325-1.239-.056-1.603-.068-4.744-.068zM12 6.865a5.135 5.135 0 1 1 0 10.27 5.135 5.135 0 0 1 0-10.27zm0 8.468a3.333 3.333 0 1 0 0-6.666 3.333 3.333 0 0 0 0 6.666zm6.538-8.671a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/>
-                </svg>
-              </a>
-              <a href="https://www.facebook.com/WealHousecommunity" target="_blank" rel="noopener noreferrer" aria-label="Weal House su Facebook" data-cursor-hover>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-              </a>
-            </div>
+      <!-- Blocco destro: gruppi social -->
+      <div class="footer-socials">
+        <div class="social-group">
+          <span class="social-group-label">Giorgia Piras</span>
+          <div class="social-icons">
+            <a href="https://www.instagram.com/lapiras93/" target="_blank" rel="noopener noreferrer" aria-label="Giorgia Piras su Instagram" data-cursor-hover>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M12 2.163c3.204 0 3.584.012 4.849.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.265.058-1.644.07-4.849.07-3.204 0-3.584-.012-4.849-.07-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.747 2.163 15.368 2.163 12s.012-3.584.07-4.849c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.141 0-3.505.012-4.744.068-.95.043-1.504.195-1.857.325-.467.181-.8.398-1.15.748-.35.35-.567.683-.748 1.15-.13.353-.282.906-.325 1.857-.056 1.239-.068 1.603-.068 4.744s.012 3.505.068 4.744c.043.95.195 1.504.325 1.857.181.467.398.8.748 1.15.35.35.683.567 1.15.748.353.13.906.282 1.857.325 1.239.056 1.603.068 4.744.068 3.141 0 3.505-.012 4.744-.068.95-.043 1.504-.195 1.857-.325.467-.181.8-.398 1.15-.748.35-.35.567-.683.748-1.15.13-.353.282-.906.325-1.857.056-1.239.068-1.603.068-4.744s-.012-3.505-.068-4.744c-.043-.95-.195-1.504-.325-1.857-.181-.467-.398-.8-.748-1.15-.35-.35-.683-.567-1.15-.748-.353-.13-.906-.282-1.857-.325-1.239-.056-1.603-.068-4.744-.068zM12 6.865a5.135 5.135 0 1 1 0 10.27 5.135 5.135 0 0 1 0-10.27zm0 8.468a3.333 3.333 0 1 0 0-6.666 3.333 3.333 0 0 0 0 6.666zm6.538-8.671a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/>
+              </svg>
+            </a>
+            <a href="https://www.facebook.com/giorgia.piras.3" target="_blank" rel="noopener noreferrer" aria-label="Giorgia Piras su Facebook" data-cursor-hover>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
           </div>
         </div>
-        <p class="footer-credit">Sito realizzato da <a href="https://transiva.it" target="_blank" rel="noopener" data-cursor-hover>Transiva</a></p>
-        <p class="footer-copyright">© 2026 Giorgia Piras. Tutti i diritti riservati.</p>
+
+        <div class="social-group">
+          <span class="social-group-label">Weal House</span>
+          <div class="social-icons">
+            <a href="https://www.instagram.com/wealhousecommunity/" target="_blank" rel="noopener noreferrer" aria-label="Weal House su Instagram" data-cursor-hover>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M12 2.163c3.204 0 3.584.012 4.849.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.265.058-1.644.07-4.849.07-3.204 0-3.584-.012-4.849-.07-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.747 2.163 15.368 2.163 12s.012-3.584.07-4.849c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0 1.802c-3.141 0-3.505.012-4.744.068-.95.043-1.504.195-1.857.325-.467.181-.8.398-1.15.748-.35.35-.567.683-.748 1.15-.13.353-.282.906-.325 1.857-.056 1.239-.068 1.603-.068 4.744s.012 3.505.068 4.744c.043.95.195 1.504.325 1.857.181.467.398.8.748 1.15.35.35.683.567 1.15.748.353.13.906.282 1.857.325 1.239.056 1.603.068 4.744.068 3.141 0 3.505-.012 4.744-.068.95-.043 1.504-.195 1.857-.325.467-.181.8-.398 1.15-.748.35-.35.567-.683.748-1.15.13-.353.282-.906.325-1.857.056-1.239.068-1.603.068-4.744s-.012-3.505-.068-4.744c-.043-.95-.195-1.504-.325-1.857-.181-.467-.398-.8-.748-1.15-.35-.35-.683-.567-1.15-.748-.353-.13-.906-.282-1.857-.325-1.239-.056-1.603-.068-4.744-.068zM12 6.865a5.135 5.135 0 1 1 0 10.27 5.135 5.135 0 0 1 0-10.27zm0 8.468a3.333 3.333 0 1 0 0-6.666 3.333 3.333 0 0 0 0 6.666zm6.538-8.671a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/>
+              </svg>
+            </a>
+            <a href="https://www.facebook.com/WealHousecommunity" target="_blank" rel="noopener noreferrer" aria-label="Weal House su Facebook" data-cursor-hover>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Divider + bottom bar -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-inner">
+        <p class="footer-copy">&copy; 2026 Giorgia Piras · Tutti i diritti riservati.</p>
+        <p class="footer-credit">Sito realizzato da <a href="https://transiva.it" target="_blank" rel="noopener noreferrer" data-cursor-hover>Transiva</a></p>
       </div>
     </div>
   </footer>
