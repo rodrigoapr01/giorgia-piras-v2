@@ -2562,7 +2562,7 @@ section p + p {
 /* ════════ FLOATING WHATSAPP — mobile only ════════ */
 .whatsapp-float {
   position: fixed;
-  bottom: 160px;
+  bottom: 150px;
   right: 20px;
   width: 56px;
   height: 56px;
@@ -2616,7 +2616,7 @@ section p + p {
 
 /* Lift the button above the cookie banner while it's visible so they don't stack. */
 body:has(.cookie-banner.is-visible) .whatsapp-float {
-  bottom: 204px;
+  bottom: 194px;
 }
 
 /* Hide on desktop — WhatsApp link already lives in the header nav there. */
