@@ -2044,18 +2044,21 @@ html.cursor-ready .cursor { display: block; }
   display: block;
 }
 
-/* ════════ BACKGROUND PATHS — sezione CTA + sfumatura nel footer ════════
-   24 path SVG (12 per gruppo) ancorati in fondo alla sezione CTA che
-   proseguono oltre il bottom e sfumano dentro il footer. Animazione
-   puramente CSS (stroke-dashoffset + opacity) — nessun JS. Il wrapper
-   è decorativo: pointer-events: none, aria-hidden, e z-index: 0 rispetto
-   al contenuto della sezione (che sta a z-index: 2). */
+/* ════════ BACKGROUND PATHS — contenuti DENTRO la sezione CTA ════════
+   16 path SVG (8 per gruppo) evenly-spread lungo tutto l'asse X del
+   viewBox, in modo che — anche con preserveAspectRatio="none" che
+   stira lo stage sui viewport stretti — non si raggruppino tutti
+   nello stesso angolo. Il wrapper è contenuto al 100% nella sezione
+   .final-cta (niente bleed nel footer). Animazione puramente CSS
+   (stroke-dashoffset) — nessun JS. Il wrapper è decorativo:
+   pointer-events: none, aria-hidden, z-index: 0 rispetto al contenuto
+   (che sta a z-index: 2). */
 .bg-paths-wrapper {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: -720px;             /* copre l'intero footer su mobile (stack) */
+  bottom: 0;                  /* CONTENUTO nella sezione: niente footer bleed */
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
@@ -2066,30 +2069,26 @@ html.cursor-ready .cursor { display: block; }
   width: 100%;
   height: 100%;
   color: var(--accent);       /* stroke="currentColor" → accent rosso mattone */
-  /* Mask gradient: tratti a piena intensità dentro tutta la sezione
-     CTA, poi attenuazione progressiva ma MAI completa nel footer —
-     così le linee arrivano fino alla parte di sotto senza
-     coprire i testi. */
+  /* Mask gradient: tratti che emergono dall'alto e si dissolvono in
+     basso, così la sezione inizia e finisce pulita, senza bordi netti
+     tra le linee e i limiti della .final-cta. */
   -webkit-mask-image: linear-gradient(to bottom,
-    #000 0%,
-    #000 45%,
-    rgba(0,0,0,0.85) 60%,
-    rgba(0,0,0,0.6) 80%,
-    rgba(0,0,0,0.45) 100%);
+    transparent 0%,
+    #000 14%,
+    #000 82%,
+    transparent 100%);
           mask-image: linear-gradient(to bottom,
-    #000 0%,
-    #000 45%,
-    rgba(0,0,0,0.85) 60%,
-    rgba(0,0,0,0.6) 80%,
-    rgba(0,0,0,0.45) 100%);
+    transparent 0%,
+    #000 14%,
+    #000 82%,
+    transparent 100%);
 }
 
 /* ── Animazione "flusso" ──
-   Trattini corti (400 solid / 200 gap) che scorrono lungo ciascun path.
-   Con una dasharray totale di 600 per ciclo, a 14s di durata vedi
-   circa 2-3 trattini passare al secondo sulle linee più lunghe —
-   movimento sempre percepibile, mai frenetico. GPU-friendly: solo
-   stroke-dashoffset (SVG-native, composited). */
+   Trattini (400 solid / 200 gap) che scorrono lungo ciascun path.
+   Dasharray totale 600, duration 14s → circa 2-3 trattini visibili
+   per path sui layout wide, percepibile ma mai frenetico.
+   GPU-friendly: solo stroke-dashoffset (SVG-native, composited). */
 @keyframes bg-paths-draw {
   from { stroke-dashoffset: 0; }
   to   { stroke-dashoffset: -600; }
@@ -2104,50 +2103,35 @@ html.cursor-ready .cursor { display: block; }
   will-change: stroke-dashoffset;
 }
 
-/* Sfasamento progressivo dei 12 path: ogni linea parte in un punto
-   diverso del ciclo (≈ 1.1s l'uno dall'altro), così l'insieme
+/* Sfasamento progressivo degli 8 path: ogni linea parte in un punto
+   diverso del ciclo (14s/8 ≈ 1.75s l'uno dall'altro), così l'insieme
    produce un flusso continuo invece di pulsare all'unisono. */
-.paths-group path:nth-child(1)  { animation-delay: 0s; }
-.paths-group path:nth-child(2)  { animation-delay: -1.1s; }
-.paths-group path:nth-child(3)  { animation-delay: -2.2s; }
-.paths-group path:nth-child(4)  { animation-delay: -3.3s; }
-.paths-group path:nth-child(5)  { animation-delay: -4.4s; }
-.paths-group path:nth-child(6)  { animation-delay: -5.5s; }
-.paths-group path:nth-child(7)  { animation-delay: -6.6s; }
-.paths-group path:nth-child(8)  { animation-delay: -7.7s; }
-.paths-group path:nth-child(9)  { animation-delay: -8.8s; }
-.paths-group path:nth-child(10) { animation-delay: -9.9s; }
-.paths-group path:nth-child(11) { animation-delay: -11s; }
-.paths-group path:nth-child(12) { animation-delay: -12.1s; }
+.paths-group path:nth-child(1) { animation-delay: 0s; }
+.paths-group path:nth-child(2) { animation-delay: -1.75s; }
+.paths-group path:nth-child(3) { animation-delay: -3.5s; }
+.paths-group path:nth-child(4) { animation-delay: -5.25s; }
+.paths-group path:nth-child(5) { animation-delay: -7s; }
+.paths-group path:nth-child(6) { animation-delay: -8.75s; }
+.paths-group path:nth-child(7) { animation-delay: -10.5s; }
+.paths-group path:nth-child(8) { animation-delay: -12.25s; }
 
-/* Il secondo gruppo scorre nella STESSA direzione del primo (dall'alto
-   a sinistra al basso a destra) con path leggermente sfalsati e una
-   durata diversa, per mantenere la densità del flusso senza creare
-   un effetto "X". */
+/* Il secondo gruppo scorre nella stessa direzione del primo, con path
+   interleaved (offset +100 su X, +20 su Y) e durata diversa (17s)
+   così i trattini dei due strati non si allineano mai. */
 .paths-group-b path {
   animation-duration: 17s;
 }
 
-/* ── Tablet + (≥768px): footer è più basso (layout orizzontale),
-   basta un bleed più contenuto per arrivare fino al copyright. ── */
-@media (min-width: 768px) {
-  .bg-paths-wrapper {
-    bottom: -540px;
-  }
-}
-
-/* ── Mobile (<768px): dimezza il carico grafico ──
-   Metà dei path nascosti + animazione più lenta per stare a 60fps
-   anche su dispositivi meno performanti. */
+/* ── Mobile (<768px): lascia solo il gruppo A ──
+   Su viewport stretti, 8 linee diagonali distribuite lungo l'asse X
+   bastano per il fondale. Il gruppo B verrebbe compresso sullo stesso
+   "fascio" del gruppo A e appesantirebbe solo il rendering. */
 @media (max-width: 767px) {
-  .paths-group path:nth-child(n+7) {
+  .paths-group-b {
     display: none;
   }
   .paths-group path {
-    animation-duration: 20s;
-  }
-  .paths-group-b path {
-    animation-duration: 23s;
+    animation-duration: 20s; /* leggermente più lento per stare a 60fps */
   }
 }
 
