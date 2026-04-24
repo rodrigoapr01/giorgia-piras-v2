@@ -1331,6 +1331,18 @@ html.cursor-ready .cursor { display: block; }
   border-color: var(--accent);
 }
 
+/* Blocco Online (social) — coerente con __services e __address:
+   stesso divider ink, stesso padding-top. Il label "Online" usa la
+   classe riusabile .weal-house__section-label. */
+.weal-online {
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--ink);
+  padding-top: 1.75rem;
+}
+.weal-online .social-icons {
+  gap: 12px;
+}
+
 /* CTA pill */
 .weal-house__cta {
   margin-top: 1.5rem;
@@ -2074,13 +2086,73 @@ html.cursor-ready .cursor { display: block; }
 .footer-nav a:hover { color: var(--accent); }
 
 .footer-meta { gap: 1rem; }
-.footer-social {
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  color: var(--ink);
-  transition: color 0.3s;
+
+/* ══ Social groups (footer) ══
+   Due colonne "Giorgia Piras" / "Weal House", ognuna con label eyebrow
+   piccola e coppia di icone circolari. Mobile-first: stack verticale,
+   affiancate da 768px in su. */
+.footer-socials {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
-.footer-social:hover { color: var(--accent); }
+.social-group {
+  display: flex;
+  flex-direction: column;
+}
+.social-group-label {
+  display: block;
+  font-family: 'Outfit', var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--accent) 85%, transparent);
+  margin: 0 0 12px;
+  line-height: 1;
+}
+@media (min-width: 768px) {
+  .footer-socials { flex-direction: row; gap: 48px; }
+  .social-group-label {
+    font-size: 13px;
+    letter-spacing: 0.22em;
+  }
+}
+
+/* ══ Social icons — shared (footer + weal-house __online) ══
+   Cerchio 44×44 con bordo sottile; hover/focus in accent. Monocromatiche
+   (currentColor) per restare coerenti con l'estetica editorial off-white. */
+.social-icons {
+  display: flex;
+  gap: 12px;
+}
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.25s var(--ease-out),
+              border-color 0.25s var(--ease-out),
+              transform 0.25s var(--ease-out);
+}
+.social-icons a:hover,
+.social-icons a:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  outline: none;
+}
+.social-icons svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  display: block;
+}
 .footer-credit {
   font-family: var(--font-body);
   font-size: 0.8rem;
