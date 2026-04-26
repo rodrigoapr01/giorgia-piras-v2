@@ -2456,6 +2456,53 @@ html.cursor-ready .cursor { display: block; }
   outline: none;
 }
 
+/* ── Transiva shimmer ──
+   Effetto "shiny text" sul solo link Transiva nel credit. Un gradient
+   orizzontale scorre sopra le lettere via background-clip: text. Il
+   selettore vince per source-order sulle regole .footer-credit a/:hover
+   sopra (stessa specificity, dichiarato dopo). */
+@keyframes transiva-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.transiva-link {
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 0%,
+    #1a1a1a 35%,
+    #d8d8d8 50%,
+    #1a1a1a 65%,
+    #1a1a1a 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+  text-decoration: none;
+  font-weight: 600;
+  animation: transiva-shimmer 4s linear infinite;
+  transition: filter 0.3s ease;
+  display: inline-block;
+  padding: 0 1px;
+}
+
+.transiva-link:hover,
+.transiva-link:focus-visible {
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
+  /* Override esplicito dei comportamenti di .footer-credit a:hover */
+  opacity: 1;
+  text-decoration: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transiva-link {
+    animation: none;
+    background-position: 50% 0;
+  }
+}
+
 /* ── Legal nav (privacy / cookie / P.IVA) ── */
 .footer-legal {
   display: flex;
