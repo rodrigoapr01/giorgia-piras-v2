@@ -1230,6 +1230,36 @@ html.cursor-ready .cursor { display: block; }
   color: var(--bg);
   padding: 0;
   overflow: hidden;
+  position: relative;
+  isolation: isolate;
+}
+
+/* Watermark grande del logo Weal House nel background della sezione.
+   Il file è bianco WH su nero pieno: mix-blend-mode: screen rende
+   invisibile il bounding rectangle nero e lascia solo le lettere
+   bianche che "respirano" sopra il dark ink della sezione. */
+.wh-watermark {
+  position: absolute;
+  bottom: -4%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 78%;
+  max-width: 520px;
+  height: auto;
+  opacity: 0.18;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  mix-blend-mode: screen;
+}
+
+@media (min-width: 768px) {
+  .wh-watermark {
+    width: 55%;
+    max-width: 640px;
+    bottom: -6%;
+    opacity: 0.14;
+  }
 }
 
 .weal-house__inner {
@@ -1238,6 +1268,8 @@ html.cursor-ready .cursor { display: block; }
   min-height: 780px;
   max-width: var(--container-max);
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 /* Colonna media */
@@ -1293,18 +1325,6 @@ html.cursor-ready .cursor { display: block; }
   color: color-mix(in srgb, var(--accent, #C9A96E) 40%, var(--bg) 60%);
   font-weight: 400;
   transform: translateY(-0.02em);
-}
-
-.weal-house__logo {
-  height: 68px;
-  width: auto;
-  align-self: flex-start;
-  margin: 0.5rem 0 0;
-  display: block;
-  background: var(--bg);
-  padding: 10px 14px;
-  border-radius: 4px;
-  box-sizing: content-box;
 }
 
 .weal-house__role {
