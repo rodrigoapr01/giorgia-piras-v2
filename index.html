@@ -180,36 +180,32 @@
           <h2 id="servizi-title" class="section-title" data-split-words>Tre vie, un metodo.</h2>
         </header>
 
-        <div class="servizi-grid" id="servizi-grid">
-          <article class="servizio-card" data-servizio="01" data-cursor-hover>
-            <span class="servizio-num" aria-hidden="true">01</span>
-            <span class="servizio-line" aria-hidden="true"></span>
-            <h3 class="servizio-title">Personal Training</h3>
-            <p class="servizio-desc">Un'ora, solo tua. In palestra a Roma. Valutazione iniziale, piano tecnico, correzione costante.</p>
-            <a class="link-underline" href="https://wa.me/393935896994" target="_blank" rel="noopener">
-              Scopri di più <span aria-hidden="true">→</span>
-            </a>
-          </article>
-
-          <article class="servizio-card" data-servizio="02" data-cursor-hover>
-            <span class="servizio-num" aria-hidden="true">02</span>
-            <span class="servizio-line" aria-hidden="true"></span>
-            <h3 class="servizio-title">Coaching Online</h3>
-            <p class="servizio-desc">Metodo, ovunque tu sia. Scheda mensile personalizzata, check-in video, feedback continuo.</p>
-            <a class="link-underline" href="https://wa.me/393935896994" target="_blank" rel="noopener">
-              Scopri di più <span aria-hidden="true">→</span>
-            </a>
-          </article>
-
-          <article class="servizio-card" data-servizio="03" data-cursor-hover>
-            <span class="servizio-num" aria-hidden="true">03</span>
-            <span class="servizio-line" aria-hidden="true"></span>
-            <h3 class="servizio-title">Programmi Su Misura</h3>
-            <p class="servizio-desc">Obiettivi precisi, piano preciso. Ricomposizione, forza, recupero, preparazione. Nulla di preconfezionato.</p>
-            <a class="link-underline" href="https://wa.me/393935896994" target="_blank" rel="noopener">
-              Scopri di più <span aria-hidden="true">→</span>
-            </a>
-          </article>
+        <div class="services-carousel" role="region" aria-label="Servizi offerti">
+          <div class="services-track">
+            <article class="service-card">
+              <h3>Personal Training</h3>
+              <p class="service-tagline">Un'ora, solo tua.</p>
+              <p class="service-desc">In palestra a Roma. Valutazione iniziale, piano tecnico, correzione costante.</p>
+              <a href="https://wa.me/393935896994" target="_blank" rel="noopener" class="service-cta" data-cursor-hover>Scopri di più <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="service-card">
+              <h3>Coaching Online</h3>
+              <p class="service-tagline">Metodo, ovunque tu sia.</p>
+              <p class="service-desc">Scheda mensile personalizzata, check-in video, feedback continuo.</p>
+              <a href="https://wa.me/393935896994" target="_blank" rel="noopener" class="service-cta" data-cursor-hover>Scopri di più <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="service-card">
+              <h3>Programmi Su Misura</h3>
+              <p class="service-tagline">Costruito intorno alla tua vita.</p>
+              <p class="service-desc">Programma personalizzato sui tuoi obiettivi, follow-up periodico, libertà di gestione.</p>
+              <a href="https://wa.me/393935896994" target="_blank" rel="noopener" class="service-cta" data-cursor-hover>Scopri di più <span aria-hidden="true">→</span></a>
+            </article>
+          </div>
+          <div class="services-dots" aria-hidden="true">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
         </div>
       </div>
     </section>
@@ -650,5 +646,6 @@
   <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.42/bundled/lenis.min.js" defer></script>
   <script src="scripts.js?v=sticky-1" defer></script>
   <script src="assets/js/footer-mesh.js" defer></script>
+  <script src="assets/js/services-carousel.js" defer></script>
 </body>
 </html>
