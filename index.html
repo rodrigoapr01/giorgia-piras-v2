@@ -396,6 +396,12 @@
           </p>
         </header>
 
+        <div class="tool-panel">
+          <div class="tool-panel__header">
+            <span class="tool-panel__dot" aria-hidden="true"></span>
+            <span class="tool-panel__label">STRUMENTO &middot; ATTIVO</span>
+          </div>
+          <div class="tool-panel__body">
         <div class="macro-calc__body">
 
           <!-- Colonna input -->
@@ -455,7 +461,7 @@
           </div>
 
           <!-- Colonna output -->
-          <div class="macro-calc__output">
+          <div class="macro-calc__output tool-panel__result">
 
             <p class="mc-output__label">Fabbisogno giornaliero</p>
             <div class="mc-output__kcal" aria-live="polite">
@@ -499,6 +505,8 @@
           </div>
 
         </div>
+          </div><!-- /.tool-panel__body -->
+        </div><!-- /.tool-panel -->
 
         <div class="mc-sticky" aria-live="polite" data-mc-sticky>
           <div class="mc-sticky__inner">
